@@ -9,4 +9,6 @@ import com.api.model.UserModel;
 public interface UserService {
     
     UserModel singup(UserModel userModel);
+    
+    UserModel update(Long id, UserModel userModel);
 }
