@@ -1,6 +1,8 @@
 package com.api.service;
 
 import com.api.model.UserModel;
+import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -11,4 +13,10 @@ public interface UserService {
     UserModel singup(UserModel userModel);
     
     UserModel update(Long id, UserModel userModel);
+    
+    List<UserModel> list();
+    
+    Optional<UserModel> find(Long id);
+    
+    void deleteAll();
 }

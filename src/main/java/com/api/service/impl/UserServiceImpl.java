@@ -7,7 +7,10 @@ import com.api.repository.UserRepository;
 import com.api.service.UserService;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -53,5 +56,23 @@ public class UserServiceImpl implements UserService {
                     return userRepository.save(existingUser);
                 })
                 .orElseThrow(() -> new MessageCustomException("Person not found."));
+    }
+
+    @Override
+    public List<UserModel> list() {
+        return userRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparing(UserModel::getId, Comparator.reverseOrder()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<UserModel> find(Long id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public void deleteAll() {
+        userRepository.deleteAll();
     }
 }

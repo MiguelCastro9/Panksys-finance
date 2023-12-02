@@ -36,7 +36,7 @@ public class UserController {
             return new ResponseEntity<>("Passwords is not equals.", HttpStatus.CONFLICT);
         }
         UserModel userModel = userService.update(id, userRequestDto.convertUserUpdateDtoForEntity());
-        return new ResponseEntity<>(userModel, HttpStatus.CREATED);
+        return new ResponseEntity<>(userModel, HttpStatus.OK);
     }
 
 }
