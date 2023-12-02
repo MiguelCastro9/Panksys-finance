@@ -36,9 +36,6 @@ public class AuthServiceImpl implements AuthService {
     if (user == null) {
         throw new IllegalArgumentException("User not found.");
     }
-    if (!user.isActive()) {
-        throw new IllegalArgumentException("User is not active.");
-    }
     try {
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(signinRequestDto.getEmail(), signinRequestDto.getPassword())

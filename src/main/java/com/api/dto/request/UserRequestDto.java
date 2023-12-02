@@ -40,24 +40,21 @@ public class UserRequestDto {
     private String passwordRepeated;
     
     private RoleEnum role;
-    
-    private boolean active;
 
-    public UserRequestDto(String name, LocalDate birth_date, String email, String password, String passwordRepeated, RoleEnum role, boolean active) {
+    public UserRequestDto(String name, LocalDate birth_date, String email, String password, String passwordRepeated, RoleEnum role) {
         this.name = name;
         this.birth_date = birth_date;
         this.email = email;
         this.password = password;
         this.passwordRepeated = passwordRepeated;
         this.role = role;
-        this.active = active;
     }
 
     public UserModel convertUserDtoForEntity() {
-        return new UserModel(name, birth_date, email, password, role, active);
+        return new UserModel(name, birth_date, email, password, role);
     }
     
     public UserModel convertUserUpdateDtoForEntity() {
-        return new UserModel(id, name, birth_date, email, password, role, active);
+        return new UserModel(id, name, birth_date, email, password, role);
     }
 }

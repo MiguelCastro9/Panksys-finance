@@ -45,17 +45,13 @@ public class UserModel implements Serializable, UserDetails {
     
     @Column(nullable = false)
     private RoleEnum role;
-    
-    @Column(nullable = false)
-    private boolean active;
 
-    public UserModel(String name, LocalDate birth_date, String email, String password, RoleEnum role, boolean active) {
+    public UserModel(String name, LocalDate birth_date, String email, String password, RoleEnum role) {
         this.name = name;
         this.birth_date = birth_date;
         this.email = email;
         this.password = password;
         this.role = role;
-        this.active = active;
     }
     
     @Override

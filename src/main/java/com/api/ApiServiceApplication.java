@@ -32,7 +32,6 @@ public class ApiServiceApplication implements CommandLineRunner {
             userModel.setEmail("admin@email.com");
             userModel.setPassword(new BCryptPasswordEncoder().encode("adminadmin"));
             userModel.setRole(RoleEnum.ADMIN);
-            userModel.setActive(true);
             userRepository.save(userModel);
         }
     }
