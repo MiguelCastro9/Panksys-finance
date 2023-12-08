@@ -40,19 +40,19 @@ class UserITTest {
 
     @Test
     void savePostTest() {
-        UserRequestDto userRequestDto = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER);
+        UserRequestDto userRequestDto = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER, true);
         ResponseEntity<UserRequestDto> requestTemplate = testRestTemplate.postForEntity("/api/v1/auth/singup", userRequestDto, UserRequestDto.class);
         Assertions.assertNotNull(requestTemplate);
     }
 
     @Test
     void updatePutTest() {
-        UserRequestDto userRequestDto1 = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER);
+        UserRequestDto userRequestDto1 = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER, true);
         UserModel userModel = userService.singup(userRequestDto1.convertUserDtoForEntity());
         Long userId = userModel.getId();
         Optional<UserModel> existingUserBeforeUpdate = userService.find(userId);
         Assertions.assertTrue(existingUserBeforeUpdate.isPresent());
-        UserRequestDto userRequestDto2 = new UserRequestDto("miguel updated", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER);
+        UserRequestDto userRequestDto2 = new UserRequestDto("miguel updated", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER, true);
         ResponseEntity<Void> responseTemplate = testRestTemplate.exchange(
                 "/api/v1/user/update/" + userId,
                 HttpMethod.PUT,

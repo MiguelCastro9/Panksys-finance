@@ -45,6 +45,9 @@ public class UserModel implements Serializable, UserDetails {
     
     @Column(nullable = false)
     private RoleEnum role;
+    
+    @Column(nullable = false)
+    private boolean enabled = true;
 
     public UserModel(String name, LocalDate birth_date, String email, String password, RoleEnum role) {
         this.name = name;
@@ -81,6 +84,6 @@ public class UserModel implements Serializable, UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }

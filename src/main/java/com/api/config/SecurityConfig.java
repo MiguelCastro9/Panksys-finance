@@ -39,12 +39,13 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/admin/message").hasAnyAuthority(RoleEnum.ADMIN.name())
                 .requestMatchers("/api/v1/user/message").hasAnyAuthority(RoleEnum.USER.name())
                 .requestMatchers("/api/v1/user/update/{id}").hasAnyAuthority(RoleEnum.USER.name())
+                .requestMatchers("/api/v1/user/disabled/{id}").hasAnyAuthority(RoleEnum.USER.name())
                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                 jwtConfig, UsernamePasswordAuthenticationFilter.class);
         return http.build();
-    }
+    } 
 
     @Bean
     public AuthenticationProvider authenticationProvider() {

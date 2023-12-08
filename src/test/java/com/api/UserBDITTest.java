@@ -36,7 +36,7 @@ class UserBDITTest {
 
     @Test
     void singupTest() {
-        UserRequestDto userRequestDto = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER);
+        UserRequestDto userRequestDto = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER, true);
         userService.singup(userRequestDto.convertUserDtoForEntity());
         userResponseDto = userService.list().stream().map(user
                 -> UserResponseDto.convertEntityForUserDto(user))
@@ -47,12 +47,12 @@ class UserBDITTest {
 
     @Test
     void updateTest() {
-        UserRequestDto userRequestDto1 = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER);
+        UserRequestDto userRequestDto1 = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER, true);
         UserModel userModel = userService.singup(userRequestDto1.convertUserDtoForEntity());
         Long userId = userModel.getId();
         Optional<UserModel> existingUserBeforeUpdate = userService.find(userId);
         Assertions.assertTrue(existingUserBeforeUpdate.isPresent());
-        UserRequestDto userRequestDto2 = new UserRequestDto("miguel updated", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER);
+        UserRequestDto userRequestDto2 = new UserRequestDto("miguel updated", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER, true);
         userService.update(userId, userRequestDto2.convertUserUpdateDtoForEntity());
         Optional<UserModel> existingUserAfterUpdate = userService.find(userId);
         Assertions.assertTrue(existingUserAfterUpdate.isPresent());

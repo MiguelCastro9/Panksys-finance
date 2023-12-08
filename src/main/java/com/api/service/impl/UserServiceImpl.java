@@ -41,8 +41,9 @@ public class UserServiceImpl implements UserService {
             newUser.setPassword(passwordEncoder.encode(userModel.getPassword()));
             newUser.setRole(RoleEnum.USER);
             return userRepository.save(newUser);
+        } else {
+            throw new IllegalArgumentException("User with email " + userModel.getEmail() + " already exists");
         }
-        return null;
     }
 
     @Override
@@ -55,7 +56,7 @@ public class UserServiceImpl implements UserService {
                     existingUser.setPassword(passwordEncoder.encode(userModel.getPassword()));
                     return userRepository.save(existingUser);
                 })
-                .orElseThrow(() -> new MessageCustomException("Person not found."));
+                .orElseThrow(() -> new IllegalArgumentException("User not found."));
     }
 
     @Override
@@ -74,5 +75,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteAll() {
         userRepository.deleteAll();
+    }
+
+    @Override
+    public UserModel disabled(Long id) {
+        return userRepository.findById(id)
+                .map(existingUser -> {
+                    existingUser.setEnabled(false);
+                    return userRepository.save(existingUser);
+                })
+                .orElseThrow(() -> new IllegalArgumentException("User not found."));
     }
 }

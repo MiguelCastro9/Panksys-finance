@@ -32,24 +32,27 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public JWTResponseDto signin(SigninRequestDto signinRequestDto) {
-    UserModel user = userRepository.findByEmail(signinRequestDto.getEmail()).orElse(null);
-    if (user == null) {
-        throw new IllegalArgumentException("User not found.");
+        UserModel user = userRepository.findByEmail(signinRequestDto.getEmail()).orElse(null);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found.");
+        }
+        if (user.isEnabled() == false) {
+            throw new IllegalArgumentException("User not is enabled.");
+        }
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(signinRequestDto.getEmail(), signinRequestDto.getPassword())
+            );
+        } catch (AuthenticationException ex) {
+            throw new IllegalArgumentException("Invalid e-mail or password.");
+        }
+        var jwt = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(new HashMap<>(), user);
+        JWTResponseDto jwtAuthenticationResponseDto = new JWTResponseDto();
+        jwtAuthenticationResponseDto.setToken(jwt);
+        jwtAuthenticationResponseDto.setRefreshToken(refreshToken);
+        return jwtAuthenticationResponseDto;
     }
-    try {
-        authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(signinRequestDto.getEmail(), signinRequestDto.getPassword())
-        );
-    } catch (AuthenticationException ex) {
-        throw new IllegalArgumentException("Invalid e-mail or password.");
-    }
-    var jwt = jwtService.generateToken(user);
-    var refreshToken = jwtService.generateRefreshToken(new HashMap<>(), user);
-    JWTResponseDto jwtAuthenticationResponseDto = new JWTResponseDto();
-    jwtAuthenticationResponseDto.setToken(jwt);
-    jwtAuthenticationResponseDto.setRefreshToken(refreshToken);
-    return jwtAuthenticationResponseDto;
-}
 
     @Override
     public JWTResponseDto refreshToken(RefreshTokenRequestDto refreshTokenRequestDto) {

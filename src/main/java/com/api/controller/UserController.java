@@ -38,5 +38,10 @@ public class UserController {
         UserModel userModel = userService.update(id, userRequestDto.convertUserUpdateDtoForEntity());
         return new ResponseEntity<>(userModel, HttpStatus.OK);
     }
-
+    
+    @PutMapping("/disabled/{id}")
+    public ResponseEntity<?> disabled(@PathVariable Long id) {
+        UserModel userModel = userService.disabled(id);
+        return new ResponseEntity<>(userModel, HttpStatus.OK);
+    }
 }

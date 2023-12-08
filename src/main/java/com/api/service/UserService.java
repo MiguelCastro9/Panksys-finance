@@ -14,6 +14,8 @@ public interface UserService {
     
     UserModel update(Long id, UserModel userModel);
     
+    UserModel disabled(Long id);
+    
     List<UserModel> list();
     
     Optional<UserModel> find(Long id);

@@ -28,8 +28,10 @@ public class UserResponseDto {
     
     private RoleEnum role;
     
+    private boolean enabled;
+    
     public static UserResponseDto convertEntityForUserDto(UserModel userModel) {
         return new UserResponseDto(userModel.getId(), userModel.getName(), 
-                userModel.getBirth_date(), userModel.getEmail(), userModel.getPassword(), userModel.getRole());
+                userModel.getBirth_date(), userModel.getEmail(), userModel.getPassword(), userModel.getRole(), userModel.isEnabled());
     }
 }
