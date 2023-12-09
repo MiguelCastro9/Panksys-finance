@@ -23,7 +23,7 @@ public class ApiServiceApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        UserModel adminAccount = userRepository.findByRole(RoleEnum.ADMIN);
+        UserModel adminAccount = userRepository.findByRole(RoleEnum.ADMIN.getName());
 
         if (adminAccount == null) {
             UserModel userBuilder = new UserModel.Builder()

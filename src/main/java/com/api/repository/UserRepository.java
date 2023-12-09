@@ -1,6 +1,5 @@
 package com.api.repository;
 
-import com.api.enums.RoleEnum;
 import com.api.model.UserModel;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +14,5 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
 
     Optional<UserModel> findByEmail(String email);
 
-    UserModel findByRole(RoleEnum role);
+    UserModel findByRole(String role);
 }

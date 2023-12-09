@@ -36,10 +36,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request.requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers("/api/v1/admin/message").hasAnyAuthority(RoleEnum.ADMIN.name())
-                .requestMatchers("/api/v1/user/message").hasAnyAuthority(RoleEnum.USER.name())
-                .requestMatchers("/api/v1/user/update/{id}").hasAnyAuthority(RoleEnum.USER.name())
-                .requestMatchers("/api/v1/user/disabled/{id}").hasAnyAuthority(RoleEnum.USER.name())
+                .requestMatchers("/api/v1/admin/message").hasAnyAuthority(RoleEnum.ADMIN.getName())
+                .requestMatchers("/api/v1/user/message").hasAnyAuthority(RoleEnum.USER.getName())
+                .requestMatchers("/api/v1/user/update/{id}").hasAnyAuthority(RoleEnum.USER.getName())
+                .requestMatchers("/api/v1/user/disabled/{id}").hasAnyAuthority(RoleEnum.USER.getName())
                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(

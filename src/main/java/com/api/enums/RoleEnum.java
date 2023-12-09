@@ -6,8 +6,8 @@ package com.api.enums;
  */
 public enum RoleEnum {
     
-    ADMIN("Administrador"), 
-    USER("Usuário");
+    ADMIN("Administrator"), 
+    USER("User");
 
     private String name;
 

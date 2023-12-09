@@ -1,6 +1,5 @@
 package com.api.dto.request;
 
-import com.api.enums.RoleEnum;
 import com.api.model.UserModel;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
