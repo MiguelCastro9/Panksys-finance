@@ -35,8 +35,8 @@ public class AuthController {
         if (!userRequestDto.getPassword().equals(userRequestDto.getPasswordRepeated())) {
             return new ResponseEntity<>("Passwords is not equals.", HttpStatus.CONFLICT);
         }
-        UserModel userModel = userService.singup(userRequestDto.convertUserDtoForEntity());
-        return new ResponseEntity<>(userModel, HttpStatus.CREATED);
+        UserModel userBuilder = userService.singup(userRequestDto.convertUserDtoForEntity());
+        return new ResponseEntity<>(userBuilder, HttpStatus.CREATED);
     }
 
     @PostMapping("/signin")

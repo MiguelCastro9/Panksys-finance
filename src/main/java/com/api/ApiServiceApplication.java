@@ -12,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class ApiServiceApplication implements CommandLineRunner {
-    
+
     @Autowired
     private UserRepository userRepository;
 
@@ -22,17 +22,18 @@ public class ApiServiceApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        
+
         UserModel adminAccount = userRepository.findByRole(RoleEnum.ADMIN);
-        
+
         if (adminAccount == null) {
-            UserModel userModel = new UserModel();
-            userModel.setName("admin");
-            userModel.setBirth_date(LocalDate.now());
-            userModel.setEmail("admin@email.com");
-            userModel.setPassword(new BCryptPasswordEncoder().encode("adminadmin"));
-            userModel.setRole(RoleEnum.ADMIN);
-            userRepository.save(userModel);
+            UserModel userBuilder = new UserModel.Builder()
+                    .setName("admin")
+                    .setBirth_date(LocalDate.now())
+                    .setEmail("admin@email.com")
+                    .setPassword(new BCryptPasswordEncoder().encode("adminadmin"))
+                    .setRole(RoleEnum.ADMIN.getName())
+                    .build();
+            userRepository.save(userBuilder);
         }
     }
 }

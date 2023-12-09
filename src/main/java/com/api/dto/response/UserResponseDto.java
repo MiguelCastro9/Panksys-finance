@@ -1,6 +1,5 @@
 package com.api.dto.response;
 
-import com.api.enums.RoleEnum;
 import com.api.model.UserModel;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
@@ -26,7 +25,7 @@ public class UserResponseDto {
     
     private String password;
     
-    private RoleEnum role;
+    private String role;
     
     private boolean enabled;
     

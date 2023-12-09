@@ -18,32 +18,32 @@ import org.hibernate.validator.constraints.Length;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRequestDto {
-    
+
     private Long id;
-    
+
     @NotBlank(message = "Name is required.")
     @Length(min = 3, max = 45, message = "Name required at minimum {min} and at maximum {max} characters.")
     private String name;
-    
+
     @NotNull(message = "Birth date is required.")
     private LocalDate birth_date;
-    
+
     @NotBlank(message = "E-mail is required.")
     @Length(min = 10, max = 255, message = "E-mail required at minimum {min} and at maximum {max} characters.")
     private String email;
-    
+
     @NotBlank(message = "Password is required.")
     @Length(min = 10, max = 255, message = "Password required at minimum {min} and at maximum {max} characters.")
     private String password;
-    
+
     @NotBlank(message = "Password repeated is required.")
     private String passwordRepeated;
-    
-    private RoleEnum role;
-    
+
+    private String role;
+
     private boolean enabled;
 
-    public UserRequestDto(String name, LocalDate birth_date, String email, String password, String passwordRepeated, RoleEnum role, boolean enabled) {
+    public UserRequestDto(String name, LocalDate birth_date, String email, String password, String passwordRepeated, String role, boolean enabled) {
         this.name = name;
         this.birth_date = birth_date;
         this.email = email;
@@ -54,10 +54,24 @@ public class UserRequestDto {
     }
 
     public UserModel convertUserDtoForEntity() {
-        return new UserModel(name, birth_date, email, password, role);
+        UserModel.Builder userBuilder = new UserModel.Builder();
+        userBuilder.setName(name)
+                .setBirth_date(birth_date)
+                .setEmail(email)
+                .setPassword(password)
+                .setRole(role);
+        return new UserModel(userBuilder);
     }
-    
+
     public UserModel convertUserUpdateDtoForEntity() {
-        return new UserModel(id, name, birth_date, email, password, role, enabled);
+        UserModel.Builder userBuilder = new UserModel.Builder();
+        userBuilder.setId(id)
+                .setName(name)
+                .setBirth_date(birth_date)
+                .setEmail(email)
+                .setPassword(password)
+                .setRole(role)
+                .setEnabled(enabled);
+        return new UserModel(userBuilder);
     }
 }

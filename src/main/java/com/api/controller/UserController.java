@@ -35,13 +35,13 @@ public class UserController {
         if (!userRequestDto.getPassword().equals(userRequestDto.getPasswordRepeated())) {
             return new ResponseEntity<>("Passwords is not equals.", HttpStatus.CONFLICT);
         }
-        UserModel userModel = userService.update(id, userRequestDto.convertUserUpdateDtoForEntity());
-        return new ResponseEntity<>(userModel, HttpStatus.OK);
+        UserModel userBuilder = userService.update(id, userRequestDto.convertUserUpdateDtoForEntity());
+        return new ResponseEntity<>(userBuilder, HttpStatus.OK);
     }
     
     @PutMapping("/disabled/{id}")
-    public ResponseEntity<?> disabled(@PathVariable Long id) {
-        UserModel userModel = userService.disabled(id);
-        return new ResponseEntity<>(userModel, HttpStatus.OK);
+    public ResponseEntity<?> disabledUser(@PathVariable Long id) {
+        UserModel userBuilder = userService.disabled(id);
+        return new ResponseEntity<>(userBuilder, HttpStatus.OK);
     }
 }

@@ -35,24 +35,24 @@ class UserITTest {
 
     @BeforeEach
     void cleanDatabase() {
-        userService.deleteAll();
+        userService.deleteUsers();
     }
 
     @Test
     void savePostTest() {
-        UserRequestDto userRequestDto = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER, true);
+        UserRequestDto userRequestDto = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER.getName(), true);
         ResponseEntity<UserRequestDto> requestTemplate = testRestTemplate.postForEntity("/api/v1/auth/singup", userRequestDto, UserRequestDto.class);
         Assertions.assertNotNull(requestTemplate);
     }
 
     @Test
     void updatePutTest() {
-        UserRequestDto userRequestDto1 = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER, true);
-        UserModel userModel = userService.singup(userRequestDto1.convertUserDtoForEntity());
-        Long userId = userModel.getId();
+        UserRequestDto userRequestDto1 = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER.getName(), true);
+        UserModel builder = userService.singup(userRequestDto1.convertUserDtoForEntity());
+        Long userId = builder.getId();
         Optional<UserModel> existingUserBeforeUpdate = userService.find(userId);
         Assertions.assertTrue(existingUserBeforeUpdate.isPresent());
-        UserRequestDto userRequestDto2 = new UserRequestDto("miguel updated", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER, true);
+        UserRequestDto userRequestDto2 = new UserRequestDto("miguel updated", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER.getName(), true);
         ResponseEntity<Void> responseTemplate = testRestTemplate.exchange(
                 "/api/v1/user/update/" + userId,
                 HttpMethod.PUT,

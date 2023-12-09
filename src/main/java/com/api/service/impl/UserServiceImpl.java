@@ -1,7 +1,6 @@
 package com.api.service.impl;
 
 import com.api.enums.RoleEnum;
-import com.api.exception.MessageCustomException;
 import com.api.model.UserModel;
 import com.api.repository.UserRepository;
 import com.api.service.UserService;
@@ -34,13 +33,14 @@ public class UserServiceImpl implements UserService {
     public UserModel singup(UserModel userModel) {
         Optional<UserModel> checkUserPresent = userRepository.findByEmail(userModel.getEmail());
         if (checkUserPresent.isEmpty()) {
-            UserModel newUser = new UserModel();
-            newUser.setName(userModel.getName());
-            newUser.setBirth_date(LocalDate.parse(dateFormatter.format(userModel.getBirth_date()), dateFormatter));
-            newUser.setEmail(userModel.getEmail());
-            newUser.setPassword(passwordEncoder.encode(userModel.getPassword()));
-            newUser.setRole(RoleEnum.USER);
-            return userRepository.save(newUser);
+            UserModel builder = new UserModel.Builder()
+                    .setName(userModel.getName())
+                    .setBirth_date(LocalDate.parse(dateFormatter.format(userModel.getBirth_date()), dateFormatter))
+                    .setEmail(userModel.getEmail())
+                    .setPassword(passwordEncoder.encode(userModel.getPassword()))
+                    .setRole(RoleEnum.USER.getName())
+                    .build();
+            return userRepository.save(builder);
         } else {
             throw new IllegalArgumentException("User with email " + userModel.getEmail() + " already exists");
         }
@@ -50,11 +50,13 @@ public class UserServiceImpl implements UserService {
     public UserModel update(Long id, UserModel userModel) {
         return userRepository.findById(id)
                 .map(existingUser -> {
-                    existingUser.setName(userModel.getName());
-                    existingUser.setBirth_date(userModel.getBirth_date());
-                    existingUser.setEmail(userModel.getEmail());
-                    existingUser.setPassword(passwordEncoder.encode(userModel.getPassword()));
-                    return userRepository.save(existingUser);
+                    UserModel.Builder builder = new UserModel.Builder()
+                            .setId(existingUser.getId())
+                            .setName(userModel.getName())
+                            .setBirth_date(userModel.getBirth_date())
+                            .setEmail(userModel.getEmail())
+                            .setPassword(passwordEncoder.encode(userModel.getPassword()));
+                    return userRepository.save(builder.build());
                 })
                 .orElseThrow(() -> new IllegalArgumentException("User not found."));
     }
@@ -73,7 +75,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteAll() {
+    public void deleteUsers() {
         userRepository.deleteAll();
     }
 
@@ -81,8 +83,15 @@ public class UserServiceImpl implements UserService {
     public UserModel disabled(Long id) {
         return userRepository.findById(id)
                 .map(existingUser -> {
-                    existingUser.setEnabled(false);
-                    return userRepository.save(existingUser);
+                    UserModel.Builder builder = new UserModel.Builder()
+                            .setId(existingUser.getId())
+                            .setName(existingUser.getName())
+                            .setBirth_date(existingUser.getBirth_date())
+                            .setEmail(existingUser.getEmail())
+                            .setPassword(existingUser.getPassword())
+                            .setRole(existingUser.getRole())
+                            .setEnabled(false);
+                    return userRepository.save(builder.build());
                 })
                 .orElseThrow(() -> new IllegalArgumentException("User not found."));
     }
