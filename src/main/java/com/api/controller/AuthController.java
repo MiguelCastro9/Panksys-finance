@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.api.service.AuthService;
 import com.api.service.UserService;
 import jakarta.validation.Valid;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
@@ -36,16 +37,21 @@ public class AuthController {
             return new ResponseEntity<>("Passwords is not equals.", HttpStatus.CONFLICT);
         }
         UserModel userBuilder = userService.singup(userRequestDto.convertUserDtoForEntity());
+        userBuilder.add(linkTo(methodOn(AuthController.class).singup(userRequestDto)).withSelfRel());
         return new ResponseEntity<>(userBuilder, HttpStatus.CREATED);
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<JWTResponseDto> signin(@RequestBody SigninRequestDto loginRequestDto) {
-        return new ResponseEntity<>(authenticationService.signin(loginRequestDto), HttpStatus.OK);
+    public ResponseEntity<JWTResponseDto> signin(@RequestBody SigninRequestDto signinRequestDto) {
+        JWTResponseDto signin = authenticationService.signin(signinRequestDto);
+        signin.add(linkTo(methodOn(AuthController.class).signin(signinRequestDto)).withSelfRel());
+        return new ResponseEntity<>(signin, HttpStatus.OK);
     }
 
     @PostMapping("/refresh")
     public ResponseEntity<JWTResponseDto> refreshToken(@RequestBody RefreshTokenRequestDto refreshTokenRequestDto) {
-        return new ResponseEntity<>(authenticationService.refreshToken(refreshTokenRequestDto), HttpStatus.OK);
+        JWTResponseDto refreshToken = authenticationService.refreshToken(refreshTokenRequestDto);
+        refreshToken.add(linkTo(methodOn(AuthController.class).refreshToken(refreshTokenRequestDto)).withSelfRel());
+        return new ResponseEntity<>(refreshToken, HttpStatus.OK);
     }
 }

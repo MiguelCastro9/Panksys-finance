@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -36,12 +37,14 @@ public class UserController {
             return new ResponseEntity<>("Passwords is not equals.", HttpStatus.CONFLICT);
         }
         UserModel userBuilder = userService.update(id, userRequestDto.convertUserUpdateDtoForEntity());
+        userBuilder.add(linkTo(methodOn(UserController.class).update(id, userRequestDto)).withSelfRel());
         return new ResponseEntity<>(userBuilder, HttpStatus.OK);
     }
     
     @PutMapping("/disabled/{id}")
-    public ResponseEntity<?> disabledUser(@PathVariable Long id) {
+    public ResponseEntity<?> disabled(@PathVariable Long id) {
         UserModel userBuilder = userService.disabled(id);
+        userBuilder.add(linkTo(methodOn(UserController.class).disabled(id)).withSelfRel());
         return new ResponseEntity<>(userBuilder, HttpStatus.OK);
     }
 }

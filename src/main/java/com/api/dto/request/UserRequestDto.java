@@ -1,11 +1,13 @@
 package com.api.dto.request;
 
+import com.api.enums.RoleEnum;
 import com.api.model.UserModel;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
@@ -14,6 +16,7 @@ import org.hibernate.validator.constraints.Length;
  * @author Miguel Castro
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRequestDto {
@@ -38,9 +41,9 @@ public class UserRequestDto {
     @NotBlank(message = "Password repeated is required.")
     private String passwordRepeated;
 
-    private String role;
+    private String role = RoleEnum.USER.getName();
 
-    private boolean enabled;
+    private boolean enabled = true;
 
     public UserRequestDto(String name, LocalDate birth_date, String email, String password, String passwordRepeated, String role, boolean enabled) {
         this.name = name;

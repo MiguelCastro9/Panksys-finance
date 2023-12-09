@@ -9,6 +9,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserModel implements Serializable, UserDetails {
+public class UserModel extends RepresentationModel implements Serializable, UserDetails {
 
     private static final long serialVersionUID = 1L;
 
@@ -44,10 +45,10 @@ public class UserModel implements Serializable, UserDetails {
     private String password;
 
     @Column(nullable = false)
-    private String role = RoleEnum.USER.getName();
+    private String role;
 
     @Column(nullable = false)
-    private boolean enabled = true;
+    private boolean enabled;
 
     public UserModel(String name, LocalDate birth_date, String email, String password, String role) {
         this.name = name;
