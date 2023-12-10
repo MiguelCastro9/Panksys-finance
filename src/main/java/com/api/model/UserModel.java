@@ -63,6 +63,15 @@ public class UserModel extends RepresentationModel implements Serializable, User
         this.birth_date = birth_date;
         this.email = email;
     }
+
+    public UserModel(Long id, String name, LocalDate birth_date, String email, String password, boolean enabled) {
+        this.id = id;
+        this.name = name;
+        this.birth_date = birth_date;
+        this.email = email;
+        this.password = password;
+        this.enabled = enabled;
+    }
     
     public UserModel(Builder builder) {
         this.id = builder.id;

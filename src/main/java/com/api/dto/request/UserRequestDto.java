@@ -1,6 +1,5 @@
 package com.api.dto.request;
 
-import com.api.enums.RoleEnum;
 import com.api.model.UserModel;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -41,10 +40,6 @@ public class UserRequestDto {
     @NotBlank(message = "Password repeated is required.")
     private String passwordRepeated;
 
-    private String role = RoleEnum.USER.getName();
-
-    private boolean enabled = true;
-
     public UserRequestDto(String name, LocalDate birth_date, String email, String password, String passwordRepeated) {
         this.name = name;
         this.birth_date = birth_date;
@@ -58,8 +53,7 @@ public class UserRequestDto {
         userBuilder.setName(name)
                 .setBirth_date(birth_date)
                 .setEmail(email)
-                .setPassword(password)
-                .setRole(role);
+                .setPassword(password);
         return new UserModel(userBuilder);
     }
 
@@ -69,9 +63,7 @@ public class UserRequestDto {
                 .setName(name)
                 .setBirth_date(birth_date)
                 .setEmail(email)
-                .setPassword(password)
-                .setRole(role)
-                .setEnabled(enabled);
+                .setPassword(password);
         return new UserModel(userBuilder);
     }
 }

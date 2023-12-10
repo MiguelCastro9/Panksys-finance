@@ -61,4 +61,20 @@ class UserITTest {
         );
         Assertions.assertEquals(HttpStatus.FORBIDDEN, responseTemplate.getStatusCode());
     }
+    
+    @Test
+    void disabledPutTest() {
+        UserRequestDto userRequestDto = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
+        UserModel builder = userService.singup(userRequestDto.convertUserDtoForEntity());
+        Long userId = builder.getId();
+        Optional<UserModel> existingUserBeforeUpdate = userService.find(userId);
+        Assertions.assertTrue(existingUserBeforeUpdate.isPresent());
+        ResponseEntity<Void> responseTemplate = testRestTemplate.exchange(
+                "/api/v1/user/disabled/" + userId,
+                HttpMethod.PUT,
+                new HttpEntity<>(userRequestDto),
+                Void.class
+        );
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, responseTemplate.getStatusCode());
+    }
 }
