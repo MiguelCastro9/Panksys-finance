@@ -3,6 +3,8 @@ package com.api.controller;
 import com.api.dto.request.UserRequestDto;
 import com.api.model.UserModel;
 import com.api.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Miguel Castro
  */
 @RestController
+@SecurityRequirement(name = "BearerAuthentication")
+@Tag(name = "Users")
 @RequestMapping("api/v1/user")
 public class UserController {
 

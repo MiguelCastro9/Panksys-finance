@@ -32,10 +32,20 @@ public class SecurityConfig {
     @Autowired
     private JWTService jwtService;
 
+    private static final String[] SWAGGER_PATHS = {
+        "/api/v1/auth/**",
+        "/swagger-ui/**",
+        "/swagger-ui.html",
+        "/v3/api-docs/**",
+        "/v3/api-docs/**",
+        "/v3/api-docs.yaml",
+        "/panksys_finance_doc"
+    };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> request.requestMatchers("/api/v1/auth/**").permitAll()
+                .authorizeHttpRequests(request -> request.requestMatchers(SWAGGER_PATHS).permitAll()
                 .requestMatchers("/api/v1/admin/message").hasAnyAuthority(RoleEnum.ADMIN.getName())
                 .requestMatchers("/api/v1/user/message").hasAnyAuthority(RoleEnum.USER.getName())
                 .requestMatchers("/api/v1/user/update/{id}").hasAnyAuthority(RoleEnum.USER.getName())
@@ -45,7 +55,7 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                 jwtConfig, UsernamePasswordAuthenticationFilter.class);
         return http.build();
-    } 
+    }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.api.service.AuthService;
 import com.api.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ import org.springframework.http.HttpStatus;
  */
 @RestController
 @RequestMapping("api/v1/auth")
+@SecurityRequirement(name = "BearerAuthentication")
+@Tag(name = "Authentications")
 public class AuthController {
 
     @Autowired
