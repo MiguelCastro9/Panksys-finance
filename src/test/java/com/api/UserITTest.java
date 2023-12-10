@@ -1,7 +1,7 @@
 package com.api;
 
+import com.api.dto.request.SigninRequestDto;
 import com.api.dto.request.UserRequestDto;
-import com.api.enums.RoleEnum;
 import com.api.model.UserModel;
 import com.api.service.UserService;
 import java.time.LocalDate;
@@ -37,44 +37,64 @@ class UserITTest {
     void cleanDatabase() {
         userService.deleteUsers();
     }
+    
+    @Test
+    void signinPostTest() {
+        UserRequestDto userRequestDto = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
+        ResponseEntity<UserRequestDto> restTemplate1 = testRestTemplate.postForEntity("/api/v1/auth/singup", userRequestDto, UserRequestDto.class);
+        Assertions.assertNotNull(restTemplate1);
+        Assertions.assertNotNull(restTemplate1.getBody());
+        Assertions.assertEquals(HttpStatus.CREATED, restTemplate1.getStatusCode());
+        SigninRequestDto signinRequestDto = new SigninRequestDto(userRequestDto.getEmail(), userRequestDto.getPassword());
+        ResponseEntity<SigninRequestDto> restTemplate2 = testRestTemplate.postForEntity("/api/v1/auth/signin", signinRequestDto, SigninRequestDto.class);
+        Assertions.assertNotNull(restTemplate2);
+        Assertions.assertEquals(HttpStatus.OK, restTemplate2.getStatusCode());
+        Assertions.assertNotNull(restTemplate2.getBody());
+    }
 
     @Test
-    void savePostTest() {
+    void singupPostTest() {
         UserRequestDto userRequestDto = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
-        ResponseEntity<UserRequestDto> requestTemplate = testRestTemplate.postForEntity("/api/v1/auth/singup", userRequestDto, UserRequestDto.class);
-        Assertions.assertNotNull(requestTemplate);
+        Assertions.assertEquals(userRequestDto.getPassword(), userRequestDto.getPasswordRepeated());
+        ResponseEntity<UserRequestDto> restTemplate = testRestTemplate.postForEntity("/api/v1/auth/singup", userRequestDto, UserRequestDto.class);
+        Assertions.assertNotNull(restTemplate);
     }
 
     @Test
     void updatePutTest() {
         UserRequestDto userRequestDto1 = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
+        Assertions.assertEquals(userRequestDto1.getPassword(), userRequestDto1.getPasswordRepeated());
         UserModel builder = userService.singup(userRequestDto1.convertUserDtoForEntity());
         Long userId = builder.getId();
         Optional<UserModel> existingUserBeforeUpdate = userService.find(userId);
         Assertions.assertTrue(existingUserBeforeUpdate.isPresent());
         UserRequestDto userRequestDto2 = new UserRequestDto("miguel updated", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
-        ResponseEntity<Void> responseTemplate = testRestTemplate.exchange(
+        Assertions.assertEquals(userRequestDto2.getPassword(), userRequestDto2.getPasswordRepeated());
+        ResponseEntity<Void> restTemplate = testRestTemplate.exchange(
                 "/api/v1/user/update/" + userId,
                 HttpMethod.PUT,
                 new HttpEntity<>(userRequestDto2),
                 Void.class
         );
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, responseTemplate.getStatusCode());
+        Assertions.assertNotNull(restTemplate);
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, restTemplate.getStatusCode());
     }
     
     @Test
     void disabledPutTest() {
         UserRequestDto userRequestDto = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
+        Assertions.assertEquals(userRequestDto.getPassword(), userRequestDto.getPasswordRepeated());
         UserModel builder = userService.singup(userRequestDto.convertUserDtoForEntity());
         Long userId = builder.getId();
         Optional<UserModel> existingUserBeforeUpdate = userService.find(userId);
         Assertions.assertTrue(existingUserBeforeUpdate.isPresent());
-        ResponseEntity<Void> responseTemplate = testRestTemplate.exchange(
+        ResponseEntity<Void> restTemplate = testRestTemplate.exchange(
                 "/api/v1/user/disabled/" + userId,
                 HttpMethod.PUT,
                 new HttpEntity<>(userRequestDto),
                 Void.class
         );
-        Assertions.assertEquals(HttpStatus.FORBIDDEN, responseTemplate.getStatusCode());
+        Assertions.assertNotNull(restTemplate);
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, restTemplate.getStatusCode());
     }
 }
