@@ -1,6 +1,5 @@
 package com.api.service.impl;
 
-import com.api.enums.RoleEnum;
 import com.api.model.UserModel;
 import com.api.repository.UserRepository;
 import com.api.service.UserService;
@@ -38,7 +37,6 @@ public class UserServiceImpl implements UserService {
                     .setBirth_date(LocalDate.parse(dateFormatter.format(userModel.getBirth_date()), dateFormatter))
                     .setEmail(userModel.getEmail())
                     .setPassword(passwordEncoder.encode(userModel.getPassword()))
-                    .setRole(RoleEnum.USER.getName())
                     .build();
             return userRepository.save(builder);
         } else {
@@ -84,12 +82,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id)
                 .map(existingUser -> {
                     UserModel.Builder builder = new UserModel.Builder()
-                            .setId(existingUser.getId())
-                            .setName(existingUser.getName())
-                            .setBirth_date(existingUser.getBirth_date())
-                            .setEmail(existingUser.getEmail())
-                            .setPassword(existingUser.getPassword())
-                            .setRole(existingUser.getRole())
                             .setEnabled(false);
                     return userRepository.save(builder.build());
                 })

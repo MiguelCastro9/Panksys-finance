@@ -45,14 +45,12 @@ public class UserRequestDto {
 
     private boolean enabled = true;
 
-    public UserRequestDto(String name, LocalDate birth_date, String email, String password, String passwordRepeated, String role, boolean enabled) {
+    public UserRequestDto(String name, LocalDate birth_date, String email, String password, String passwordRepeated) {
         this.name = name;
         this.birth_date = birth_date;
         this.email = email;
         this.password = password;
         this.passwordRepeated = passwordRepeated;
-        this.role = role;
-        this.enabled = enabled;
     }
 
     public UserModel convertUserDtoForEntity() {

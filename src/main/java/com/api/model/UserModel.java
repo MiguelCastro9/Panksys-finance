@@ -50,14 +50,20 @@ public class UserModel extends RepresentationModel implements Serializable, User
     @Column(nullable = false)
     private boolean enabled;
 
-    public UserModel(String name, LocalDate birth_date, String email, String password, String role) {
+    public UserModel(String name, LocalDate birth_date, String email, String password) {
         this.name = name;
         this.birth_date = birth_date;
         this.email = email;
         this.password = password;
-        this.role = role;
     }
 
+    public UserModel(Long id, String name, LocalDate birth_date, String email) {
+        this.id = id;
+        this.name = name;
+        this.birth_date = birth_date;
+        this.email = email;
+    }
+    
     public UserModel(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;

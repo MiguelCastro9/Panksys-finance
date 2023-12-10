@@ -40,12 +40,12 @@ class UserSecurityITTest {
     
     @Test
     void updatePutTest() {
-        UserRequestDto userRequestDto1 = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER.getName(), true);
+        UserRequestDto userRequestDto1 = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
         UserModel builder = userService.singup(userRequestDto1.convertUserDtoForEntity());
         Long userId = builder.getId();
         Optional<UserModel> existingUserBeforeUpdate = userService.find(userId);
         Assertions.assertTrue(existingUserBeforeUpdate.isPresent());
-        UserRequestDto userRequestDto2 = new UserRequestDto("miguel updated", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel", RoleEnum.USER.getName(), true);
+        UserRequestDto userRequestDto2 = new UserRequestDto("miguel updated", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
         ResponseEntity<Void> responseTemplate = testRestTemplate.exchange(
                 "/api/v1/user/update/" + userId,
                 HttpMethod.PUT,

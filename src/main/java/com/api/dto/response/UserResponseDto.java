@@ -23,14 +23,8 @@ public class UserResponseDto {
     
     private String email;
     
-    private String password;
-    
-    private String role;
-    
-    private boolean enabled;
-    
     public static UserResponseDto convertEntityForUserDto(UserModel userModel) {
         return new UserResponseDto(userModel.getId(), userModel.getName(), 
-                userModel.getBirth_date(), userModel.getEmail(), userModel.getPassword(), userModel.getRole(), userModel.isEnabled());
+                userModel.getBirth_date(), userModel.getEmail());
     }
 }
