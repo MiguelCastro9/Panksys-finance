@@ -42,14 +42,33 @@ public class SecurityConfig {
         "/panksys_finance_doc"
     };
 
+    private static final String[] USERS_PATHS = {
+        "/api/v1/user/message",
+        "/api/v1/user/update/{id}",
+        "/api/v1/user/disabled/{id}",
+        "/api/v1/simple-finance/**"
+    };
+
+    private static final String[] ADMINS_PATHS = {
+        "/api/v1/admin/message"
+    };
+
+    private static final String[] SIMPLE_FINANCE_PATHS = {
+        "/api/v1/simple-finance/save",
+        "/api/v1/simple-finance/update/{id}",
+        "/api/v1/simple-finance/list",
+        "/api/v1/simple-finance/find/{id}",
+        "/api/v1/simple-finance/delete/{id}"
+    };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> request.requestMatchers(SWAGGER_PATHS).permitAll()
-                .requestMatchers("/api/v1/admin/message").hasAnyAuthority(RoleEnum.ADMIN.getName())
-                .requestMatchers("/api/v1/user/message").hasAnyAuthority(RoleEnum.USER.getName())
-                .requestMatchers("/api/v1/user/update/{id}").hasAnyAuthority(RoleEnum.USER.getName())
-                .requestMatchers("/api/v1/user/disabled/{id}").hasAnyAuthority(RoleEnum.USER.getName())
+                .authorizeHttpRequests(request -> request
+                .requestMatchers(SWAGGER_PATHS).permitAll()
+                .requestMatchers(ADMINS_PATHS).hasAnyAuthority(RoleEnum.ADMIN.getName())
+                .requestMatchers(USERS_PATHS).hasAnyAuthority(RoleEnum.USER.getName())
+                .requestMatchers(SIMPLE_FINANCE_PATHS).hasAnyAuthority(RoleEnum.USER.getName())
                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
