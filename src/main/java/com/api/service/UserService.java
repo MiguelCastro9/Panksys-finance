@@ -20,5 +20,5 @@ public interface UserService {
     
     Optional<UserModel> find(Long id);
     
-    void deleteUsers();
+    void deleteAll();
 }

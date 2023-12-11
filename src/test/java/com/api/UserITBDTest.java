@@ -30,7 +30,7 @@ class UserITBDTest {
 
     @BeforeEach
     void cleanDatabase() {
-        userService.deleteUsers();
+        userService.deleteAll();
     }
 
     @Test

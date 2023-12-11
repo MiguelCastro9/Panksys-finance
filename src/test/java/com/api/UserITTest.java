@@ -35,7 +35,7 @@ class UserITTest {
 
     @BeforeEach
     void cleanDatabase() {
-        userService.deleteUsers();
+        userService.deleteAll();
     }
     
     @Test

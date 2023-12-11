@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +29,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -46,6 +53,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserModel update(Long id, UserModel userModel) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
+
+            if (!id.equals(infoUserAuthenticated.getId())) {
+                throw new IllegalArgumentException("You are not allowed to update other users.");
+            }
+        } else {
+            throw new IllegalArgumentException("User details not found in the authentication context.");
+        }
         return userRepository.findById(id)
                 .map(existingUser -> {
                     UserModel.Builder builder = new UserModel.Builder()
@@ -73,15 +90,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUsers() {
+    public void deleteAll() {
         userRepository.deleteAll();
     }
 
     @Override
     public UserModel disabled(Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
+
+            if (!id.equals(infoUserAuthenticated.getId())) {
+                throw new IllegalArgumentException("You are not allowed to disabled other users.");
+            }
+        } else {
+            throw new IllegalArgumentException("User details not found in the authentication context.");
+        }
         return userRepository.findById(id)
                 .map(existingUser -> {
                     UserModel.Builder builder = new UserModel.Builder()
+                            .setId(existingUser.getId())
+                            .setName(existingUser.getName())
+                            .setBirth_date(existingUser.getBirth_date())
+                            .setEmail(existingUser.getEmail())
+                            .setPassword(passwordEncoder.encode(existingUser.getPassword()))
                             .setEnabled(false);
                     return userRepository.save(builder.build());
                 })
