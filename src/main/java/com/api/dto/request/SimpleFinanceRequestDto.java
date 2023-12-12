@@ -29,8 +29,9 @@ public class SimpleFinanceRequestDto {
     @NotNull(message = "Value is required.")
     private double value;
 
-    @NotBlank(message = "Form of payment is required.")
-    private String form_payment;
+    @NotNull(message = "Form of payment is required.")
+    @Length(min = 3, max = 45, message = "Name required at minimum {min} and at maximum {max} characters.")
+    private FormPaymentEnum form_payment;
 
     @NotNull(message = "Mounth of payment is required.")
     private LocalDate mounth_payment;
@@ -40,10 +41,11 @@ public class SimpleFinanceRequestDto {
 
     private String description;
 
-    @NotBlank(message = "Status of payment is required.")
-    private String status_payment;
+    @NotNull(message = "Status of payment is required.")
+    @Length(min = 3, max = 45, message = "Name required at minimum {min} and at maximum {max} characters.")
+    private StatusPaymentEnum status_payment;
 
-    public SimpleFinanceRequestDto(String name, double value, String form_payment, LocalDate mounth_payment, Integer installment, String description, String status_payment) {
+    public SimpleFinanceRequestDto(String name, double value, FormPaymentEnum form_payment, LocalDate mounth_payment, Integer installment, String description, StatusPaymentEnum status_payment) {
         this.name = name;
         this.value = value;
         this.form_payment = form_payment;

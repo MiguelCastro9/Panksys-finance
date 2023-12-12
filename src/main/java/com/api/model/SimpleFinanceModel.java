@@ -1,7 +1,11 @@
 package com.api.model;
 
+import com.api.enums.FormPaymentEnum;
+import com.api.enums.StatusPaymentEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,8 +41,9 @@ public class SimpleFinanceModel extends RepresentationModel implements Serializa
     @Column(nullable = false)
     private double value;
 
-    @Column(nullable = false)
-    private String form_payment;
+    @Column(nullable = false, length = 45)
+    @Enumerated(EnumType.STRING)
+    private FormPaymentEnum form_payment;
 
     @Column(nullable = false)
     private LocalDate mounth_payment;
@@ -49,10 +54,11 @@ public class SimpleFinanceModel extends RepresentationModel implements Serializa
     @Column(length = 255)
     private String description;
 
-    @Column(nullable = false)
-    private String status_payment;
+    @Column(nullable = false, length = 45)
+    @Enumerated(EnumType.STRING)
+    private StatusPaymentEnum status_payment;
 
-    public SimpleFinanceModel(String name, double value, String form_payment, LocalDate mounth_payment, Integer installment, String description, String status_payment) {
+    public SimpleFinanceModel(String name, double value, FormPaymentEnum form_payment, LocalDate mounth_payment, Integer installment, String description, StatusPaymentEnum status_payment) {
         this.name = name;
         this.value = value;
         this.form_payment = form_payment;
@@ -81,7 +87,7 @@ public class SimpleFinanceModel extends RepresentationModel implements Serializa
 
         private double value;
 
-        private String form_payment;
+        private FormPaymentEnum form_payment;
 
         private LocalDate mounth_payment;
 
@@ -89,7 +95,7 @@ public class SimpleFinanceModel extends RepresentationModel implements Serializa
 
         private String description;
 
-        private String status_payment;
+        private StatusPaymentEnum status_payment;
 
         public Builder setId(Long id) {
             this.id = id;
@@ -106,7 +112,7 @@ public class SimpleFinanceModel extends RepresentationModel implements Serializa
             return this;
         }
 
-        public Builder setForm_payment(String form_payment) {
+        public Builder setForm_payment(FormPaymentEnum form_payment) {
             this.form_payment = form_payment;
             return this;
         }
@@ -126,7 +132,7 @@ public class SimpleFinanceModel extends RepresentationModel implements Serializa
             return this;
         }
 
-        public Builder setStatus_payment(String status_payment) {
+        public Builder setStatus_payment(StatusPaymentEnum status_payment) {
             this.status_payment = status_payment;
             return this;
         }

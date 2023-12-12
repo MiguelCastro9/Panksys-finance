@@ -1,10 +1,13 @@
 package com.api.dto.response;
 
+import com.api.enums.FormPaymentEnum;
+import com.api.enums.StatusPaymentEnum;
 import com.api.model.SimpleFinanceModel;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 /**
  *
@@ -13,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SimpleFinanceResponseDto {
+public class SimpleFinanceResponseDto extends RepresentationModel {
 
     private Long id;
 
@@ -21,7 +24,7 @@ public class SimpleFinanceResponseDto {
 
     private double value;
 
-    private String form_payment;
+    private FormPaymentEnum form_payment;
 
     private LocalDate mounth_payment;
 
@@ -29,7 +32,7 @@ public class SimpleFinanceResponseDto {
 
     private String description;
 
-    private String status_payment;
+    private StatusPaymentEnum status_payment;
 
     public static SimpleFinanceResponseDto convertEntityForSimpleFinanceDto(SimpleFinanceModel simpleFinanceModel) {
         return new SimpleFinanceResponseDto(simpleFinanceModel.getId(), simpleFinanceModel.getName(),

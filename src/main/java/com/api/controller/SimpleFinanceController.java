@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +39,7 @@ public class SimpleFinanceController {
 
     @PostMapping("/save")
     public ResponseEntity<?> save(@Valid @RequestBody SimpleFinanceRequestDto simpleFinanceRequestDto) {
+        System.out.println(simpleFinanceRequestDto);
         SimpleFinanceModel builder = simpleFinanceService.save(simpleFinanceRequestDto.convertSimpleFinanceDtoForEntity());
         builder.add(linkTo(methodOn(SimpleFinanceController.class).save(simpleFinanceRequestDto)).withSelfRel());
         return new ResponseEntity<>(builder, HttpStatus.CREATED);
@@ -50,16 +53,24 @@ public class SimpleFinanceController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<SimpleFinanceResponseDto>> list() {
-        return new ResponseEntity<List<SimpleFinanceResponseDto>>(
-                simpleFinanceService.list().stream().map(simpleFinance
-                        -> SimpleFinanceResponseDto.convertEntityForSimpleFinanceDto(simpleFinance))
-                        .collect(Collectors.toList()), HttpStatus.OK);
+    public ResponseEntity<CollectionModel<SimpleFinanceResponseDto>> list() {
+        List<SimpleFinanceResponseDto> simpleFinanceList = simpleFinanceService.list().stream()
+                .map(simpleFinance -> SimpleFinanceResponseDto.convertEntityForSimpleFinanceDto(simpleFinance))
+                .collect(Collectors.toList());
+        Link selfLink = linkTo(methodOn(SimpleFinanceController.class).list()).withSelfRel();
+        CollectionModel<SimpleFinanceResponseDto> collectionModel = CollectionModel.of(simpleFinanceList, selfLink);
+        for (SimpleFinanceResponseDto financeDto : simpleFinanceList) {
+            Link itemLink = linkTo(methodOn(SimpleFinanceController.class).find(financeDto.getId())).withRel("item");
+            collectionModel.add(itemLink);
+        }
+        return new ResponseEntity<>(collectionModel, HttpStatus.OK);
     }
     
     @GetMapping("/find/{id}")
     public ResponseEntity<?> find(@PathVariable Long id) {
-        return new ResponseEntity<>(simpleFinanceService.find(id), HttpStatus.OK);
+        SimpleFinanceModel simpleFinanceModel = simpleFinanceService.find(id).orElseThrow();
+        simpleFinanceModel.add(linkTo(methodOn(SimpleFinanceController.class).find(id)).withSelfRel());
+        return new ResponseEntity<>(simpleFinanceModel, HttpStatus.OK);
     }
     
     @DeleteMapping("/delete/{id}")

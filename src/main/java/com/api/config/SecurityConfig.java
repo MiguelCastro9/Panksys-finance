@@ -66,9 +66,9 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                 .requestMatchers(SWAGGER_PATHS).permitAll()
-                .requestMatchers(ADMINS_PATHS).hasAnyAuthority(RoleEnum.ADMIN.getName())
-                .requestMatchers(USERS_PATHS).hasAnyAuthority(RoleEnum.USER.getName())
-                .requestMatchers(SIMPLE_FINANCE_PATHS).hasAnyAuthority(RoleEnum.USER.getName())
+                .requestMatchers(ADMINS_PATHS).hasAnyAuthority(RoleEnum.ADMIN.name())
+                .requestMatchers(USERS_PATHS).hasAnyAuthority(RoleEnum.USER.name())
+                .requestMatchers(SIMPLE_FINANCE_PATHS).hasAnyAuthority(RoleEnum.USER.name())
                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(

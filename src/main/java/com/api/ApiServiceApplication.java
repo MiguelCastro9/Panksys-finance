@@ -23,7 +23,7 @@ public class ApiServiceApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        UserModel adminAccount = userRepository.findByRole(RoleEnum.ADMIN.getName());
+        UserModel adminAccount = userRepository.findByRole(RoleEnum.ADMIN);
 
         if (adminAccount == null) {
             UserModel userBuilder = new UserModel.Builder()
@@ -31,7 +31,7 @@ public class ApiServiceApplication implements CommandLineRunner {
                     .setBirth_date(LocalDate.now())
                     .setEmail("admin@email.com")
                     .setPassword(new BCryptPasswordEncoder().encode("adminadmin"))
-                    .setRole(RoleEnum.ADMIN.getName())
+                    .setRole(RoleEnum.ADMIN)
                     .build();
             userRepository.save(userBuilder);
         }

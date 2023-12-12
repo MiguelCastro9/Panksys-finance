@@ -6,17 +6,5 @@ package com.api.enums;
  */
 public enum StatusPaymentEnum {
     
-    ALL_PAID("All paid"), 
-    ALL_PENDING("All pending"), 
-    ALL_LATE("All late");
-
-    private String name;
-
-    StatusPaymentEnum(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
+    ALL_PAID, ALL_PENDING, ALL_LATE;
 }

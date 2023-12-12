@@ -1,6 +1,5 @@
 package com.api.service.impl;
 
-import com.api.enums.RoleEnum;
 import com.api.model.UserModel;
 import com.api.repository.UserRepository;
 import com.api.service.UserService;
@@ -11,9 +10,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -50,16 +46,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserModel update(Long id, UserModel userModel) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof UserDetails) {
-            UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
-
-            if (!id.equals(infoUserAuthenticated.getId())) {
-                throw new IllegalArgumentException("You are not allowed to update other users.");
-            }
-        } else {
-            throw new IllegalArgumentException("User details not found in the authentication context.");
-        }
         return userRepository.findById(id)
                 .map(existingUser -> {
                     UserModel.Builder builder = new UserModel.Builder()
@@ -93,16 +79,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserModel disabled(Long id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof UserDetails) {
-            UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
-
-            if (!id.equals(infoUserAuthenticated.getId())) {
-                throw new IllegalArgumentException("You are not allowed to disabled other users.");
-            }
-        } else {
-            throw new IllegalArgumentException("User details not found in the authentication context.");
-        }
         return userRepository.findById(id)
                 .map(existingUser -> {
                     UserModel.Builder builder = new UserModel.Builder()

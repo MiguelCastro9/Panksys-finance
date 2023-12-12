@@ -44,8 +44,9 @@ public class UserModel extends RepresentationModel implements Serializable, User
     @Column(nullable = false, length = 255)
     private String password;
 
-    @Column(nullable = false)
-    private String role;
+    @Column(nullable = false, length = 45)
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role = RoleEnum.USER;
 
     @Column(nullable = false)
     private boolean enabled;
@@ -95,7 +96,7 @@ public class UserModel extends RepresentationModel implements Serializable, User
 
         private String password;
 
-        private String role = RoleEnum.USER.getName();
+        private RoleEnum role = RoleEnum.USER;
 
         private boolean enabled = true;
 
@@ -124,7 +125,7 @@ public class UserModel extends RepresentationModel implements Serializable, User
             return this;
         }
 
-        public Builder setRole(String role) {
+        public Builder setRole(RoleEnum role) {
             this.role = role;
             return this;
         }
@@ -141,7 +142,7 @@ public class UserModel extends RepresentationModel implements Serializable, User
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role));
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override

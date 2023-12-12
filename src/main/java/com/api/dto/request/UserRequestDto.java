@@ -36,6 +36,7 @@ public class UserRequestDto {
     private String password;
 
     @NotBlank(message = "Password repeated is required.")
+    @Length(min = 10, max = 255, message = "Password repeated required at minimum {min} and at maximum {max} characters.")
     private String passwordRepeated;
 
     public UserRequestDto(String name, LocalDate birth_date, String email, String password, String passwordRepeated) {
