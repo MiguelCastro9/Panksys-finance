@@ -1,6 +1,5 @@
 package com.api.service.impl;
 
-import com.api.enums.RoleEnum;
 import com.api.model.UserModel;
 import com.api.repository.UserRepository;
 import com.api.service.UserService;
@@ -53,7 +52,6 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getPrincipal() instanceof UserDetails) {
             UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
-
             if (!id.equals(infoUserAuthenticated.getId())) {
                 throw new IllegalArgumentException("You are not allowed to update other users.");
             }

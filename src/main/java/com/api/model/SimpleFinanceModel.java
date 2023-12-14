@@ -9,6 +9,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -57,8 +59,12 @@ public class SimpleFinanceModel extends RepresentationModel implements Serializa
     @Column(nullable = false, length = 45)
     @Enumerated(EnumType.STRING)
     private StatusPaymentEnum status_payment;
+    
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserModel user;
 
-    public SimpleFinanceModel(String name, double value, FormPaymentEnum form_payment, LocalDate mounth_payment, Integer installment, String description, StatusPaymentEnum status_payment) {
+    public SimpleFinanceModel(String name, double value, FormPaymentEnum form_payment, LocalDate mounth_payment, Integer installment, String description, StatusPaymentEnum status_payment, UserModel user) {
         this.name = name;
         this.value = value;
         this.form_payment = form_payment;
@@ -66,6 +72,7 @@ public class SimpleFinanceModel extends RepresentationModel implements Serializa
         this.installment = installment;
         this.description = description;
         this.status_payment = status_payment;
+        this.user = user;
     }
 
     public SimpleFinanceModel(Builder builder) {
@@ -77,6 +84,7 @@ public class SimpleFinanceModel extends RepresentationModel implements Serializa
         this.installment = builder.installment;
         this.description = builder.description;
         this.status_payment = builder.status_payment;
+        this.user = builder.user;
     }
 
     public static class Builder {
@@ -96,6 +104,8 @@ public class SimpleFinanceModel extends RepresentationModel implements Serializa
         private String description;
 
         private StatusPaymentEnum status_payment;
+        
+        private UserModel user;
 
         public Builder setId(Long id) {
             this.id = id;
@@ -134,6 +144,11 @@ public class SimpleFinanceModel extends RepresentationModel implements Serializa
 
         public Builder setStatus_payment(StatusPaymentEnum status_payment) {
             this.status_payment = status_payment;
+            return this;
+        }
+        
+        public Builder setUser(UserModel user) {
+            this.user = user;
             return this;
         }
 

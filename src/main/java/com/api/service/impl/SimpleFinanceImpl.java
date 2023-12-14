@@ -1,6 +1,7 @@
 package com.api.service.impl;
 
 import com.api.model.SimpleFinanceModel;
+import com.api.model.UserModel;
 import com.api.repository.SimpleFinanceRepository;
 import com.api.service.SimpleFinanceService;
 import java.time.LocalDate;
@@ -10,6 +11,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,6 +30,8 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
 
     @Override
     public SimpleFinanceModel save(SimpleFinanceModel simpleFinanceModel) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
         SimpleFinanceModel builder = new SimpleFinanceModel.Builder()
                 .setName(simpleFinanceModel.getName())
                 .setValue(simpleFinanceModel.getValue())
@@ -34,27 +40,42 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                 .setInstallment(simpleFinanceModel.getInstallment())
                 .setDescription(simpleFinanceModel.getDescription())
                 .setStatus_payment(simpleFinanceModel.getStatus_payment())
+                .setUser(infoUserAuthenticated)
                 .build();
         return simpleFinanceRepository.save(builder);
     }
 
-    @Override
-    public SimpleFinanceModel update(Long id, SimpleFinanceModel simpleFinanceModel) {
-        return simpleFinanceRepository.findById(id)
-                .map(existingSimpleFinance -> {
-                    SimpleFinanceModel.Builder builder = new SimpleFinanceModel.Builder()
-                            .setId(existingSimpleFinance.getId())
-                            .setName(simpleFinanceModel.getName())
-                            .setValue(simpleFinanceModel.getValue())
-                            .setForm_payment(simpleFinanceModel.getForm_payment())
-                            .setMounth_payment(LocalDate.parse(dateFormatter.format(simpleFinanceModel.getMounth_payment()), dateFormatter))
-                            .setInstallment(simpleFinanceModel.getInstallment())
-                            .setDescription(simpleFinanceModel.getDescription())
-                            .setStatus_payment(simpleFinanceModel.getStatus_payment());
-                    return simpleFinanceRepository.save(builder.build());
-                })
-                .orElseThrow(() -> new IllegalArgumentException("Simple finance not found."));
+ @Override
+public SimpleFinanceModel update(Long id, SimpleFinanceModel simpleFinanceModel) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (!(authentication.getPrincipal() instanceof UserDetails)) {
+        throw new IllegalArgumentException("User details not found in the authentication context.");
     }
+    UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
+    Long userId = simpleFinanceRepository.getUserId(id);
+     if (userId == null) {
+         throw new IllegalArgumentException("User ID not found.");
+     }
+    if (!userId.equals(infoUserAuthenticated.getId())) {
+        throw new IllegalArgumentException("You are not allowed to change other users' simple finances.");
+    }
+    return simpleFinanceRepository.findById(id)
+            .map(existingSimpleFinance -> {
+                SimpleFinanceModel.Builder builder = new SimpleFinanceModel.Builder()
+                        .setId(existingSimpleFinance.getId())
+                        .setName(simpleFinanceModel.getName())
+                        .setValue(simpleFinanceModel.getValue())
+                        .setForm_payment(simpleFinanceModel.getForm_payment())
+                        .setMounth_payment(LocalDate.parse(dateFormatter.format(simpleFinanceModel.getMounth_payment()), dateFormatter))
+                        .setInstallment(simpleFinanceModel.getInstallment())
+                        .setDescription(simpleFinanceModel.getDescription())
+                        .setStatus_payment(simpleFinanceModel.getStatus_payment())
+                        .setUser(infoUserAuthenticated);
+
+                return simpleFinanceRepository.save(builder.build());
+            })
+            .orElseThrow(() -> new IllegalArgumentException("fimple finance not found."));
+}
 
     @Override
     public List<SimpleFinanceModel> list() {

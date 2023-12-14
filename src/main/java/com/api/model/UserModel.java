@@ -50,6 +50,9 @@ public class UserModel extends RepresentationModel implements Serializable, User
 
     @Column(nullable = false)
     private boolean enabled;
+    
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<SimpleFinanceModel> simple_finances;
 
     public UserModel(String name, LocalDate birth_date, String email, String password) {
         this.name = name;

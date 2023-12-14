@@ -30,7 +30,6 @@ public class SimpleFinanceRequestDto {
     private double value;
 
     @NotNull(message = "Form of payment is required.")
-    @Length(min = 3, max = 45, message = "Name required at minimum {min} and at maximum {max} characters.")
     private FormPaymentEnum form_payment;
 
     @NotNull(message = "Mounth of payment is required.")
@@ -42,9 +41,8 @@ public class SimpleFinanceRequestDto {
     private String description;
 
     @NotNull(message = "Status of payment is required.")
-    @Length(min = 3, max = 45, message = "Name required at minimum {min} and at maximum {max} characters.")
     private StatusPaymentEnum status_payment;
-
+    
     public SimpleFinanceRequestDto(String name, double value, FormPaymentEnum form_payment, LocalDate mounth_payment, Integer installment, String description, StatusPaymentEnum status_payment) {
         this.name = name;
         this.value = value;
@@ -68,15 +66,15 @@ public class SimpleFinanceRequestDto {
     }
 
     public SimpleFinanceModel convertSimpleFinanceUpdateDtoForEntity() {
-        SimpleFinanceModel.Builder userBuilder = new SimpleFinanceModel.Builder();
-        userBuilder.setId(id)
+        SimpleFinanceModel.Builder builder = new SimpleFinanceModel.Builder();
+        builder.setId(id)
                 .setName(name)
                 .setValue(value)
                 .setForm_payment(form_payment)
                 .setMounth_payment(mounth_payment)
                 .setInstallment(installment)
                 .setDescription(description)
-                .setStatus_payment(status_payment);;
-        return new SimpleFinanceModel(userBuilder);
+                .setStatus_payment(status_payment);
+        return new SimpleFinanceModel(builder);
     }
 }

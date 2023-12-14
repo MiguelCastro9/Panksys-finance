@@ -1,6 +1,7 @@
 package com.api.dto.request;
 
 import com.api.model.UserModel;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -28,6 +29,7 @@ public class UserRequestDto {
     private LocalDate birth_date;
 
     @NotBlank(message = "E-mail is required.")
+    @Email(message = "E-mail invalid.")
     @Length(min = 10, max = 255, message = "E-mail required at minimum {min} and at maximum {max} characters.")
     private String email;
 
