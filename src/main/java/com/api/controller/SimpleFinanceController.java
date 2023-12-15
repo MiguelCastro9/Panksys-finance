@@ -47,7 +47,7 @@ public class SimpleFinanceController {
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody SimpleFinanceRequestDto simpleFinanceRequestDto) {
         SimpleFinanceModel builder = simpleFinanceService.update(id, simpleFinanceRequestDto.convertSimpleFinanceUpdateDtoForEntity());
-        //builder.add(linkTo(methodOn(SimpleFinanceController.class).update(id, simpleFinanceRequestDto)).withSelfRel());
+        builder.add(linkTo(methodOn(SimpleFinanceController.class).update(id, simpleFinanceRequestDto)).withSelfRel());
         return new ResponseEntity<>(builder, HttpStatus.OK);
     }
 

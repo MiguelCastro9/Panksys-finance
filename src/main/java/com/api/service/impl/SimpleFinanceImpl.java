@@ -45,41 +45,46 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
         return simpleFinanceRepository.save(builder);
     }
 
- @Override
-public SimpleFinanceModel update(Long id, SimpleFinanceModel simpleFinanceModel) {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    if (!(authentication.getPrincipal() instanceof UserDetails)) {
-        throw new IllegalArgumentException("User details not found in the authentication context.");
-    }
-    UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
-    Long userId = simpleFinanceRepository.getUserId(id);
-     if (userId == null) {
-         throw new IllegalArgumentException("User ID not found.");
-     }
-    if (!userId.equals(infoUserAuthenticated.getId())) {
-        throw new IllegalArgumentException("You are not allowed to change other users' simple finances.");
-    }
-    return simpleFinanceRepository.findById(id)
-            .map(existingSimpleFinance -> {
-                SimpleFinanceModel.Builder builder = new SimpleFinanceModel.Builder()
-                        .setId(existingSimpleFinance.getId())
-                        .setName(simpleFinanceModel.getName())
-                        .setValue(simpleFinanceModel.getValue())
-                        .setForm_payment(simpleFinanceModel.getForm_payment())
-                        .setMounth_payment(LocalDate.parse(dateFormatter.format(simpleFinanceModel.getMounth_payment()), dateFormatter))
-                        .setInstallment(simpleFinanceModel.getInstallment())
-                        .setDescription(simpleFinanceModel.getDescription())
-                        .setStatus_payment(simpleFinanceModel.getStatus_payment())
-                        .setUser(infoUserAuthenticated);
+    @Override
+    public SimpleFinanceModel update(Long id, SimpleFinanceModel simpleFinanceModel) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication.getPrincipal() instanceof UserDetails)) {
+            throw new IllegalArgumentException("User details not found in the authentication context.");
+        }
+        UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
+        Long userId = simpleFinanceRepository.getUserId(id);
+        if (userId == null) {
+            throw new IllegalArgumentException("User ID not found.");
+        }
+        if (!userId.equals(infoUserAuthenticated.getId())) {
+            throw new IllegalArgumentException("You are not allowed to change other users' simple finances.");
+        }
+        return simpleFinanceRepository.findById(id)
+                .map(existingSimpleFinance -> {
+                    SimpleFinanceModel.Builder builder = new SimpleFinanceModel.Builder()
+                            .setId(existingSimpleFinance.getId())
+                            .setName(simpleFinanceModel.getName())
+                            .setValue(simpleFinanceModel.getValue())
+                            .setForm_payment(simpleFinanceModel.getForm_payment())
+                            .setMounth_payment(LocalDate.parse(dateFormatter.format(simpleFinanceModel.getMounth_payment()), dateFormatter))
+                            .setInstallment(simpleFinanceModel.getInstallment())
+                            .setDescription(simpleFinanceModel.getDescription())
+                            .setStatus_payment(simpleFinanceModel.getStatus_payment())
+                            .setUser(infoUserAuthenticated);
 
-                return simpleFinanceRepository.save(builder.build());
-            })
-            .orElseThrow(() -> new IllegalArgumentException("fimple finance not found."));
-}
+                    return simpleFinanceRepository.save(builder.build());
+                })
+                .orElseThrow(() -> new IllegalArgumentException("fimple finance not found."));
+    }
 
     @Override
     public List<SimpleFinanceModel> list() {
-        return simpleFinanceRepository.findAll()
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication.getPrincipal() instanceof UserDetails)) {
+            throw new IllegalArgumentException("User details not found in the authentication context.");
+        }
+        UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
+        return simpleFinanceRepository.list(infoUserAuthenticated.getId())
                 .stream()
                 .sorted(Comparator.comparing(SimpleFinanceModel::getId, Comparator.reverseOrder()))
                 .collect(Collectors.toList());
@@ -87,6 +92,19 @@ public SimpleFinanceModel update(Long id, SimpleFinanceModel simpleFinanceModel)
 
     @Override
     public Optional<SimpleFinanceModel> find(Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = simpleFinanceRepository.getUserId(id);
+        if (userId == null) {
+            throw new IllegalArgumentException("User ID not found.");
+        }
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
+            if (!userId.equals(infoUserAuthenticated.getId())) {
+                throw new IllegalArgumentException("You are not allowed to search for simple finances from other users.");
+            }
+        } else {
+            throw new IllegalArgumentException("User details not found in the authentication context.");
+        }
         return simpleFinanceRepository.findById(id);
     }
 
