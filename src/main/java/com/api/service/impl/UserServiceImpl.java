@@ -47,17 +47,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserModel update(Long id, UserModel userModel) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof UserDetails) {
-            UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
-            if (!infoUserAuthenticated.isEnabled()) {
-                throw new IllegalArgumentException("Your user is disabled.");
-            }
-            if (!id.equals(infoUserAuthenticated.getId())) {
-                throw new IllegalArgumentException("You are not allowed to update other users.");
-            }
-        } else {
-            throw new IllegalArgumentException("User details not found in the authentication context.");
+        UserModel userAuthenticated = getUserAuthenticated();
+        if (!id.equals(userAuthenticated.getId())) {
+            throw new IllegalArgumentException("You are not allowed to update other users.");
         }
         return userRepository.findById(id)
                 .map(existingUser -> {
@@ -94,17 +86,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserModel disabled(Long id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof UserDetails) {
-            UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
-            if (!infoUserAuthenticated.isEnabled()) {
-                throw new IllegalArgumentException("Your user is disabled.");
-            }
-            if (!id.equals(infoUserAuthenticated.getId())) {
-                throw new IllegalArgumentException("You are not allowed to disabled other users.");
-            }
-        } else {
-            throw new IllegalArgumentException("User details not found in the authentication context.");
+        UserModel userAuthenticated = getUserAuthenticated();
+        if (!id.equals(userAuthenticated.getId())) {
+            throw new IllegalArgumentException("You are not allowed to disabled other users.");
         }
         return userRepository.findById(id)
                 .map(existingUser -> {
@@ -120,5 +104,18 @@ public class UserServiceImpl implements UserService {
                     return userRepository.save(builder.build());
                 })
                 .orElseThrow(() -> new IllegalArgumentException("User not found."));
+    }
+
+    private UserModel getUserAuthenticated() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserModel userAuthenticated = (UserModel) authentication.getPrincipal();
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            if (!userAuthenticated.isEnabled()) {
+                throw new IllegalArgumentException("Your user is disabled.");
+            }
+        } else {
+            throw new IllegalArgumentException("User details not found in the authentication context.");
+        }
+        return userAuthenticated;
     }
 }

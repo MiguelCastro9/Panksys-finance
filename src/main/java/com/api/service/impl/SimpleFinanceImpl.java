@@ -31,11 +31,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
 
     @Override
     public SimpleFinanceModel save(SimpleFinanceModel simpleFinanceModel) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
-        if (!infoUserAuthenticated.isEnabled()) {
-            throw new IllegalArgumentException("Your user is disabled.");
-        }
+        UserModel userAuthenticated = getUserAuthenticated();
         SimpleFinanceModel.Builder builder = new SimpleFinanceModel.Builder()
                 .setName(simpleFinanceModel.getName())
                 .setValue(simpleFinanceModel.getValue())
@@ -44,7 +40,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                 .setInstallment(simpleFinanceModel.getInstallment())
                 .setDescription(simpleFinanceModel.getDescription())
                 .setStatus_payment(simpleFinanceModel.getStatus_payment())
-                .setUser(infoUserAuthenticated)
+                .setUser(userAuthenticated)
                 .setEnabled(true)
                 .setCreated_date(LocalDateTime.now())
                 .setUpdated_date(LocalDateTime.now());
@@ -53,19 +49,12 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
 
     @Override
     public SimpleFinanceModel update(Long id, SimpleFinanceModel simpleFinanceModel) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication.getPrincipal() instanceof UserDetails)) {
-            throw new IllegalArgumentException("User details not found in the authentication context.");
-        }
-        UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
-        if (!infoUserAuthenticated.isEnabled()) {
-            throw new IllegalArgumentException("Your user is disabled.");
-        }
+        UserModel userAuthenticated = getUserAuthenticated();
         Long userId = simpleFinanceRepository.getUserId(id);
         if (userId == null) {
             throw new IllegalArgumentException("Simple finance don't exists.");
         }
-        if (!userId.equals(infoUserAuthenticated.getId())) {
+        if (!userId.equals(userAuthenticated.getId())) {
             throw new IllegalArgumentException("You are not allowed to change other users' simple finances.");
         }
         return simpleFinanceRepository.findById(id)
@@ -79,7 +68,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                             .setInstallment(simpleFinanceModel.getInstallment())
                             .setDescription(simpleFinanceModel.getDescription())
                             .setStatus_payment(simpleFinanceModel.getStatus_payment())
-                            .setUser(infoUserAuthenticated)
+                            .setUser(userAuthenticated)
                             .setEnabled(true)
                             .setCreated_date(existingSimpleFinance.getCreated_date())
                             .setUpdated_date(LocalDateTime.now());
@@ -90,15 +79,8 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
 
     @Override
     public List<SimpleFinanceModel> list() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication.getPrincipal() instanceof UserDetails)) {
-            throw new IllegalArgumentException("User details not found in the authentication context.");
-        }
-        UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
-        if (!infoUserAuthenticated.isEnabled()) {
-            throw new IllegalArgumentException("Your user is disabled.");
-        }
-        return simpleFinanceRepository.list(infoUserAuthenticated.getId())
+        UserModel userAuthenticated = getUserAuthenticated();
+        return simpleFinanceRepository.list(userAuthenticated.getId())
                 .stream()
                 .sorted(Comparator.comparing(SimpleFinanceModel::getId, Comparator.reverseOrder()))
                 .collect(Collectors.toList());
@@ -106,40 +88,25 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
 
     @Override
     public Optional<SimpleFinanceModel> find(Long id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserModel userAuthenticated = getUserAuthenticated();
         Long userId = simpleFinanceRepository.getUserId(id);
         if (userId == null) {
             throw new IllegalArgumentException("Simple finance don't exists.");
         }
-        if (authentication.getPrincipal() instanceof UserDetails) {
-            UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
-            if (!infoUserAuthenticated.isEnabled()) {
-                throw new IllegalArgumentException("Your user is disabled.");
-            }
-            if (!userId.equals(infoUserAuthenticated.getId())) {
-                throw new IllegalArgumentException("You are not allowed to search for simple finances from other users.");
-            }
-        } else {
-            throw new IllegalArgumentException("User details not found in the authentication context.");
+        if (!userId.equals(userAuthenticated.getId())) {
+            throw new IllegalArgumentException("You are not allowed to search for simple finances from other users.");
         }
         return simpleFinanceRepository.findById(id);
     }
 
     @Override
     public SimpleFinanceModel disabled(Long id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication.getPrincipal() instanceof UserDetails)) {
-            throw new IllegalArgumentException("User details not found in the authentication context.");
-        }
-        UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
-        if (!infoUserAuthenticated.isEnabled()) {
-            throw new IllegalArgumentException("Your user is disabled.");
-        }
+        UserModel userAuthenticated = getUserAuthenticated();
         Long userId = simpleFinanceRepository.getUserId(id);
         if (userId == null) {
             throw new IllegalArgumentException("Simple finance dont't exists.");
         }
-        if (!userId.equals(infoUserAuthenticated.getId())) {
+        if (!userId.equals(userAuthenticated.getId())) {
             throw new IllegalArgumentException("You are not allowed to change other users' simple finances.");
         }
         return simpleFinanceRepository.findById(id)
@@ -153,7 +120,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                             .setInstallment(existingSimpleFinance.getInstallment())
                             .setDescription(existingSimpleFinance.getDescription())
                             .setStatus_payment(existingSimpleFinance.getStatus_payment())
-                            .setUser(infoUserAuthenticated)
+                            .setUser(userAuthenticated)
                             .setEnabled(false)
                             .setCreated_date(existingSimpleFinance.getCreated_date())
                             .setUpdated_date(LocalDateTime.now());
@@ -165,5 +132,18 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
     @Override
     public void deleteAll() {
         simpleFinanceRepository.deleteAll();
+    }
+
+    private UserModel getUserAuthenticated() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserModel userAuthenticated = (UserModel) authentication.getPrincipal();
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            if (!userAuthenticated.isEnabled()) {
+                throw new IllegalArgumentException("Your user is disabled.");
+            }
+        } else {
+            throw new IllegalArgumentException("User details not found in the authentication context.");
+        }
+        return userAuthenticated;
     }
 }
