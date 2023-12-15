@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -45,7 +46,7 @@ public class UserController {
         return new ResponseEntity<>(builder, HttpStatus.OK);
     }
 
-    @PutMapping("/disabled/{id}")
+    @DeleteMapping("/disabled/{id}")
     public ResponseEntity<?> disabled(@PathVariable Long id) {
         UserModel builder = userService.disabled(id);
         builder.add(linkTo(methodOn(UserController.class).disabled(id)).withSelfRel());

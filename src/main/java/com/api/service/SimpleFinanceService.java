@@ -18,7 +18,7 @@ public interface SimpleFinanceService {
     
     Optional<SimpleFinanceModel> find(Long id);
     
-    SimpleFinanceModel delete(Long id);
+    SimpleFinanceModel disabled(Long id);
     
     void deleteAll();
 }

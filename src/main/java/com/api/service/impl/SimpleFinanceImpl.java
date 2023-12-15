@@ -33,6 +33,9 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
     public SimpleFinanceModel save(SimpleFinanceModel simpleFinanceModel) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
+        if (!infoUserAuthenticated.isEnabled()) {
+            throw new IllegalArgumentException("Your user is disabled.");
+        }
         SimpleFinanceModel.Builder builder = new SimpleFinanceModel.Builder()
                 .setName(simpleFinanceModel.getName())
                 .setValue(simpleFinanceModel.getValue())
@@ -55,9 +58,12 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
             throw new IllegalArgumentException("User details not found in the authentication context.");
         }
         UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
+        if (!infoUserAuthenticated.isEnabled()) {
+            throw new IllegalArgumentException("Your user is disabled.");
+        }
         Long userId = simpleFinanceRepository.getUserId(id);
         if (userId == null) {
-            throw new IllegalArgumentException("User ID not found.");
+            throw new IllegalArgumentException("Simple finance don't exists.");
         }
         if (!userId.equals(infoUserAuthenticated.getId())) {
             throw new IllegalArgumentException("You are not allowed to change other users' simple finances.");
@@ -89,6 +95,9 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
             throw new IllegalArgumentException("User details not found in the authentication context.");
         }
         UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
+        if (!infoUserAuthenticated.isEnabled()) {
+            throw new IllegalArgumentException("Your user is disabled.");
+        }
         return simpleFinanceRepository.list(infoUserAuthenticated.getId())
                 .stream()
                 .sorted(Comparator.comparing(SimpleFinanceModel::getId, Comparator.reverseOrder()))
@@ -100,10 +109,13 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long userId = simpleFinanceRepository.getUserId(id);
         if (userId == null) {
-            throw new IllegalArgumentException("User ID not found.");
+            throw new IllegalArgumentException("Simple finance don't exists.");
         }
         if (authentication.getPrincipal() instanceof UserDetails) {
             UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
+            if (!infoUserAuthenticated.isEnabled()) {
+                throw new IllegalArgumentException("Your user is disabled.");
+            }
             if (!userId.equals(infoUserAuthenticated.getId())) {
                 throw new IllegalArgumentException("You are not allowed to search for simple finances from other users.");
             }
@@ -114,15 +126,18 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
     }
 
     @Override
-    public SimpleFinanceModel delete(Long id) {
+    public SimpleFinanceModel disabled(Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication.getPrincipal() instanceof UserDetails)) {
             throw new IllegalArgumentException("User details not found in the authentication context.");
         }
         UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
+        if (!infoUserAuthenticated.isEnabled()) {
+            throw new IllegalArgumentException("Your user is disabled.");
+        }
         Long userId = simpleFinanceRepository.getUserId(id);
         if (userId == null) {
-            throw new IllegalArgumentException("User ID not found.");
+            throw new IllegalArgumentException("Simple finance dont't exists.");
         }
         if (!userId.equals(infoUserAuthenticated.getId())) {
             throw new IllegalArgumentException("You are not allowed to change other users' simple finances.");

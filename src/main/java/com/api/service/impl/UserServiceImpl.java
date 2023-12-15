@@ -50,6 +50,9 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getPrincipal() instanceof UserDetails) {
             UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
+            if (!infoUserAuthenticated.isEnabled()) {
+                throw new IllegalArgumentException("Your user is disabled.");
+            }
             if (!id.equals(infoUserAuthenticated.getId())) {
                 throw new IllegalArgumentException("You are not allowed to update other users.");
             }
@@ -94,6 +97,9 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getPrincipal() instanceof UserDetails) {
             UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
+            if (!infoUserAuthenticated.isEnabled()) {
+                throw new IllegalArgumentException("Your user is disabled.");
+            }
             if (!id.equals(infoUserAuthenticated.getId())) {
                 throw new IllegalArgumentException("You are not allowed to disabled other users.");
             }

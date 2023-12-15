@@ -68,8 +68,9 @@ public class SimpleFinanceController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        simpleFinanceService.delete(id);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    public ResponseEntity<?> disabled(@PathVariable Long id) {
+        SimpleFinanceModel builder = simpleFinanceService.disabled(id);
+        builder.add(linkTo(methodOn(SimpleFinanceController.class).disabled(id)).withSelfRel());
+        return new ResponseEntity(builder, HttpStatus.OK);
     }
 }
