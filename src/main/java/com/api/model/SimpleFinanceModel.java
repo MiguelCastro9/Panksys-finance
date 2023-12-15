@@ -14,6 +14,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -59,12 +60,23 @@ public class SimpleFinanceModel extends RepresentationModel implements Serializa
     @Column(nullable = false, length = 45)
     @Enumerated(EnumType.STRING)
     private StatusPaymentEnum status_payment;
-    
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserModel user;
 
-    public SimpleFinanceModel(String name, double value, FormPaymentEnum form_payment, LocalDate mounth_payment, Integer installment, String description, StatusPaymentEnum status_payment, UserModel user) {
+    @Column(nullable = false)
+    private boolean enabled;
+
+    @Column(nullable = false)
+    private LocalDateTime created_date;
+
+    @Column(nullable = false)
+    private LocalDateTime updated_date;
+
+    public SimpleFinanceModel(String name, double value, FormPaymentEnum form_payment, LocalDate mounth_payment,
+            Integer installment, String description, StatusPaymentEnum status_payment, UserModel user, boolean enabled,
+            LocalDateTime created_date, LocalDateTime updated_date) {
         this.name = name;
         this.value = value;
         this.form_payment = form_payment;
@@ -73,6 +85,9 @@ public class SimpleFinanceModel extends RepresentationModel implements Serializa
         this.description = description;
         this.status_payment = status_payment;
         this.user = user;
+        this.enabled = enabled;
+        this.created_date = created_date;
+        this.updated_date = updated_date;
     }
 
     public SimpleFinanceModel(Builder builder) {
@@ -85,6 +100,10 @@ public class SimpleFinanceModel extends RepresentationModel implements Serializa
         this.description = builder.description;
         this.status_payment = builder.status_payment;
         this.user = builder.user;
+        this.enabled = builder.enabled;
+        this.created_date = builder.created_date;
+        this.updated_date = builder.updated_date;
+
     }
 
     public static class Builder {
@@ -104,8 +123,15 @@ public class SimpleFinanceModel extends RepresentationModel implements Serializa
         private String description;
 
         private StatusPaymentEnum status_payment;
-        
+
         private UserModel user;
+
+        @Column(nullable = false)
+        private boolean enabled;
+
+        private LocalDateTime created_date;
+
+        private LocalDateTime updated_date;
 
         public Builder setId(Long id) {
             this.id = id;
@@ -146,9 +172,24 @@ public class SimpleFinanceModel extends RepresentationModel implements Serializa
             this.status_payment = status_payment;
             return this;
         }
-        
+
         public Builder setUser(UserModel user) {
             this.user = user;
+            return this;
+        }
+
+        public Builder setEnabled(boolean enabled) {
+            this.enabled = enabled;
+            return this;
+        }
+
+        public Builder setCreated_date(LocalDateTime created_date) {
+            this.created_date = created_date;
+            return this;
+        }
+
+        public Builder setUpdated_date(LocalDateTime updated_date) {
+            this.updated_date = updated_date;
             return this;
         }
 

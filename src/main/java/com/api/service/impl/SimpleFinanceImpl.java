@@ -5,6 +5,7 @@ import com.api.model.UserModel;
 import com.api.repository.SimpleFinanceRepository;
 import com.api.service.SimpleFinanceService;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
@@ -32,7 +33,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
     public SimpleFinanceModel save(SimpleFinanceModel simpleFinanceModel) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
-        SimpleFinanceModel builder = new SimpleFinanceModel.Builder()
+        SimpleFinanceModel.Builder builder = new SimpleFinanceModel.Builder()
                 .setName(simpleFinanceModel.getName())
                 .setValue(simpleFinanceModel.getValue())
                 .setForm_payment(simpleFinanceModel.getForm_payment())
@@ -41,8 +42,10 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                 .setDescription(simpleFinanceModel.getDescription())
                 .setStatus_payment(simpleFinanceModel.getStatus_payment())
                 .setUser(infoUserAuthenticated)
-                .build();
-        return simpleFinanceRepository.save(builder);
+                .setEnabled(true)
+                .setCreated_date(LocalDateTime.now())
+                .setUpdated_date(LocalDateTime.now());
+        return simpleFinanceRepository.save(builder.build());
     }
 
     @Override
@@ -70,8 +73,10 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                             .setInstallment(simpleFinanceModel.getInstallment())
                             .setDescription(simpleFinanceModel.getDescription())
                             .setStatus_payment(simpleFinanceModel.getStatus_payment())
-                            .setUser(infoUserAuthenticated);
-
+                            .setUser(infoUserAuthenticated)
+                            .setEnabled(true)
+                            .setCreated_date(existingSimpleFinance.getCreated_date())
+                            .setUpdated_date(LocalDateTime.now());
                     return simpleFinanceRepository.save(builder.build());
                 })
                 .orElseThrow(() -> new IllegalArgumentException("fimple finance not found."));
@@ -109,8 +114,37 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
     }
 
     @Override
-    public void delete(Long id) {
-        simpleFinanceRepository.deleteById(id);
+    public SimpleFinanceModel delete(Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication.getPrincipal() instanceof UserDetails)) {
+            throw new IllegalArgumentException("User details not found in the authentication context.");
+        }
+        UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
+        Long userId = simpleFinanceRepository.getUserId(id);
+        if (userId == null) {
+            throw new IllegalArgumentException("User ID not found.");
+        }
+        if (!userId.equals(infoUserAuthenticated.getId())) {
+            throw new IllegalArgumentException("You are not allowed to change other users' simple finances.");
+        }
+        return simpleFinanceRepository.findById(id)
+                .map(existingSimpleFinance -> {
+                    SimpleFinanceModel.Builder builder = new SimpleFinanceModel.Builder()
+                            .setId(existingSimpleFinance.getId())
+                            .setName(existingSimpleFinance.getName())
+                            .setValue(existingSimpleFinance.getValue())
+                            .setForm_payment(existingSimpleFinance.getForm_payment())
+                            .setMounth_payment(LocalDate.parse(dateFormatter.format(existingSimpleFinance.getMounth_payment()), dateFormatter))
+                            .setInstallment(existingSimpleFinance.getInstallment())
+                            .setDescription(existingSimpleFinance.getDescription())
+                            .setStatus_payment(existingSimpleFinance.getStatus_payment())
+                            .setUser(infoUserAuthenticated)
+                            .setEnabled(false)
+                            .setCreated_date(existingSimpleFinance.getCreated_date())
+                            .setUpdated_date(LocalDateTime.now());
+                    return simpleFinanceRepository.save(builder.build());
+                })
+                .orElseThrow(() -> new IllegalArgumentException("fimple finance not found."));
     }
 
     @Override

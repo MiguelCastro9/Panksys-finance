@@ -43,7 +43,8 @@ public class SimpleFinanceRequestDto {
     @NotNull(message = "Status of payment is required.")
     private StatusPaymentEnum status_payment;
     
-    public SimpleFinanceRequestDto(String name, double value, FormPaymentEnum form_payment, LocalDate mounth_payment, Integer installment, String description, StatusPaymentEnum status_payment) {
+    public SimpleFinanceRequestDto(String name, double value, FormPaymentEnum form_payment, LocalDate mounth_payment, 
+            Integer installment, String description, StatusPaymentEnum status_payment) {
         this.name = name;
         this.value = value;
         this.form_payment = form_payment;

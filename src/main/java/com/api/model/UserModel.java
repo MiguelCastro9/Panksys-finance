@@ -4,6 +4,7 @@ import com.api.enums.RoleEnum;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -50,22 +51,32 @@ public class UserModel extends RepresentationModel implements Serializable, User
 
     @Column(nullable = false)
     private boolean enabled;
-    
+
+    @Column(nullable = false)
+    private LocalDateTime created_date;
+
+    @Column(nullable = false)
+    private LocalDateTime updated_date;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<SimpleFinanceModel> simple_finances;
 
-    public UserModel(String name, LocalDate birth_date, String email, String password) {
+    public UserModel(String name, LocalDate birth_date, String email, String password, LocalDateTime created_date, LocalDateTime updated_date) {
         this.name = name;
         this.birth_date = birth_date;
         this.email = email;
         this.password = password;
+        this.created_date = created_date;
+        this.updated_date = updated_date;
     }
 
-    public UserModel(Long id, String name, LocalDate birth_date, String email) {
+    public UserModel(Long id, String name, LocalDate birth_date, String email, LocalDateTime created_date, LocalDateTime updated_date) {
         this.id = id;
         this.name = name;
         this.birth_date = birth_date;
         this.email = email;
+        this.created_date = created_date;
+        this.updated_date = updated_date;
     }
 
     public UserModel(Long id, String name, LocalDate birth_date, String email, String password, boolean enabled) {
@@ -76,7 +87,7 @@ public class UserModel extends RepresentationModel implements Serializable, User
         this.password = password;
         this.enabled = enabled;
     }
-    
+
     public UserModel(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
@@ -85,6 +96,8 @@ public class UserModel extends RepresentationModel implements Serializable, User
         this.password = builder.password;
         this.role = builder.role;
         this.enabled = builder.enabled;
+        this.created_date = builder.created_date;
+        this.updated_date = builder.updated_date;
     }
 
     public static class Builder {
@@ -102,6 +115,10 @@ public class UserModel extends RepresentationModel implements Serializable, User
         private RoleEnum role = RoleEnum.USER;
 
         private boolean enabled = true;
+
+        private LocalDateTime created_date;
+
+        private LocalDateTime updated_date;
 
         public Builder setId(Long id) {
             this.id = id;
@@ -135,6 +152,16 @@ public class UserModel extends RepresentationModel implements Serializable, User
 
         public Builder setEnabled(boolean enabled) {
             this.enabled = enabled;
+            return this;
+        }
+
+        public Builder setCreated_date(LocalDateTime created_date) {
+            this.created_date = created_date;
+            return this;
+        }
+
+        public Builder setUpdated_date(LocalDateTime updated_date) {
+            this.updated_date = updated_date;
             return this;
         }
 

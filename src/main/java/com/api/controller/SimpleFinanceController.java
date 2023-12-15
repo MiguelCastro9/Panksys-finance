@@ -52,26 +52,23 @@ public class SimpleFinanceController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<CollectionModel<SimpleFinanceResponseDto>> list() {
-        List<SimpleFinanceResponseDto> simpleFinanceList = simpleFinanceService.list().stream()
+    public ResponseEntity<List<SimpleFinanceResponseDto>> list() {
+        List<SimpleFinanceResponseDto> simpleFinances = simpleFinanceService.list().stream()
                 .map(simpleFinance -> SimpleFinanceResponseDto.convertEntityForSimpleFinanceDto(simpleFinance))
                 .collect(Collectors.toList());
-        Link selfLink = linkTo(methodOn(SimpleFinanceController.class).list()).withSelfRel();
-        CollectionModel<SimpleFinanceResponseDto> collectionModel = CollectionModel.of(simpleFinanceList, selfLink);
-        for (SimpleFinanceResponseDto financeDto : simpleFinanceList) {
-            Link itemLink = linkTo(methodOn(SimpleFinanceController.class).find(financeDto.getId())).withRel("item");
-            collectionModel.add(itemLink);
-        }
-        return new ResponseEntity<>(collectionModel, HttpStatus.OK);
+        simpleFinances.forEach(simpleFinance -> simpleFinance
+                .add(linkTo(methodOn(SimpleFinanceController.class)
+                        .find(simpleFinance.getId())).withSelfRel()));
+        return new ResponseEntity<>(simpleFinances, HttpStatus.OK);
     }
-    
+
     @GetMapping("/find/{id}")
     public ResponseEntity<?> find(@PathVariable Long id) {
         SimpleFinanceModel simpleFinanceModel = simpleFinanceService.find(id).orElseThrow();
         simpleFinanceModel.add(linkTo(methodOn(SimpleFinanceController.class).find(id)).withSelfRel());
         return new ResponseEntity<>(simpleFinanceModel, HttpStatus.OK);
     }
-    
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         simpleFinanceService.delete(id);

@@ -3,8 +3,7 @@ package com.api.service.impl;
 import com.api.model.UserModel;
 import com.api.repository.UserRepository;
 import com.api.service.UserService;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -29,19 +28,18 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
     @Override
     public UserModel singup(UserModel userModel) {
         Optional<UserModel> checkUserPresent = userRepository.findByEmail(userModel.getEmail());
         if (checkUserPresent.isEmpty()) {
-            UserModel builder = new UserModel.Builder()
+            UserModel.Builder builder = new UserModel.Builder()
                     .setName(userModel.getName())
-                    .setBirth_date(LocalDate.parse(dateFormatter.format(userModel.getBirth_date()), dateFormatter))
+                    .setBirth_date(userModel.getBirth_date())
                     .setEmail(userModel.getEmail())
                     .setPassword(passwordEncoder.encode(userModel.getPassword()))
-                    .build();
-            return userRepository.save(builder);
+                    .setCreated_date(LocalDateTime.now())
+                    .setUpdated_date(LocalDateTime.now());
+            return userRepository.save(builder.build());
         } else {
             throw new IllegalArgumentException("User with email " + userModel.getEmail() + " already exists");
         }
@@ -65,7 +63,9 @@ public class UserServiceImpl implements UserService {
                             .setName(userModel.getName())
                             .setBirth_date(userModel.getBirth_date())
                             .setEmail(userModel.getEmail())
-                            .setPassword(passwordEncoder.encode(userModel.getPassword()));
+                            .setPassword(passwordEncoder.encode(userModel.getPassword()))
+                            .setCreated_date(existingUser.getCreated_date())
+                            .setUpdated_date(LocalDateTime.now());
                     return userRepository.save(builder.build());
                 })
                 .orElseThrow(() -> new IllegalArgumentException("User not found."));
@@ -94,7 +94,6 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getPrincipal() instanceof UserDetails) {
             UserModel infoUserAuthenticated = (UserModel) authentication.getPrincipal();
-
             if (!id.equals(infoUserAuthenticated.getId())) {
                 throw new IllegalArgumentException("You are not allowed to disabled other users.");
             }
@@ -109,7 +108,9 @@ public class UserServiceImpl implements UserService {
                             .setBirth_date(existingUser.getBirth_date())
                             .setEmail(existingUser.getEmail())
                             .setPassword(passwordEncoder.encode(existingUser.getPassword()))
-                            .setEnabled(false);
+                            .setEnabled(false)
+                            .setCreated_date(existingUser.getCreated_date())
+                            .setUpdated_date(LocalDateTime.now());
                     return userRepository.save(builder.build());
                 })
                 .orElseThrow(() -> new IllegalArgumentException("User not found."));

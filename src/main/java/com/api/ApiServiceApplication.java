@@ -4,6 +4,7 @@ import com.api.enums.RoleEnum;
 import com.api.model.UserModel;
 import com.api.repository.UserRepository;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -26,14 +27,15 @@ public class ApiServiceApplication implements CommandLineRunner {
         UserModel adminAccount = userRepository.findByRole(RoleEnum.ADMIN);
 
         if (adminAccount == null) {
-            UserModel userBuilder = new UserModel.Builder()
+            UserModel.Builder builder = new UserModel.Builder()
                     .setName("admin")
                     .setBirth_date(LocalDate.now())
                     .setEmail("admin@email.com")
                     .setPassword(new BCryptPasswordEncoder().encode("adminadmin"))
                     .setRole(RoleEnum.ADMIN)
-                    .build();
-            userRepository.save(userBuilder);
+                    .setCreated_date(LocalDateTime.now())
+                    .setUpdated_date(LocalDateTime.now());
+            userRepository.save(builder.build());
         }
     }
 }
