@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.Length;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SimpleFinanceRequestDto {
-    
+
     private Long id;
 
     @NotBlank(message = "Name is required.")
@@ -42,8 +42,8 @@ public class SimpleFinanceRequestDto {
 
     @NotNull(message = "Status of payment is required.")
     private StatusPaymentEnum status_payment;
-    
-    public SimpleFinanceRequestDto(String name, double value, FormPaymentEnum form_payment, LocalDate mounth_payment, 
+
+    public SimpleFinanceRequestDto(String name, double value, FormPaymentEnum form_payment, LocalDate mounth_payment,
             Integer installment, String description, StatusPaymentEnum status_payment) {
         this.name = name;
         this.value = value;
@@ -53,7 +53,7 @@ public class SimpleFinanceRequestDto {
         this.description = description;
         this.status_payment = status_payment;
     }
-    
+
     public SimpleFinanceModel convertSimpleFinanceDtoForEntity() {
         SimpleFinanceModel.Builder userBuilder = new SimpleFinanceModel.Builder();
         userBuilder.setName(name)

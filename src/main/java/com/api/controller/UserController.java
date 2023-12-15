@@ -44,7 +44,7 @@ public class UserController {
         builder.add(linkTo(methodOn(UserController.class).update(id, userRequestDto)).withSelfRel());
         return new ResponseEntity<>(builder, HttpStatus.OK);
     }
-    
+
     @PutMapping("/disabled/{id}")
     public ResponseEntity<?> disabled(@PathVariable Long id) {
         UserModel builder = userService.disabled(id);
