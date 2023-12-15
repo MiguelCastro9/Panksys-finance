@@ -4,6 +4,7 @@ import com.api.dto.request.SigninRequestDto;
 import com.api.dto.request.RefreshTokenRequestDto;
 import com.api.dto.request.UserRequestDto;
 import com.api.dto.response.JWTResponseDto;
+import com.api.dto.response.UserResponseDto;
 import com.api.model.UserModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,26 +37,27 @@ public class AuthController {
     UserService userService;
 
     @PostMapping("/singup")
-    public ResponseEntity<?> singup(@Valid @RequestBody UserRequestDto userRequestDto) {
+    public ResponseEntity<UserResponseDto> singup(@Valid @RequestBody UserRequestDto userRequestDto) {
         if (!userRequestDto.getPassword().equals(userRequestDto.getPasswordRepeated())) {
-            return new ResponseEntity<>("Passwords is not equals.", HttpStatus.CONFLICT);
+            return new ResponseEntity("Passwords is not equals.", HttpStatus.CONFLICT);
         }
-        UserModel builder = userService.singup(userRequestDto.convertUserDtoForEntity());
-        builder.add(linkTo(methodOn(AuthController.class).singup(userRequestDto)).withSelfRel());
-        return new ResponseEntity<>(builder, HttpStatus.CREATED);
+        UserModel userModel = userService.singup(userRequestDto.convertUserDtoForEntity());
+        UserResponseDto userResponseDto = UserResponseDto.convertEntityForUserDto(userModel);
+        userResponseDto.add(linkTo(methodOn(AuthController.class).singup(userRequestDto)).withSelfRel());
+        return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
     }
 
     @PostMapping("/signin")
     public ResponseEntity<JWTResponseDto> signin(@RequestBody SigninRequestDto signinRequestDto) {
-        JWTResponseDto signin = authenticationService.signin(signinRequestDto);
-        signin.add(linkTo(methodOn(AuthController.class).signin(signinRequestDto)).withSelfRel());
-        return new ResponseEntity<>(signin, HttpStatus.OK);
+        JWTResponseDto jwtResponseDto = authenticationService.signin(signinRequestDto);
+        jwtResponseDto.add(linkTo(methodOn(AuthController.class).signin(signinRequestDto)).withSelfRel());
+        return new ResponseEntity<>(jwtResponseDto, HttpStatus.OK);
     }
 
     @PostMapping("/refresh")
     public ResponseEntity<JWTResponseDto> refreshToken(@RequestBody RefreshTokenRequestDto refreshTokenRequestDto) {
-        JWTResponseDto refreshToken = authenticationService.refreshToken(refreshTokenRequestDto);
-        refreshToken.add(linkTo(methodOn(AuthController.class).refreshToken(refreshTokenRequestDto)).withSelfRel());
-        return new ResponseEntity<>(refreshToken, HttpStatus.OK);
+        JWTResponseDto refreshTokenDto = authenticationService.refreshToken(refreshTokenRequestDto);
+        refreshTokenDto.add(linkTo(methodOn(AuthController.class).refreshToken(refreshTokenRequestDto)).withSelfRel());
+        return new ResponseEntity<>(refreshTokenDto, HttpStatus.OK);
     }
 }

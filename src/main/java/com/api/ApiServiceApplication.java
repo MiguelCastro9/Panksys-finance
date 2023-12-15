@@ -24,9 +24,9 @@ public class ApiServiceApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        UserModel adminAccount = userRepository.findByRole(RoleEnum.ADMIN);
+        UserModel getRoleUser = userRepository.findByRole(RoleEnum.ADMIN);
 
-        if (adminAccount == null) {
+        if (getRoleUser == null) {
             UserModel.Builder builder = new UserModel.Builder()
                     .setName("admin")
                     .setBirth_date(LocalDate.now())

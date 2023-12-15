@@ -4,9 +4,7 @@ import com.api.model.SimpleFinanceModel;
 import com.api.model.UserModel;
 import com.api.repository.SimpleFinanceRepository;
 import com.api.service.SimpleFinanceService;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +25,6 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
     @Autowired
     private SimpleFinanceRepository simpleFinanceRepository;
 
-    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Override
     public SimpleFinanceModel save(SimpleFinanceModel simpleFinanceModel) {
@@ -36,7 +33,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                 .setName(simpleFinanceModel.getName())
                 .setValue(simpleFinanceModel.getValue())
                 .setForm_payment(simpleFinanceModel.getForm_payment())
-                .setMounth_payment(LocalDate.parse(dateFormatter.format(simpleFinanceModel.getMounth_payment()), dateFormatter))
+                .setMounth_payment(simpleFinanceModel.getMounth_payment())
                 .setInstallment(simpleFinanceModel.getInstallment())
                 .setDescription(simpleFinanceModel.getDescription())
                 .setStatus_payment(simpleFinanceModel.getStatus_payment())
@@ -64,7 +61,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                             .setName(simpleFinanceModel.getName())
                             .setValue(simpleFinanceModel.getValue())
                             .setForm_payment(simpleFinanceModel.getForm_payment())
-                            .setMounth_payment(LocalDate.parse(dateFormatter.format(simpleFinanceModel.getMounth_payment()), dateFormatter))
+                            .setMounth_payment(simpleFinanceModel.getMounth_payment())
                             .setInstallment(simpleFinanceModel.getInstallment())
                             .setDescription(simpleFinanceModel.getDescription())
                             .setStatus_payment(simpleFinanceModel.getStatus_payment())
@@ -74,7 +71,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                             .setUpdated_date(LocalDateTime.now());
                     return simpleFinanceRepository.save(builder.build());
                 })
-                .orElseThrow(() -> new IllegalArgumentException("fimple finance not found."));
+                .orElseThrow(() -> new IllegalArgumentException("Simple finance don't exists."));
     }
 
     @Override
@@ -116,7 +113,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                             .setName(existingSimpleFinance.getName())
                             .setValue(existingSimpleFinance.getValue())
                             .setForm_payment(existingSimpleFinance.getForm_payment())
-                            .setMounth_payment(LocalDate.parse(dateFormatter.format(existingSimpleFinance.getMounth_payment()), dateFormatter))
+                            .setMounth_payment(existingSimpleFinance.getMounth_payment())
                             .setInstallment(existingSimpleFinance.getInstallment())
                             .setDescription(existingSimpleFinance.getDescription())
                             .setStatus_payment(existingSimpleFinance.getStatus_payment())
@@ -126,7 +123,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                             .setUpdated_date(LocalDateTime.now());
                     return simpleFinanceRepository.save(builder.build());
                 })
-                .orElseThrow(() -> new IllegalArgumentException("fimple finance not found."));
+                .orElseThrow(() -> new IllegalArgumentException("Simple finance don't exists."));
     }
 
     @Override

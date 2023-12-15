@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.hateoas.RepresentationModel;
 
 /**
  *
@@ -29,7 +28,7 @@ import org.springframework.hateoas.RepresentationModel;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SimpleFinanceModel extends RepresentationModel implements Serializable {
+public class SimpleFinanceModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

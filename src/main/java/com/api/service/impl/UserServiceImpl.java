@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
                             .setUpdated_date(LocalDateTime.now());
                     return userRepository.save(builder.build());
                 })
-                .orElseThrow(() -> new IllegalArgumentException("User not found."));
+                .orElseThrow(() -> new IllegalArgumentException("User don't exists."));
     }
 
     @Override
@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
                             .setUpdated_date(LocalDateTime.now());
                     return userRepository.save(builder.build());
                 })
-                .orElseThrow(() -> new IllegalArgumentException("User not found."));
+                .orElseThrow(() -> new IllegalArgumentException("User don't exists."));
     }
 
     private UserModel getUserAuthenticated() {

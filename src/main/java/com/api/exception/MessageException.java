@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MessageException {
     
-    private String messageUser;
+    private String message_user;
     
-    private String messageDeveloper;
+    private String message_developer;
 }

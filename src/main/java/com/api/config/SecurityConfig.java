@@ -58,7 +58,7 @@ public class SecurityConfig {
         "/api/v1/simple-finance/update/{id}",
         "/api/v1/simple-finance/list",
         "/api/v1/simple-finance/find/{id}",
-        "/api/v1/simple-finance/delete/{id}"
+        "/api/v1/simple-finance/disabled/{id}"
     };
 
     @Bean

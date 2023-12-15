@@ -36,41 +36,45 @@ public class SimpleFinanceController {
     private SimpleFinanceService simpleFinanceService;
 
     @PostMapping("/save")
-    public ResponseEntity<?> save(@Valid @RequestBody SimpleFinanceRequestDto simpleFinanceRequestDto) {
-        SimpleFinanceModel builder = simpleFinanceService.save(simpleFinanceRequestDto.convertSimpleFinanceDtoForEntity());
-        builder.add(linkTo(methodOn(SimpleFinanceController.class).save(simpleFinanceRequestDto)).withSelfRel());
-        return new ResponseEntity<>(builder, HttpStatus.CREATED);
+    public ResponseEntity<SimpleFinanceResponseDto> save(@Valid @RequestBody SimpleFinanceRequestDto simpleFinanceRequestDto) {
+        SimpleFinanceModel simpleFinanceModel = simpleFinanceService.save(simpleFinanceRequestDto.convertSimpleFinanceDtoForEntity());
+        SimpleFinanceResponseDto simpleFinanceResponseDto = SimpleFinanceResponseDto.convertEntityForSimpleFinanceDto(simpleFinanceModel);
+        simpleFinanceResponseDto.add(linkTo(methodOn(SimpleFinanceController.class).save(simpleFinanceRequestDto)).withSelfRel());
+        return new ResponseEntity<>(simpleFinanceResponseDto, HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody SimpleFinanceRequestDto simpleFinanceRequestDto) {
-        SimpleFinanceModel builder = simpleFinanceService.update(id, simpleFinanceRequestDto.convertSimpleFinanceUpdateDtoForEntity());
-        builder.add(linkTo(methodOn(SimpleFinanceController.class).update(id, simpleFinanceRequestDto)).withSelfRel());
-        return new ResponseEntity<>(builder, HttpStatus.OK);
+    public ResponseEntity<SimpleFinanceResponseDto> update(@PathVariable Long id, @Valid @RequestBody SimpleFinanceRequestDto simpleFinanceRequestDto) {
+        SimpleFinanceModel simpleFinanceModel = simpleFinanceService.update(id, simpleFinanceRequestDto.convertSimpleFinanceUpdateDtoForEntity());
+        SimpleFinanceResponseDto simpleFinanceResponseDto = SimpleFinanceResponseDto.convertEntityForSimpleFinanceDto(simpleFinanceModel);
+        simpleFinanceResponseDto.add(linkTo(methodOn(SimpleFinanceController.class).update(id, simpleFinanceRequestDto)).withSelfRel());
+        return new ResponseEntity<>(simpleFinanceResponseDto, HttpStatus.OK);
     }
 
     @GetMapping("/list")
     public ResponseEntity<List<SimpleFinanceResponseDto>> list() {
-        List<SimpleFinanceResponseDto> simpleFinances = simpleFinanceService.list().stream()
+        List<SimpleFinanceResponseDto> simpleFinanceResponseDto = simpleFinanceService.list().stream()
                 .map(simpleFinance -> SimpleFinanceResponseDto.convertEntityForSimpleFinanceDto(simpleFinance))
                 .collect(Collectors.toList());
-        simpleFinances.forEach(simpleFinance -> simpleFinance
+        simpleFinanceResponseDto.forEach(simpleFinance -> simpleFinance
                 .add(linkTo(methodOn(SimpleFinanceController.class)
                         .find(simpleFinance.getId())).withSelfRel()));
-        return new ResponseEntity<>(simpleFinances, HttpStatus.OK);
+        return new ResponseEntity<>(simpleFinanceResponseDto, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<?> find(@PathVariable Long id) {
+    public ResponseEntity<SimpleFinanceResponseDto> find(@PathVariable Long id) {
         SimpleFinanceModel simpleFinanceModel = simpleFinanceService.find(id).orElseThrow();
-        simpleFinanceModel.add(linkTo(methodOn(SimpleFinanceController.class).find(id)).withSelfRel());
-        return new ResponseEntity<>(simpleFinanceModel, HttpStatus.OK);
+        SimpleFinanceResponseDto simpleFinanceResponseDto = SimpleFinanceResponseDto.convertEntityForSimpleFinanceDto(simpleFinanceModel);
+        simpleFinanceResponseDto.add(linkTo(methodOn(SimpleFinanceController.class).find(id)).withSelfRel());
+        return new ResponseEntity<>(simpleFinanceResponseDto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> disabled(@PathVariable Long id) {
-        SimpleFinanceModel builder = simpleFinanceService.disabled(id);
-        builder.add(linkTo(methodOn(SimpleFinanceController.class).disabled(id)).withSelfRel());
-        return new ResponseEntity(builder, HttpStatus.OK);
+    @DeleteMapping("/disabled/{id}")
+    public ResponseEntity<SimpleFinanceResponseDto> disabled(@PathVariable Long id) {
+        SimpleFinanceModel simpleFinanceModel = simpleFinanceService.disabled(id);
+        SimpleFinanceResponseDto simpleFinanceResponseDto = SimpleFinanceResponseDto.convertEntityForSimpleFinanceDto(simpleFinanceModel);
+        simpleFinanceResponseDto.add(linkTo(methodOn(SimpleFinanceController.class).disabled(id)).withSelfRel());
+        return new ResponseEntity(simpleFinanceResponseDto, HttpStatus.OK);
     }
 }

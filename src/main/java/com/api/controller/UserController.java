@@ -1,6 +1,7 @@
 package com.api.controller;
 
 import com.api.dto.request.UserRequestDto;
+import com.api.dto.response.UserResponseDto;
 import com.api.model.UserModel;
 import com.api.service.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -37,19 +38,21 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody UserRequestDto userRequestDto) {
+    public ResponseEntity<UserResponseDto> update(@PathVariable Long id, @Valid @RequestBody UserRequestDto userRequestDto) {
         if (!userRequestDto.getPassword().equals(userRequestDto.getPasswordRepeated())) {
-            return new ResponseEntity<>("Passwords is not equals.", HttpStatus.CONFLICT);
+            return new ResponseEntity("Passwords is not equals.", HttpStatus.CONFLICT);
         }
-        UserModel builder = userService.update(id, userRequestDto.convertUserUpdateDtoForEntity());
-        builder.add(linkTo(methodOn(UserController.class).update(id, userRequestDto)).withSelfRel());
-        return new ResponseEntity<>(builder, HttpStatus.OK);
+        UserModel userModel = userService.update(id, userRequestDto.convertUserUpdateDtoForEntity());
+        UserResponseDto userResponseDto = UserResponseDto.convertEntityForUserDto(userModel);
+        userResponseDto.add(linkTo(methodOn(UserController.class).update(id, userRequestDto)).withSelfRel());
+        return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/disabled/{id}")
-    public ResponseEntity<?> disabled(@PathVariable Long id) {
-        UserModel builder = userService.disabled(id);
-        builder.add(linkTo(methodOn(UserController.class).disabled(id)).withSelfRel());
-        return new ResponseEntity<>(builder, HttpStatus.OK);
+    public ResponseEntity<UserResponseDto> disabled(@PathVariable Long id) {
+        UserModel userModel = userService.disabled(id);
+        UserResponseDto userResponseDto = UserResponseDto.convertEntityForUserDto(userModel);
+        userResponseDto.add(linkTo(methodOn(UserController.class).disabled(id)).withSelfRel());
+        return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 }
