@@ -60,6 +60,10 @@ public class SecurityConfig {
         "/api/v1/simple-finance/find/{id}",
         "/api/v1/simple-finance/disabled/{id}"
     };
+    
+    private static final String[] SIMPLE_FINANCE_INSTALLMENT_PATHS = {
+        "api/v1/simple-finance-installment/update"
+    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -69,6 +73,7 @@ public class SecurityConfig {
                 .requestMatchers(ADMINS_PATHS).hasAnyAuthority(RoleEnum.ADMIN.name())
                 .requestMatchers(USERS_PATHS).hasAnyAuthority(RoleEnum.USER.name())
                 .requestMatchers(SIMPLE_FINANCE_PATHS).hasAnyAuthority(RoleEnum.USER.name())
+                        .requestMatchers(SIMPLE_FINANCE_INSTALLMENT_PATHS).hasAnyAuthority(RoleEnum.USER.name())
                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(

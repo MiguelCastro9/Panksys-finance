@@ -6,5 +6,5 @@ package com.api.enums;
  */
 public enum StatusPaymentEnum {
     
-    ALL_PAID, ALL_PENDING, ALL_LATE;
+    PAID, PENDING, LATE;
 }

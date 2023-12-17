@@ -16,26 +16,22 @@ import lombok.NoArgsConstructor;
 public class SimpleFinanceInstallmentRequestDto {
 
     private Long id;
-
-    private Integer installment;
     
     private StatusPaymentEnum status_payment;
 
-    public SimpleFinanceInstallmentRequestDto(Integer installment) {
-        this.installment = installment;
+    public SimpleFinanceInstallmentRequestDto(StatusPaymentEnum status_payment) {
+        this.status_payment = status_payment;
     }
 
     public SimpleFinanceInstallmentModel convertSimpleFinanceInstallmentDtoForEntity() {
         SimpleFinanceInstallmentModel.Builder builder = new SimpleFinanceInstallmentModel.Builder();
-        builder.setInstallment(installment)
-                .setStatusPayment(status_payment);
+        builder.setStatusPayment(status_payment);
         return new SimpleFinanceInstallmentModel(builder);
     }
 
     public SimpleFinanceInstallmentModel convertSimpleFinanceInstallmentUpdateDtoForEntity() {
         SimpleFinanceInstallmentModel.Builder builder = new SimpleFinanceInstallmentModel.Builder();
         builder.setId(id)
-                .setInstallment(installment)
                 .setStatusPayment(status_payment);
         return new SimpleFinanceInstallmentModel(builder);
     }

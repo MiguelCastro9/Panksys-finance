@@ -64,7 +64,7 @@ public class SimpleFinanceModel implements Serializable {
 
     @Column(nullable = false, length = 45)
     @Enumerated(EnumType.STRING)
-    private StatusPaymentEnum status_payment;
+    private StatusPaymentEnum all_status_payment = StatusPaymentEnum.PENDING;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -80,7 +80,7 @@ public class SimpleFinanceModel implements Serializable {
     private LocalDateTime updated_date;
 
     public SimpleFinanceModel(String name, double total_value, FormPaymentEnum form_payment, LocalDate mounth_payment, 
-            Integer total_installment, String description, StatusPaymentEnum status_payment, UserModel user, 
+            Integer total_installment, String description, StatusPaymentEnum all_status_payment, UserModel user, 
             boolean enabled,LocalDateTime created_date, LocalDateTime updated_date) {
         this.name = name;
         this.total_value = total_value;
@@ -88,7 +88,7 @@ public class SimpleFinanceModel implements Serializable {
         this.mounth_payment = mounth_payment;
         this.total_installment = total_installment;
         this.description = description;
-        this.status_payment = status_payment;
+        this.all_status_payment = all_status_payment;
         this.user = user;
         this.enabled = enabled;
         this.created_date = created_date;
@@ -103,7 +103,7 @@ public class SimpleFinanceModel implements Serializable {
         this.mounth_payment = builder.mounth_payment;
         this.total_installment = builder.total_installment;
         this.description = builder.description;
-        this.status_payment = builder.status_payment;
+        this.all_status_payment = builder.all_status_payment;
         this.user = builder.user;
         this.enabled = builder.enabled;
         this.created_date = builder.created_date;
@@ -127,7 +127,7 @@ public class SimpleFinanceModel implements Serializable {
 
         private String description;
 
-        private StatusPaymentEnum status_payment;
+        private StatusPaymentEnum all_status_payment = StatusPaymentEnum.PENDING;
 
         private UserModel user;
 
@@ -172,8 +172,8 @@ public class SimpleFinanceModel implements Serializable {
             return this;
         }
 
-        public Builder setStatus_payment(StatusPaymentEnum status_payment) {
-            this.status_payment = status_payment;
+        public Builder setAll_status_payment(StatusPaymentEnum all_status_payment) {
+            this.all_status_payment = all_status_payment;
             return this;
         }
 

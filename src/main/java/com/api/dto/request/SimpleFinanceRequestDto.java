@@ -1,7 +1,6 @@
 package com.api.dto.request;
 
 import com.api.enums.FormPaymentEnum;
-import com.api.enums.StatusPaymentEnum;
 import com.api.model.SimpleFinanceModel;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -39,18 +38,14 @@ public class SimpleFinanceRequestDto {
 
     private String description;
 
-    @NotNull(message = "Status of payment is required.")
-    private StatusPaymentEnum status_payment;
-
     public SimpleFinanceRequestDto(String name, double total_value, FormPaymentEnum form_payment, LocalDate mounth_payment, 
-            Integer total_installment, String description, StatusPaymentEnum status_payment) {
+            Integer total_installment, String description) {
         this.name = name;
         this.total_value = total_value;
         this.form_payment = form_payment;
         this.mounth_payment = mounth_payment;
         this.total_installment = total_installment;
         this.description = description;
-        this.status_payment = status_payment;
     }
 
     public SimpleFinanceModel convertSimpleFinanceDtoForEntity() {
@@ -60,8 +55,7 @@ public class SimpleFinanceRequestDto {
                 .setForm_payment(form_payment)
                 .setMounth_payment(mounth_payment)
                 .setTotal_installment(total_installment)
-                .setDescription(description)
-                .setStatus_payment(status_payment);
+                .setDescription(description);
         return new SimpleFinanceModel(builder);
     }
 
@@ -73,8 +67,7 @@ public class SimpleFinanceRequestDto {
                 .setForm_payment(form_payment)
                 .setMounth_payment(mounth_payment)
                 .setTotal_installment(total_installment)
-                .setDescription(description)
-                .setStatus_payment(status_payment);
+                .setDescription(description);
         return new SimpleFinanceModel(builder);
     }
 }

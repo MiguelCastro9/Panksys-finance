@@ -36,6 +36,6 @@ public class SimpleFinanceResponseDto extends RepresentationModel {
         return new SimpleFinanceResponseDto(simpleFinanceModel.getId(), simpleFinanceModel.getName(),
                 simpleFinanceModel.getTotal_value(), simpleFinanceModel.getForm_payment(),
                 simpleFinanceModel.getMounth_payment(), simpleFinanceModel.getDescription(),
-                simpleFinanceModel.getStatus_payment());
+                simpleFinanceModel.getAll_status_payment());
     }
 }
