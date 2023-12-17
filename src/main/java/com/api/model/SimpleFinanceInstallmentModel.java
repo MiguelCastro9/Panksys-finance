@@ -36,7 +36,7 @@ public class SimpleFinanceInstallmentModel implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-    private Integer installment;
+    private Integer number_installment;
     
     @Column(nullable = false)
     private double value_installment;
@@ -49,8 +49,8 @@ public class SimpleFinanceInstallmentModel implements Serializable {
     @JoinColumn(name = "simple_finance_id")
     private SimpleFinanceModel simple_finance;
 
-    public SimpleFinanceInstallmentModel(Integer installment, double value_installment, StatusPaymentEnum status_payment, SimpleFinanceModel simple_finance) {
-        this.installment = installment;
+    public SimpleFinanceInstallmentModel(Integer number_installment, double value_installment, StatusPaymentEnum status_payment, SimpleFinanceModel simple_finance) {
+        this.number_installment = number_installment;
         this.status_payment = status_payment;
         this.simple_finance = simple_finance;
         this.value_installment = value_installment;
@@ -59,7 +59,7 @@ public class SimpleFinanceInstallmentModel implements Serializable {
     public SimpleFinanceInstallmentModel(Builder builder) {
         this.id = builder.id;
         this.status_payment = builder.status_payment;
-        this.installment = builder.installment;
+        this.number_installment = builder.number_installment;
         this.simple_finance = builder.simple_finance;
         this.value_installment = builder.value_installment;
     }
@@ -70,7 +70,7 @@ public class SimpleFinanceInstallmentModel implements Serializable {
 
         private StatusPaymentEnum status_payment;
 
-        private Integer installment;
+        private Integer number_installment;
         
         private double value_installment;
         
@@ -86,8 +86,8 @@ public class SimpleFinanceInstallmentModel implements Serializable {
             return this;
         }
 
-        public Builder setInstallment(Integer installment) {
-            this.installment = installment;
+        public Builder setNumberInstallment(Integer number_installment) {
+            this.number_installment = number_installment;
             return this;
         }
         

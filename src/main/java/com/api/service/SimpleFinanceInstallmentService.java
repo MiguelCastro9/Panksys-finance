@@ -2,6 +2,7 @@ package com.api.service;
 
 import com.api.model.SimpleFinanceInstallmentModel;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -11,6 +12,7 @@ public interface SimpleFinanceInstallmentService {
     
     SimpleFinanceInstallmentModel update(Long id, SimpleFinanceInstallmentModel simpleFinanceInstallmentModel);
     
-    List<SimpleFinanceInstallmentModel> list();
+    List<SimpleFinanceInstallmentModel> list(Long simpleFinanceId);
     
+    Optional<SimpleFinanceInstallmentModel> find(Long id);
 }

@@ -62,7 +62,9 @@ public class SecurityConfig {
     };
     
     private static final String[] SIMPLE_FINANCE_INSTALLMENT_PATHS = {
-        "api/v1/simple-finance-installment/update"
+        "api/v1/simple-finance-installment/update",
+        "api/v1/simple-finance-installment/list/{id}",
+        "api/v1/simple-finance-installment/find/{id}"
     };
 
     @Bean

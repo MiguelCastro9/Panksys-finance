@@ -91,7 +91,6 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                 && simpleFinanceBuilder.getAll_status_payment().equals(StatusPaymentEnum.LATE)) {
             saveSimpleFinanceInstallmentForCredit(simpleFinanceBuilder, StatusPaymentEnum.LATE);
         }
-
         return simpleFinanceBuilder;
     }
 
@@ -107,7 +106,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
         }
         return simpleFinanceRepository.findById(id)
                 .map(existingSimpleFinance -> {
-                    SimpleFinanceModel.Builder builder = new SimpleFinanceModel.Builder()
+                    SimpleFinanceModel builder = new SimpleFinanceModel.Builder()
                             .setId(existingSimpleFinance.getId())
                             .setName(simpleFinanceModel.getName())
                             .setTotalValue(simpleFinanceModel.getTotal_value())
@@ -118,8 +117,9 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                             .setUser(userAuthenticated)
                             .setEnabled(true)
                             .setCreated_date(existingSimpleFinance.getCreated_date())
-                            .setUpdated_date(LocalDateTime.now());
-                    return simpleFinanceRepository.save(builder.build());
+                            .setUpdated_date(LocalDateTime.now())
+                            .build();
+                    return simpleFinanceRepository.save(builder);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Simple finance don't exists."));
     }
@@ -195,7 +195,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
     
     private void saveSimpleFinanceInstallmentForDebitOrMoney(SimpleFinanceModel simpleFinanceModel, StatusPaymentEnum allStatusPayment) {
         SimpleFinanceInstallmentModel simpleFinanceInstallmentBuilder = new SimpleFinanceInstallmentModel.Builder()
-                .setInstallment(1)
+                .setNumberInstallment(1)
                 .setStatusPayment(allStatusPayment)
                 .setValueInstallment(simpleFinanceModel.getTotal_value())
                 .setSimpleFinance(simpleFinanceModel)
@@ -207,7 +207,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
         double calculetedInstallment = simpleFinanceModel.getTotal_value() / simpleFinanceModel.getTotal_installment();
         for (int i = 0; i < simpleFinanceModel.getTotal_installment(); i++) {
             SimpleFinanceInstallmentModel simpleFinanceInstallmentBuilder = new SimpleFinanceInstallmentModel.Builder()
-                .setInstallment(i+1)
+                .setNumberInstallment(i+1)
                 .setStatusPayment(allStatusPayment)
                 .setValueInstallment(calculetedInstallment)
                 .setSimpleFinance(simpleFinanceModel)

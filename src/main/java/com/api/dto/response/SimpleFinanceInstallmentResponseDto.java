@@ -24,6 +24,6 @@ public class SimpleFinanceInstallmentResponseDto extends RepresentationModel {
 
     public static SimpleFinanceInstallmentResponseDto convertEntityForSimpleFinanceInstallmentDto(SimpleFinanceInstallmentModel simpleFinanceInstallmentModel) {
         return new SimpleFinanceInstallmentResponseDto(simpleFinanceInstallmentModel.getId(),
-                simpleFinanceInstallmentModel.getInstallment(), simpleFinanceInstallmentModel.getStatus_payment());
+                simpleFinanceInstallmentModel.getNumber_installment(), simpleFinanceInstallmentModel.getStatus_payment());
     }
 }

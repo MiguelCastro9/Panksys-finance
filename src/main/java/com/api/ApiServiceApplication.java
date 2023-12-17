@@ -27,15 +27,16 @@ public class ApiServiceApplication implements CommandLineRunner {
         UserModel getRoleUser = userRepository.findByRole(RoleEnum.ADMIN);
 
         if (getRoleUser == null) {
-            UserModel.Builder builder = new UserModel.Builder()
+            UserModel builder = new UserModel.Builder()
                     .setName("admin")
                     .setBirth_date(LocalDate.now())
                     .setEmail("admin@email.com")
                     .setPassword(new BCryptPasswordEncoder().encode("adminadmin"))
                     .setRole(RoleEnum.ADMIN)
                     .setCreated_date(LocalDateTime.now())
-                    .setUpdated_date(LocalDateTime.now());
-            userRepository.save(builder.build());
+                    .setUpdated_date(LocalDateTime.now())
+                    .build();
+            userRepository.save(builder);
         }
     }
 }
