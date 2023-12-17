@@ -22,13 +22,11 @@ public class SimpleFinanceResponseDto extends RepresentationModel {
 
     private String name;
 
-    private double value;
+    private double total_value;
 
     private FormPaymentEnum form_payment;
 
     private LocalDate mounth_payment;
-
-    private Integer installment;
 
     private String description;
 
@@ -36,8 +34,8 @@ public class SimpleFinanceResponseDto extends RepresentationModel {
 
     public static SimpleFinanceResponseDto convertEntityForSimpleFinanceDto(SimpleFinanceModel simpleFinanceModel) {
         return new SimpleFinanceResponseDto(simpleFinanceModel.getId(), simpleFinanceModel.getName(),
-                simpleFinanceModel.getValue(), simpleFinanceModel.getForm_payment(),
-                simpleFinanceModel.getMounth_payment(), simpleFinanceModel.getInstallment(), simpleFinanceModel.getDescription(),
+                simpleFinanceModel.getTotal_value(), simpleFinanceModel.getForm_payment(),
+                simpleFinanceModel.getMounth_payment(), simpleFinanceModel.getDescription(),
                 simpleFinanceModel.getStatus_payment());
     }
 }

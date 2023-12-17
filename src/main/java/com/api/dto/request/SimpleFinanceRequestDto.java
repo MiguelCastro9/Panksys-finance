@@ -27,53 +27,52 @@ public class SimpleFinanceRequestDto {
     private String name;
 
     @NotNull(message = "Value is required.")
-    private double value;
+    private double total_value;
 
     @NotNull(message = "Form of payment is required.")
     private FormPaymentEnum form_payment;
 
     @NotNull(message = "Mounth of payment is required.")
     private LocalDate mounth_payment;
-
-    @NotNull(message = "Installment is required.")
-    private Integer installment;
+    
+    private Integer total_installment;
 
     private String description;
 
     @NotNull(message = "Status of payment is required.")
     private StatusPaymentEnum status_payment;
 
-    public SimpleFinanceRequestDto(String name, double value, FormPaymentEnum form_payment, LocalDate mounth_payment,
-            Integer installment, String description, StatusPaymentEnum status_payment) {
+    public SimpleFinanceRequestDto(String name, double total_value, FormPaymentEnum form_payment, LocalDate mounth_payment, 
+            Integer total_installment, String description, StatusPaymentEnum status_payment) {
         this.name = name;
-        this.value = value;
+        this.total_value = total_value;
         this.form_payment = form_payment;
         this.mounth_payment = mounth_payment;
-        this.installment = installment;
+        this.total_installment = total_installment;
         this.description = description;
         this.status_payment = status_payment;
     }
 
     public SimpleFinanceModel convertSimpleFinanceDtoForEntity() {
-        SimpleFinanceModel.Builder userBuilder = new SimpleFinanceModel.Builder();
-        userBuilder.setName(name)
-                .setValue(value)
+        SimpleFinanceModel.Builder builder = new SimpleFinanceModel.Builder();
+        builder.setName(name)
+                .setTotalValue(total_value)
                 .setForm_payment(form_payment)
                 .setMounth_payment(mounth_payment)
-                .setInstallment(installment)
+                .setTotal_installment(total_installment)
                 .setDescription(description)
                 .setStatus_payment(status_payment);
-        return new SimpleFinanceModel(userBuilder);
+        return new SimpleFinanceModel(builder);
     }
 
     public SimpleFinanceModel convertSimpleFinanceUpdateDtoForEntity() {
         SimpleFinanceModel.Builder builder = new SimpleFinanceModel.Builder();
         builder.setId(id)
                 .setName(name)
-                .setValue(value)
+                .setTotalValue(total_value)
                 .setForm_payment(form_payment)
                 .setMounth_payment(mounth_payment)
-                .setInstallment(installment)
+                .setTotal_installment(total_installment)
                 .setDescription(description)
                 .setStatus_payment(status_payment);
         return new SimpleFinanceModel(builder);

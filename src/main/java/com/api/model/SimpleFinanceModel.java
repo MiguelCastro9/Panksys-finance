@@ -2,19 +2,23 @@ package com.api.model;
 
 import com.api.enums.FormPaymentEnum;
 import com.api.enums.StatusPaymentEnum;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,7 +45,7 @@ public class SimpleFinanceModel implements Serializable {
     private String name;
 
     @Column(nullable = false)
-    private double value;
+    private double total_value;
 
     @Column(nullable = false, length = 45)
     @Enumerated(EnumType.STRING)
@@ -49,9 +53,11 @@ public class SimpleFinanceModel implements Serializable {
 
     @Column(nullable = false)
     private LocalDate mounth_payment;
-
-    @Column(nullable = false)
-    private Integer installment;
+    
+    private Integer total_installment;
+    
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<SimpleFinanceInstallmentModel> installments;
 
     @Column(length = 255)
     private String description;
@@ -73,14 +79,14 @@ public class SimpleFinanceModel implements Serializable {
     @Column(nullable = false)
     private LocalDateTime updated_date;
 
-    public SimpleFinanceModel(String name, double value, FormPaymentEnum form_payment, LocalDate mounth_payment,
-            Integer installment, String description, StatusPaymentEnum status_payment, UserModel user, boolean enabled,
-            LocalDateTime created_date, LocalDateTime updated_date) {
+    public SimpleFinanceModel(String name, double total_value, FormPaymentEnum form_payment, LocalDate mounth_payment, 
+            Integer total_installment, String description, StatusPaymentEnum status_payment, UserModel user, 
+            boolean enabled,LocalDateTime created_date, LocalDateTime updated_date) {
         this.name = name;
-        this.value = value;
+        this.total_value = total_value;
         this.form_payment = form_payment;
         this.mounth_payment = mounth_payment;
-        this.installment = installment;
+        this.total_installment = total_installment;
         this.description = description;
         this.status_payment = status_payment;
         this.user = user;
@@ -92,10 +98,10 @@ public class SimpleFinanceModel implements Serializable {
     public SimpleFinanceModel(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
-        this.value = builder.value;
+        this.total_value = builder.total_value;
         this.form_payment = builder.form_payment;
         this.mounth_payment = builder.mounth_payment;
-        this.installment = builder.installment;
+        this.total_installment = builder.total_installment;
         this.description = builder.description;
         this.status_payment = builder.status_payment;
         this.user = builder.user;
@@ -111,13 +117,13 @@ public class SimpleFinanceModel implements Serializable {
 
         private String name;
 
-        private double value;
+        private double total_value;
 
         private FormPaymentEnum form_payment;
 
         private LocalDate mounth_payment;
-
-        private Integer installment;
+        
+        private Integer total_installment;
 
         private String description;
 
@@ -125,7 +131,6 @@ public class SimpleFinanceModel implements Serializable {
 
         private UserModel user;
 
-        @Column(nullable = false)
         private boolean enabled;
 
         private LocalDateTime created_date;
@@ -142,8 +147,8 @@ public class SimpleFinanceModel implements Serializable {
             return this;
         }
 
-        public Builder setValue(double value) {
-            this.value = value;
+        public Builder setTotalValue(double total_value) {
+            this.total_value = total_value;
             return this;
         }
 
@@ -156,9 +161,9 @@ public class SimpleFinanceModel implements Serializable {
             this.mounth_payment = mounth_payment;
             return this;
         }
-
-        public Builder setInstallment(Integer installment) {
-            this.installment = installment;
+        
+        public Builder setTotal_installment(Integer total_installment) {
+            this.total_installment = total_installment;
             return this;
         }
 

@@ -1,7 +1,11 @@
 package com.api.service.impl;
 
+import com.api.enums.FormPaymentEnum;
+import com.api.enums.StatusPaymentEnum;
+import com.api.model.SimpleFinanceInstallmentModel;
 import com.api.model.SimpleFinanceModel;
 import com.api.model.UserModel;
+import com.api.repository.SimpleFinanceInstallmentRepository;
 import com.api.repository.SimpleFinanceRepository;
 import com.api.service.SimpleFinanceService;
 import java.time.LocalDateTime;
@@ -25,23 +29,82 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
     @Autowired
     private SimpleFinanceRepository simpleFinanceRepository;
 
+    @Autowired
+    private SimpleFinanceInstallmentRepository simpleFinanceInstallmentRepository;
 
     @Override
     public SimpleFinanceModel save(SimpleFinanceModel simpleFinanceModel) {
         UserModel userAuthenticated = getUserAuthenticated();
-        SimpleFinanceModel.Builder builder = new SimpleFinanceModel.Builder()
+        SimpleFinanceModel simpleFinanceBuilder = new SimpleFinanceModel.Builder()
                 .setName(simpleFinanceModel.getName())
-                .setValue(simpleFinanceModel.getValue())
+                .setTotalValue(simpleFinanceModel.getTotal_value())
                 .setForm_payment(simpleFinanceModel.getForm_payment())
                 .setMounth_payment(simpleFinanceModel.getMounth_payment())
-                .setInstallment(simpleFinanceModel.getInstallment())
+                .setTotal_installment(simpleFinanceModel.getTotal_installment())
                 .setDescription(simpleFinanceModel.getDescription())
                 .setStatus_payment(simpleFinanceModel.getStatus_payment())
                 .setUser(userAuthenticated)
                 .setEnabled(true)
                 .setCreated_date(LocalDateTime.now())
-                .setUpdated_date(LocalDateTime.now());
-        return simpleFinanceRepository.save(builder.build());
+                .setUpdated_date(LocalDateTime.now())
+                .build();
+        if (simpleFinanceBuilder.getTotal_installment() > 1 
+                && simpleFinanceBuilder.getForm_payment().equals(FormPaymentEnum.MONEY)) {
+             throw new IllegalArgumentException("For DEBIT or MONEY payment methods, the installment must be equal to 1.");
+        }
+        
+        if (simpleFinanceBuilder.getTotal_installment() > 1 
+                && simpleFinanceBuilder.getForm_payment().equals(FormPaymentEnum.DEBIT)) {
+             throw new IllegalArgumentException("For DEBIT or MONEY payment methods, the installment must be equal to 1.");
+        }
+        simpleFinanceRepository.save(simpleFinanceBuilder);
+
+        if ((simpleFinanceBuilder.getForm_payment().equals(FormPaymentEnum.DEBIT)
+                || simpleFinanceBuilder.getForm_payment().equals(FormPaymentEnum.MONEY))
+                && simpleFinanceBuilder.getStatus_payment().equals(StatusPaymentEnum.ALL_PAID)) {
+            saveSimpleFinanceInstallmentForDebitOrMoney(simpleFinanceBuilder, StatusPaymentEnum.ALL_PAID);
+        }
+
+        if ((simpleFinanceBuilder.getForm_payment().equals(FormPaymentEnum.DEBIT)
+                || simpleFinanceBuilder.getForm_payment().equals(FormPaymentEnum.MONEY))
+                && simpleFinanceBuilder.getStatus_payment().equals(StatusPaymentEnum.ALL_PENDING)) {
+            saveSimpleFinanceInstallmentForDebitOrMoney(simpleFinanceBuilder, StatusPaymentEnum.ALL_PENDING);
+        }
+
+        if ((simpleFinanceBuilder.getForm_payment().equals(FormPaymentEnum.DEBIT)
+                || simpleFinanceBuilder.getForm_payment().equals(FormPaymentEnum.MONEY))
+                && simpleFinanceBuilder.getStatus_payment().equals(StatusPaymentEnum.ALL_LATE)) {
+            saveSimpleFinanceInstallmentForDebitOrMoney(simpleFinanceBuilder, StatusPaymentEnum.ALL_LATE);
+        }
+        
+        if ((simpleFinanceBuilder.getForm_payment().equals(FormPaymentEnum.CREDIT))
+                && simpleFinanceBuilder.getStatus_payment().equals(StatusPaymentEnum.ALL_PAID)) {
+            saveSimpleFinanceInstallmentForCredit(simpleFinanceBuilder, StatusPaymentEnum.ALL_PAID);
+        }
+
+        return simpleFinanceBuilder;
+    }
+
+    private void saveSimpleFinanceInstallmentForDebitOrMoney(SimpleFinanceModel simpleFinanceModel, StatusPaymentEnum statusPayment) {
+        SimpleFinanceInstallmentModel simpleFinanceInstallmentBuilder = new SimpleFinanceInstallmentModel.Builder()
+                .setInstallment(1)
+                .setStatusPayment(statusPayment)
+                .setSimpleFinance(simpleFinanceModel)
+                .build();
+        simpleFinanceInstallmentRepository.save(simpleFinanceInstallmentBuilder);
+    }
+    
+    private void saveSimpleFinanceInstallmentForCredit(SimpleFinanceModel simpleFinanceModel, StatusPaymentEnum statusPayment) {
+        double calculetedInstallment = simpleFinanceModel.getTotal_value() / simpleFinanceModel.getTotal_installment();
+        for (int i = 0; i < simpleFinanceModel.getTotal_installment(); i++) {
+            SimpleFinanceInstallmentModel simpleFinanceInstallmentBuilder = new SimpleFinanceInstallmentModel.Builder()
+                .setInstallment(i+1)
+                .setValueInstallment(calculetedInstallment)
+                .setStatusPayment(statusPayment)
+                .setSimpleFinance(simpleFinanceModel)
+                .build();
+        simpleFinanceInstallmentRepository.save(simpleFinanceInstallmentBuilder);
+        }
     }
 
     @Override
@@ -59,10 +122,9 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                     SimpleFinanceModel.Builder builder = new SimpleFinanceModel.Builder()
                             .setId(existingSimpleFinance.getId())
                             .setName(simpleFinanceModel.getName())
-                            .setValue(simpleFinanceModel.getValue())
+                            .setTotalValue(simpleFinanceModel.getTotal_value())
                             .setForm_payment(simpleFinanceModel.getForm_payment())
                             .setMounth_payment(simpleFinanceModel.getMounth_payment())
-                            .setInstallment(simpleFinanceModel.getInstallment())
                             .setDescription(simpleFinanceModel.getDescription())
                             .setStatus_payment(simpleFinanceModel.getStatus_payment())
                             .setUser(userAuthenticated)
@@ -111,10 +173,9 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                     SimpleFinanceModel.Builder builder = new SimpleFinanceModel.Builder()
                             .setId(existingSimpleFinance.getId())
                             .setName(existingSimpleFinance.getName())
-                            .setValue(existingSimpleFinance.getValue())
+                            .setTotalValue(existingSimpleFinance.getTotal_value())
                             .setForm_payment(existingSimpleFinance.getForm_payment())
                             .setMounth_payment(existingSimpleFinance.getMounth_payment())
-                            .setInstallment(existingSimpleFinance.getInstallment())
                             .setDescription(existingSimpleFinance.getDescription())
                             .setStatus_payment(existingSimpleFinance.getStatus_payment())
                             .setUser(userAuthenticated)
