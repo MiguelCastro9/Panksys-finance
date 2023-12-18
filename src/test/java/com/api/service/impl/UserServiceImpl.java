@@ -4,7 +4,7 @@ import com.api.model.UserModel;
 import com.api.repository.UserRepository;
 import com.api.service.UserService;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -26,17 +26,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
     @Override
     public UserModel singup(UserModel userModel) {
         Optional<UserModel> checkUserPresent = userRepository.findByEmail(userModel.getEmail());
         if (checkUserPresent.isEmpty()) {
             UserModel builder = new UserModel.Builder()
                     .setName(userModel.getName())
-                    .setBirth_date(LocalDate.parse(dateFormatter.format(userModel.getBirth_date()), dateFormatter))
+                    .setBirth_date(LocalDate.now())
                     .setEmail(userModel.getEmail())
                     .setPassword(passwordEncoder.encode(userModel.getPassword()))
+                    .setCreated_date(LocalDateTime.now())
+                    .setUpdated_date(LocalDateTime.now())
                     .build();
             return userRepository.save(builder);
         } else {
@@ -48,13 +48,16 @@ public class UserServiceImpl implements UserService {
     public UserModel update(Long id, UserModel userModel) {
         return userRepository.findById(id)
                 .map(existingUser -> {
-                    UserModel.Builder builder = new UserModel.Builder()
+                    UserModel builder = new UserModel.Builder()
                             .setId(existingUser.getId())
                             .setName(userModel.getName())
-                            .setBirth_date(userModel.getBirth_date())
+                            .setBirth_date(LocalDate.now())
                             .setEmail(userModel.getEmail())
-                            .setPassword(passwordEncoder.encode(userModel.getPassword()));
-                    return userRepository.save(builder.build());
+                            .setPassword(passwordEncoder.encode(userModel.getPassword()))
+                            .setCreated_date(LocalDateTime.now())
+                            .setUpdated_date(LocalDateTime.now())
+                            .build();
+                    return userRepository.save(builder);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("User not found."));
     }
@@ -81,14 +84,17 @@ public class UserServiceImpl implements UserService {
     public UserModel disabled(Long id) {
         return userRepository.findById(id)
                 .map(existingUser -> {
-                    UserModel.Builder builder = new UserModel.Builder()
+                    UserModel builder = new UserModel.Builder()
                             .setId(existingUser.getId())
                             .setName(existingUser.getName())
                             .setBirth_date(existingUser.getBirth_date())
                             .setEmail(existingUser.getEmail())
                             .setPassword(passwordEncoder.encode(existingUser.getPassword()))
-                            .setEnabled(false);
-                    return userRepository.save(builder.build());
+                            .setEnabled(false)
+                            .setCreated_date(existingUser.getCreated_date())
+                            .setUpdated_date(existingUser.getUpdated_date())
+                            .build();
+                    return userRepository.save(builder);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("User not found."));
     }
