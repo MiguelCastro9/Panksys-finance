@@ -55,7 +55,7 @@ class UserITTest {
     @Test
     void singupPostTest() {
         UserRequestDto userRequestDto = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
-        Assertions.assertEquals(userRequestDto.getPassword(), userRequestDto.getPasswordRepeated());
+        Assertions.assertEquals(userRequestDto.getPassword(), userRequestDto.getPassword_repeated());
         ResponseEntity<UserRequestDto> restTemplate = testRestTemplate.postForEntity("/api/v1/auth/singup", userRequestDto, UserRequestDto.class);
         Assertions.assertNotNull(restTemplate);
     }
@@ -63,13 +63,13 @@ class UserITTest {
     @Test
     void updatePutTest() {
         UserRequestDto userRequestDto1 = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
-        Assertions.assertEquals(userRequestDto1.getPassword(), userRequestDto1.getPasswordRepeated());
+        Assertions.assertEquals(userRequestDto1.getPassword(), userRequestDto1.getPassword_repeated());
         UserModel builder = userService.singup(userRequestDto1.convertUserDtoForEntity());
         Long userId = builder.getId();
         Optional<UserModel> existingUserBeforeUpdate = userService.find(userId);
         Assertions.assertTrue(existingUserBeforeUpdate.isPresent());
         UserRequestDto userRequestDto2 = new UserRequestDto("miguel updated", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
-        Assertions.assertEquals(userRequestDto2.getPassword(), userRequestDto2.getPasswordRepeated());
+        Assertions.assertEquals(userRequestDto2.getPassword(), userRequestDto2.getPassword_repeated());
         ResponseEntity<Void> restTemplate = testRestTemplate.exchange(
                 "/api/v1/user/update/" + userId,
                 HttpMethod.PUT,
@@ -83,7 +83,7 @@ class UserITTest {
     @Test
     void disabledPutTest() {
         UserRequestDto userRequestDto = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
-        Assertions.assertEquals(userRequestDto.getPassword(), userRequestDto.getPasswordRepeated());
+        Assertions.assertEquals(userRequestDto.getPassword(), userRequestDto.getPassword_repeated());
         UserModel builder = userService.singup(userRequestDto.convertUserDtoForEntity());
         Long userId = builder.getId();
         Optional<UserModel> existingUserBeforeUpdate = userService.find(userId);

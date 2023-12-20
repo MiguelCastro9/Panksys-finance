@@ -17,5 +17,5 @@ public interface SimpleFinanceInstallmentRepository extends JpaRepository<Simple
     public Long getSimpleFinanceId(@Param("id") Long id);
     
     @Query(value = "SELECT * FROM simple_finance_installments WHERE simple_finance_id = :simple_finance_id", nativeQuery = true)
-    public List<SimpleFinanceInstallmentModel> list(@Param("simple_finance_id") Long simple_finance_id);
+    public List<SimpleFinanceInstallmentModel> list(@Param("simple_finance_id") Long simpleFinanceId);
 }

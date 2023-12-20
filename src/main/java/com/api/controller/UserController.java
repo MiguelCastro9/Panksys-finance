@@ -39,7 +39,7 @@ public class UserController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<UserResponseDto> update(@PathVariable Long id, @Valid @RequestBody UserRequestDto userRequestDto) {
-        if (!userRequestDto.getPassword().equals(userRequestDto.getPasswordRepeated())) {
+        if (!userRequestDto.getPassword().equals(userRequestDto.getPassword_repeated())) {
             return new ResponseEntity("Passwords is not equals.", HttpStatus.CONFLICT);
         }
         UserModel userModel = userService.update(id, userRequestDto.convertUserUpdateDtoForEntity());

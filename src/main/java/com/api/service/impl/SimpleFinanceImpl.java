@@ -158,7 +158,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
         }
         return simpleFinanceRepository.findById(id)
                 .map(existingSimpleFinance -> {
-                    SimpleFinanceModel.Builder builder = new SimpleFinanceModel.Builder()
+                    SimpleFinanceModel builder = new SimpleFinanceModel.Builder()
                             .setId(existingSimpleFinance.getId())
                             .setName(existingSimpleFinance.getName())
                             .setTotalValue(existingSimpleFinance.getTotal_value())
@@ -169,8 +169,9 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                             .setUser(userAuthenticated)
                             .setEnabled(false)
                             .setCreated_date(existingSimpleFinance.getCreated_date())
-                            .setUpdated_date(LocalDateTime.now());
-                    return simpleFinanceRepository.save(builder.build());
+                            .setUpdated_date(LocalDateTime.now())
+                            .build();
+                    return simpleFinanceRepository.save(builder);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Simple finance don't exists."));
     }

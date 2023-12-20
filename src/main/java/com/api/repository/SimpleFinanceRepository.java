@@ -18,5 +18,5 @@ public interface SimpleFinanceRepository extends JpaRepository<SimpleFinanceMode
     public Long getUserId(@Param("id") Long id);
     
     @Query(value = "SELECT * FROM simple_finances WHERE user_id = :user_id AND enabled = 1", nativeQuery = true)
-    public List<SimpleFinanceModel> list(@Param("user_id") Long user_id);
+    public List<SimpleFinanceModel> list(@Param("user_id") Long userId);
 }

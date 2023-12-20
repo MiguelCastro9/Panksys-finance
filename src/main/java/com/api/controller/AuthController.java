@@ -38,7 +38,7 @@ public class AuthController {
 
     @PostMapping("/singup")
     public ResponseEntity<UserResponseDto> singup(@Valid @RequestBody UserRequestDto userRequestDto) {
-        if (!userRequestDto.getPassword().equals(userRequestDto.getPasswordRepeated())) {
+        if (!userRequestDto.getPassword().equals(userRequestDto.getPassword_repeated())) {
             return new ResponseEntity("Passwords is not equals.", HttpStatus.CONFLICT);
         }
         UserModel userModel = userService.singup(userRequestDto.convertUserDtoForEntity());

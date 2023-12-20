@@ -39,14 +39,14 @@ public class UserRequestDto {
 
     @NotBlank(message = "Password repeated is required.")
     @Length(min = 10, max = 255, message = "Password repeated required at minimum {min} and at maximum {max} characters.")
-    private String passwordRepeated;
+    private String password_repeated;
 
-    public UserRequestDto(String name, LocalDate birth_date, String email, String password, String passwordRepeated) {
+    public UserRequestDto(String name, LocalDate birth_date, String email, String password, String password_repeated) {
         this.name = name;
         this.birth_date = birth_date;
         this.email = email;
         this.password = password;
-        this.passwordRepeated = passwordRepeated;
+        this.password_repeated = password_repeated;
     }
 
     public UserModel convertUserDtoForEntity() {

@@ -50,7 +50,7 @@ public class AuthServiceImpl implements AuthService {
         var refreshToken = jwtService.generateRefreshToken(new HashMap<>(), user);
         JWTResponseDto jwtAuthenticationResponseDto = new JWTResponseDto();
         jwtAuthenticationResponseDto.setToken(jwt);
-        jwtAuthenticationResponseDto.setRefreshToken(refreshToken);
+        jwtAuthenticationResponseDto.setRefresh_token(refreshToken);
         return jwtAuthenticationResponseDto;
     }
 
@@ -62,7 +62,7 @@ public class AuthServiceImpl implements AuthService {
             var jwt = jwtService.generateToken(userModel);
             JWTResponseDto jwtAuthenticationResponseDto = new JWTResponseDto();
             jwtAuthenticationResponseDto.setToken(jwt);
-            jwtAuthenticationResponseDto.setRefreshToken(refreshTokenRequestDto.getToken());
+            jwtAuthenticationResponseDto.setRefresh_token(refreshTokenRequestDto.getToken());
             return jwtAuthenticationResponseDto;
         }
         return null;

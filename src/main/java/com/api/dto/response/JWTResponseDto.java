@@ -16,5 +16,5 @@ public class JWTResponseDto extends RepresentationModel {
     
     private String token;
     
-    private String refreshToken;
+    private String refresh_token;
 }
