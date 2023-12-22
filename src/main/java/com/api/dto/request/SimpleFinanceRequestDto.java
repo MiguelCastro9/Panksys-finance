@@ -31,19 +31,19 @@ public class SimpleFinanceRequestDto {
     @NotNull(message = "Form of payment is required.")
     private FormPaymentEnum form_payment;
 
-    @NotNull(message = "Mounth of payment is required.")
-    private LocalDate mounth_payment;
+    @NotNull(message = "Month of payment is required.")
+    private LocalDate month_payment;
     
     private Integer total_installment;
 
     private String description;
 
-    public SimpleFinanceRequestDto(String name, double total_value, FormPaymentEnum form_payment, LocalDate mounth_payment, 
+    public SimpleFinanceRequestDto(String name, double total_value, FormPaymentEnum form_payment, LocalDate month_payment, 
             Integer total_installment, String description) {
         this.name = name;
         this.total_value = total_value;
         this.form_payment = form_payment;
-        this.mounth_payment = mounth_payment;
+        this.month_payment = month_payment;
         this.total_installment = total_installment;
         this.description = description;
     }
@@ -53,7 +53,7 @@ public class SimpleFinanceRequestDto {
         builder.setName(name)
                 .setTotalValue(total_value)
                 .setForm_payment(form_payment)
-                .setMounth_payment(mounth_payment)
+                .setMonth_payment(month_payment)
                 .setTotal_installment(total_installment)
                 .setDescription(description);
         return new SimpleFinanceModel(builder);
@@ -65,7 +65,7 @@ public class SimpleFinanceRequestDto {
                 .setName(name)
                 .setTotalValue(total_value)
                 .setForm_payment(form_payment)
-                .setMounth_payment(mounth_payment)
+                .setMonth_payment(month_payment)
                 .setTotal_installment(total_installment)
                 .setDescription(description);
         return new SimpleFinanceModel(builder);

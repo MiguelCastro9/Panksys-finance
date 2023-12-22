@@ -52,7 +52,7 @@ public class SimpleFinanceModel implements Serializable {
     private FormPaymentEnum form_payment;
 
     @Column(nullable = false)
-    private LocalDate mounth_payment;
+    private LocalDate month_payment;
     
     private Integer total_installment;
     
@@ -79,13 +79,13 @@ public class SimpleFinanceModel implements Serializable {
     @Column(nullable = false)
     private LocalDateTime updated_date;
 
-    public SimpleFinanceModel(String name, double total_value, FormPaymentEnum form_payment, LocalDate mounth_payment, 
+    public SimpleFinanceModel(String name, double total_value, FormPaymentEnum form_payment, LocalDate month_payment, 
             Integer total_installment, String description, StatusPaymentEnum all_status_payment, UserModel user, 
             boolean enabled,LocalDateTime created_date, LocalDateTime updated_date) {
         this.name = name;
         this.total_value = total_value;
         this.form_payment = form_payment;
-        this.mounth_payment = mounth_payment;
+        this.month_payment = month_payment;
         this.total_installment = total_installment;
         this.description = description;
         this.all_status_payment = all_status_payment;
@@ -100,7 +100,7 @@ public class SimpleFinanceModel implements Serializable {
         this.name = builder.name;
         this.total_value = builder.total_value;
         this.form_payment = builder.form_payment;
-        this.mounth_payment = builder.mounth_payment;
+        this.month_payment = builder.month_payment;
         this.total_installment = builder.total_installment;
         this.description = builder.description;
         this.all_status_payment = builder.all_status_payment;
@@ -121,7 +121,7 @@ public class SimpleFinanceModel implements Serializable {
 
         private FormPaymentEnum form_payment;
 
-        private LocalDate mounth_payment;
+        private LocalDate month_payment;
         
         private Integer total_installment;
 
@@ -157,8 +157,8 @@ public class SimpleFinanceModel implements Serializable {
             return this;
         }
 
-        public Builder setMounth_payment(LocalDate mounth_payment) {
-            this.mounth_payment = mounth_payment;
+        public Builder setMonth_payment(LocalDate month_payment) {
+            this.month_payment = month_payment;
             return this;
         }
         

@@ -18,12 +18,15 @@ public class SimpleFinanceInstallmentResponseDto extends RepresentationModel {
 
     private Long id;
 
-    private Integer installment;
-    
+    private Integer value_installment;
+
     private StatusPaymentEnum status_payment;
+
+    private String month_payment_installment;
 
     public static SimpleFinanceInstallmentResponseDto convertEntityForSimpleFinanceInstallmentDto(SimpleFinanceInstallmentModel simpleFinanceInstallmentModel) {
         return new SimpleFinanceInstallmentResponseDto(simpleFinanceInstallmentModel.getId(),
-                simpleFinanceInstallmentModel.getNumber_installment(), simpleFinanceInstallmentModel.getStatus_payment());
+                simpleFinanceInstallmentModel.getNumber_installment(), simpleFinanceInstallmentModel.getStatus_payment(),
+                simpleFinanceInstallmentModel.getMonth_payment_installment());
     }
 }

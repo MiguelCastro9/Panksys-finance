@@ -40,6 +40,9 @@ public class SimpleFinanceInstallmentModel implements Serializable {
     
     @Column(nullable = false)
     private double value_installment;
+    
+    @Column(nullable = false)
+    private String month_payment_installment;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -49,8 +52,10 @@ public class SimpleFinanceInstallmentModel implements Serializable {
     @JoinColumn(name = "simple_finance_id")
     private SimpleFinanceModel simple_finance;
 
-    public SimpleFinanceInstallmentModel(Integer number_installment, double value_installment, StatusPaymentEnum status_payment, SimpleFinanceModel simple_finance) {
+    public SimpleFinanceInstallmentModel(Integer number_installment, double value_installment,
+            String month_payment_installment, StatusPaymentEnum status_payment, SimpleFinanceModel simple_finance) {
         this.number_installment = number_installment;
+        this.month_payment_installment = month_payment_installment;
         this.status_payment = status_payment;
         this.simple_finance = simple_finance;
         this.value_installment = value_installment;
@@ -58,10 +63,12 @@ public class SimpleFinanceInstallmentModel implements Serializable {
 
     public SimpleFinanceInstallmentModel(Builder builder) {
         this.id = builder.id;
-        this.status_payment = builder.status_payment;
         this.number_installment = builder.number_installment;
-        this.simple_finance = builder.simple_finance;
         this.value_installment = builder.value_installment;
+        this.month_payment_installment = builder.month_payment_installment;
+        this.status_payment = builder.status_payment;
+        this.simple_finance = builder.simple_finance;
+        
     }
 
     public static class Builder {
@@ -73,6 +80,8 @@ public class SimpleFinanceInstallmentModel implements Serializable {
         private Integer number_installment;
         
         private double value_installment;
+        
+        private String month_payment_installment;
         
         private SimpleFinanceModel simple_finance;
 
@@ -93,6 +102,11 @@ public class SimpleFinanceInstallmentModel implements Serializable {
         
         public Builder setValueInstallment(double value_installment) {
             this.value_installment = value_installment;
+            return this;
+        }
+        
+        public Builder seMonthPaymentInstallment(String month_payment_installment) {
+            this.month_payment_installment = month_payment_installment;
             return this;
         }
         

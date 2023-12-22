@@ -66,7 +66,6 @@ public class SimpleFinanceInstallmentImpl implements SimpleFinanceInstallmentSer
 
     @Override
     public List<SimpleFinanceInstallmentModel> list(Long simpleFinanceId) {
-        System.out.println(simpleFinanceId);
         UserModel userAuthenticated = getUserAuthenticated();
         Long getSimpleFinanceId = simpleFinanceInstallmentRepository.getSimpleFinanceId(simpleFinanceId);
         Long getUserId = simpleFinanceRepository.getUserId(getSimpleFinanceId);
