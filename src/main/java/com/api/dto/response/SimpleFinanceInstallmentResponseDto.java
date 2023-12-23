@@ -17,8 +17,10 @@ import org.springframework.hateoas.RepresentationModel;
 public class SimpleFinanceInstallmentResponseDto extends RepresentationModel {
 
     private Long id;
+    
+    private Integer number_installment;
 
-    private Integer value_installment;
+    private double value_installment;
 
     private StatusPaymentEnum status_payment;
 
@@ -26,7 +28,7 @@ public class SimpleFinanceInstallmentResponseDto extends RepresentationModel {
 
     public static SimpleFinanceInstallmentResponseDto convertEntityForSimpleFinanceInstallmentDto(SimpleFinanceInstallmentModel simpleFinanceInstallmentModel) {
         return new SimpleFinanceInstallmentResponseDto(simpleFinanceInstallmentModel.getId(),
-                simpleFinanceInstallmentModel.getNumber_installment(), simpleFinanceInstallmentModel.getStatus_payment(),
-                simpleFinanceInstallmentModel.getMonth_payment_installment());
+                simpleFinanceInstallmentModel.getNumber_installment(), simpleFinanceInstallmentModel.getValue_installment(), 
+                simpleFinanceInstallmentModel.getStatus_payment(), simpleFinanceInstallmentModel.getMonth_payment_installment());
     }
 }

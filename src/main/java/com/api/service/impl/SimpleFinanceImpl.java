@@ -110,14 +110,14 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                     SimpleFinanceModel builder = new SimpleFinanceModel.Builder()
                             .setId(existingSimpleFinance.getId())
                             .setName(simpleFinanceModel.getName())
-                            .setTotalValue(simpleFinanceModel.getTotal_value())
-                            .setForm_payment(simpleFinanceModel.getForm_payment())
-                            .setMonth_payment(simpleFinanceModel.getMonth_payment())
-                            .setTotal_installment(simpleFinanceModel.getTotal_installment())
+                            .setTotalValue(existingSimpleFinance.getTotal_value())
+                            .setForm_payment(existingSimpleFinance.getForm_payment())
+                            .setMonth_payment(existingSimpleFinance.getMonth_payment())
+                            .setTotal_installment(existingSimpleFinance.getTotal_installment())
                             .setDescription(simpleFinanceModel.getDescription())
-                            .setAll_status_payment(simpleFinanceModel.getAll_status_payment())
-                            .setUser(userAuthenticated)
-                            .setEnabled(true)
+                            .setAll_status_payment(existingSimpleFinance.getAll_status_payment())
+                            .setUser(existingSimpleFinance.getUser())
+                            .setEnabled(existingSimpleFinance.isEnabled())
                             .setCreated_date(existingSimpleFinance.getCreated_date())
                             .setUpdated_date(LocalDateTime.now())
                             .build();
@@ -197,10 +197,12 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
     }
 
     private void saveSimpleFinanceInstallmentForDebitOrMoney(SimpleFinanceModel simpleFinanceModel, StatusPaymentEnum allStatusPayment) {
+        LocalDate currentMonth = simpleFinanceModel.getMonth_payment();
         SimpleFinanceInstallmentModel simpleFinanceInstallmentBuilder = new SimpleFinanceInstallmentModel.Builder()
                 .setNumberInstallment(1)
                 .setStatusPayment(allStatusPayment)
                 .setValueInstallment(simpleFinanceModel.getTotal_value())
+                .seMonthPaymentInstallment(currentMonth.getMonthValue() + "/" + currentMonth.getYear())
                 .setSimpleFinance(simpleFinanceModel)
                 .build();
         simpleFinanceInstallmentRepository.save(simpleFinanceInstallmentBuilder);

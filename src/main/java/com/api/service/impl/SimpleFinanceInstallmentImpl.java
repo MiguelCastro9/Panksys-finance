@@ -6,7 +6,6 @@ import com.api.repository.SimpleFinanceInstallmentRepository;
 import com.api.repository.SimpleFinanceRepository;
 import com.api.service.SimpleFinanceInstallmentService;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,8 +30,12 @@ public class SimpleFinanceInstallmentImpl implements SimpleFinanceInstallmentSer
         UserModel userAuthenticated = getUserAuthenticated();
         Long simpleFinanceId = simpleFinanceInstallmentRepository.getSimpleFinanceId(id);
         Long userId = simpleFinanceRepository.getUserId(simpleFinanceId);
+        boolean getCheckSimpleFinanceEnabled = simpleFinanceRepository.checkSimpleFinanceEnabled(simpleFinanceId);
         if (simpleFinanceId == null) {
             throw new IllegalArgumentException("Simple finance installment don't exists.");
+        }
+        if (!getCheckSimpleFinanceEnabled) {
+            throw new IllegalArgumentException("It is not allowed to view disabled simple finance installments.");
         }
         if (!userId.equals(userAuthenticated.getId())) {
             throw new IllegalArgumentException("You are not allowed to change other users' simple finance installments.");
@@ -51,6 +54,27 @@ public class SimpleFinanceInstallmentImpl implements SimpleFinanceInstallmentSer
                 .orElseThrow(() -> new IllegalArgumentException("Simple finance installment don't exists."));
     }
 
+    @Override
+    public List<SimpleFinanceInstallmentModel> list(Long simpleFinanceId) {
+        UserModel userAuthenticated = getUserAuthenticated();
+        Long getSimpleFinanceId = simpleFinanceInstallmentRepository.getSimpleFinanceId(simpleFinanceId);
+        Long getUserId = simpleFinanceRepository.getUserId(getSimpleFinanceId);
+        boolean getCheckSimpleFinanceEnabled = simpleFinanceRepository.checkSimpleFinanceEnabled(simpleFinanceId);
+        if (getSimpleFinanceId == null) {
+            throw new IllegalArgumentException("Simple finance installment don't exists.");
+        }
+        if (!getCheckSimpleFinanceEnabled) {
+            throw new IllegalArgumentException("It is not allowed to view disabled simple finance installments.");
+        }
+        if (getUserId == null) {
+            throw new IllegalArgumentException("Don't exists users vinculated at simple finance installments.");
+        }
+        if (!getUserId.equals(userAuthenticated.getId())) {
+            throw new IllegalArgumentException("You are not allowed to change other users' simple finance installments.");
+        }
+        return simpleFinanceInstallmentRepository.list(simpleFinanceId);
+    }
+
     private UserModel getUserAuthenticated() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserModel userAuthenticated = (UserModel) authentication.getPrincipal();
@@ -62,32 +86,5 @@ public class SimpleFinanceInstallmentImpl implements SimpleFinanceInstallmentSer
             throw new IllegalArgumentException("User details not found in the authentication context.");
         }
         return userAuthenticated;
-    }
-
-    @Override
-    public List<SimpleFinanceInstallmentModel> list(Long simpleFinanceId) {
-        UserModel userAuthenticated = getUserAuthenticated();
-        Long getSimpleFinanceId = simpleFinanceInstallmentRepository.getSimpleFinanceId(simpleFinanceId);
-        Long getUserId = simpleFinanceRepository.getUserId(getSimpleFinanceId);
-        if (getSimpleFinanceId == null) {
-            throw new IllegalArgumentException("Simple finance installment don't exists.");
-        }
-        if (!getUserId.equals(userAuthenticated.getId())) {
-            throw new IllegalArgumentException("You are not allowed to change other users' simple finance installments.");
-        }
-        return simpleFinanceInstallmentRepository.list(simpleFinanceId);
-    }
-    
-    @Override
-    public Optional<SimpleFinanceInstallmentModel> find(Long id) {
-        UserModel userAuthenticated = getUserAuthenticated();
-        Long userId = simpleFinanceRepository.getUserId(id);
-        if (userId == null) {
-            throw new IllegalArgumentException("Simple finance installment don't exists.");
-        }
-        if (!userId.equals(userAuthenticated.getId())) {
-            throw new IllegalArgumentException("You are not allowed to search for simple finance installments from other users.");
-        }
-        return simpleFinanceInstallmentRepository.findById(id);
     }
 }

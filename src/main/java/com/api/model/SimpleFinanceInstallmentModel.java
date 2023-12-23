@@ -75,13 +75,13 @@ public class SimpleFinanceInstallmentModel implements Serializable {
 
         private Long id;
 
-        private StatusPaymentEnum status_payment;
-
         private Integer number_installment;
         
         private double value_installment;
         
         private String month_payment_installment;
+        
+        private StatusPaymentEnum status_payment;
         
         private SimpleFinanceModel simple_finance;
 

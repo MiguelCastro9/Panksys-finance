@@ -48,17 +48,9 @@ public class SimpleFinanceInstallmentController {
         List<SimpleFinanceInstallmentResponseDto> simpleFinanceInstallmentResponseDto = simpleFinanceInstallmentService.list(simpleFinanceId).stream()
                 .map(simpleFinanceInstallment -> SimpleFinanceInstallmentResponseDto.convertEntityForSimpleFinanceInstallmentDto(simpleFinanceInstallment))
                 .collect(Collectors.toList());
-        simpleFinanceInstallmentResponseDto.forEach(simpleFinanceInstallment -> simpleFinanceInstallment
-                .add(linkTo(methodOn(SimpleFinanceInstallmentController.class)
-                        .find(simpleFinanceInstallment.getId())).withSelfRel()));
-        return new ResponseEntity<>(simpleFinanceInstallmentResponseDto, HttpStatus.OK);
-    }
-    
-    @GetMapping("/find/{id}")
-    public ResponseEntity<SimpleFinanceInstallmentResponseDto> find(@PathVariable Long id) {
-        SimpleFinanceInstallmentModel simpleFinanceInstallmentModel = simpleFinanceInstallmentService.find(id).orElseThrow();
-        SimpleFinanceInstallmentResponseDto simpleFinanceInstallmentResponseDto = SimpleFinanceInstallmentResponseDto.convertEntityForSimpleFinanceInstallmentDto(simpleFinanceInstallmentModel);
-        simpleFinanceInstallmentResponseDto.add(linkTo(methodOn(SimpleFinanceController.class).find(id)).withSelfRel());
+        //simpleFinanceInstallmentResponseDto.forEach(simpleFinanceInstallment -> simpleFinanceInstallment
+         //       .add(linkTo(methodOn(SimpleFinanceInstallmentController.class)
+         //               .find(simpleFinanceInstallment.getId())).withSelfRel()));
         return new ResponseEntity<>(simpleFinanceInstallmentResponseDto, HttpStatus.OK);
     }
 }
