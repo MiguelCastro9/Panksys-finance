@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     public UserModel singup(UserModel userModel) {
         Optional<UserModel> checkUserPresent = userRepository.findByEmail(userModel.getEmail());
         if (checkUserPresent.isEmpty()) {
-            UserModel builder = new UserModel.Builder()
+            UserModel userBuilder = new UserModel.Builder()
                     .setName(userModel.getName())
                     .setBirth_date(LocalDate.now())
                     .setEmail(userModel.getEmail())
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
                     .setCreated_date(LocalDateTime.now())
                     .setUpdated_date(LocalDateTime.now())
                     .build();
-            return userRepository.save(builder);
+            return userRepository.save(userBuilder);
         } else {
             throw new IllegalArgumentException("User with email " + userModel.getEmail() + " already exists");
         }
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
     public UserModel update(Long id, UserModel userModel) {
         return userRepository.findById(id)
                 .map(existingUser -> {
-                    UserModel builder = new UserModel.Builder()
+                    UserModel userBuilder = new UserModel.Builder()
                             .setId(existingUser.getId())
                             .setName(userModel.getName())
                             .setBirth_date(LocalDate.now())
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
                             .setCreated_date(LocalDateTime.now())
                             .setUpdated_date(LocalDateTime.now())
                             .build();
-                    return userRepository.save(builder);
+                    return userRepository.save(userBuilder);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("User not found."));
     }
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
     public UserModel disabled(Long id) {
         return userRepository.findById(id)
                 .map(existingUser -> {
-                    UserModel builder = new UserModel.Builder()
+                    UserModel userBuilder = new UserModel.Builder()
                             .setId(existingUser.getId())
                             .setName(existingUser.getName())
                             .setBirth_date(existingUser.getBirth_date())
@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
                             .setCreated_date(existingUser.getCreated_date())
                             .setUpdated_date(existingUser.getUpdated_date())
                             .build();
-                    return userRepository.save(builder);
+                    return userRepository.save(userBuilder);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("User not found."));
     }

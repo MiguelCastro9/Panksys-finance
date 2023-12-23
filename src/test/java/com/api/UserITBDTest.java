@@ -49,8 +49,8 @@ class UserITBDTest {
     void updateTest() {
         UserRequestDto userRequestDto1 = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
         Assertions.assertEquals(userRequestDto1.getPassword(), userRequestDto1.getPassword_repeated());
-        UserModel builder = userService.singup(userRequestDto1.convertUserDtoForEntity());
-        Long userId = builder.getId();
+        UserModel userBuilder = userService.singup(userRequestDto1.convertUserDtoForEntity());
+        Long userId = userBuilder.getId();
         Optional<UserModel> existingUserBeforeUpdate = userService.find(userId);
         Assertions.assertTrue(existingUserBeforeUpdate.isPresent());
         UserRequestDto userRequestDto2 = new UserRequestDto("miguel updated", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
