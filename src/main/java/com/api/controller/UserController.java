@@ -53,6 +53,6 @@ public class UserController {
         UserModel userModel = userService.disabled(id);
         UserResponseDto userResponseDto = UserResponseDto.convertEntityForUserDto(userModel);
         userResponseDto.add(linkTo(methodOn(UserController.class).disabled(id)).withSelfRel());
-        return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
+        return new ResponseEntity("User [" + userResponseDto.getId() + "] " + userResponseDto.getName() + " disabled with success.", HttpStatus.OK);
     }
 }

@@ -99,6 +99,9 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
     public SimpleFinanceModel update(Long id, SimpleFinanceModel simpleFinanceModel) {
         UserModel userAuthenticated = getUserAuthenticated();
         Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.getSimpleFinance(id);
+        if (getSimpleFinance.isEmpty()) {
+            throw new IllegalArgumentException("Simple finance don't exists.");
+        }
         if (getSimpleFinance.get().getUser().getId() == null) {
             throw new IllegalArgumentException("Simple finance don't exists.");
         }
@@ -152,6 +155,9 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
     public SimpleFinanceModel disabled(Long id) {
         UserModel userAuthenticated = getUserAuthenticated();
         Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.getSimpleFinance(id);
+        if (getSimpleFinance.isEmpty()) {
+            throw new IllegalArgumentException("Simple finance dont't exists.");
+        }
         if (getSimpleFinance.get().getUser().getId() == null) {
             throw new IllegalArgumentException("Simple finance dont't exists.");
         }

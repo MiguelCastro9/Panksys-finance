@@ -75,6 +75,6 @@ public class SimpleFinanceController {
         SimpleFinanceModel simpleFinanceModel = simpleFinanceService.disabled(id);
         SimpleFinanceResponseDto simpleFinanceResponseDto = SimpleFinanceResponseDto.convertEntityForSimpleFinanceDto(simpleFinanceModel);
         simpleFinanceResponseDto.add(linkTo(methodOn(SimpleFinanceController.class).disabled(id)).withSelfRel());
-        return new ResponseEntity(simpleFinanceResponseDto, HttpStatus.OK);
+        return new ResponseEntity("Simple finance [" + simpleFinanceResponseDto.getId() + "] " + simpleFinanceResponseDto.getName() + " disabled with success.", HttpStatus.OK);
     }
 }

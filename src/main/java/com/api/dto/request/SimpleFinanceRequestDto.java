@@ -2,6 +2,8 @@ package com.api.dto.request;
 
 import com.api.enums.FormPaymentEnum;
 import com.api.model.SimpleFinanceModel;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -34,6 +36,8 @@ public class SimpleFinanceRequestDto {
     @NotNull(message = "Month of payment is required.")
     private LocalDate month_payment;
     
+    @Max(value = 45, message = "Total installment required at maximum 45 installments.")
+    @Min(value = 1, message = "Total installment required at minimum 1 installment.")
     private Integer total_installment;
 
     private String description;

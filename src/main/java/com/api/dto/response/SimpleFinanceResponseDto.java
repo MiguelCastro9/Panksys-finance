@@ -32,12 +32,10 @@ public class SimpleFinanceResponseDto extends RepresentationModel {
 
     private String description;
 
-    private StatusPaymentEnum status_payment;
-
     public static SimpleFinanceResponseDto convertEntityForSimpleFinanceDto(SimpleFinanceModel simpleFinanceModel) {
         return new SimpleFinanceResponseDto(simpleFinanceModel.getId(), simpleFinanceModel.getName(),
                 simpleFinanceModel.getTotal_value(), simpleFinanceModel.getForm_payment(),
                 simpleFinanceModel.getMonth_payment(), simpleFinanceModel.getTotal_installment(), 
-                simpleFinanceModel.getDescription(), simpleFinanceModel.getAll_status_payment());
+                simpleFinanceModel.getDescription());
     }
 }
