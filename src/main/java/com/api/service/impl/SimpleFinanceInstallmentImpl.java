@@ -6,6 +6,7 @@ import com.api.repository.SimpleFinanceInstallmentRepository;
 import com.api.repository.SimpleFinanceRepository;
 import com.api.service.SimpleFinanceInstallmentService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,10 +29,10 @@ public class SimpleFinanceInstallmentImpl implements SimpleFinanceInstallmentSer
     @Override
     public SimpleFinanceInstallmentModel update(Long id, SimpleFinanceInstallmentModel simpleFinanceInstallmentModel) {
         UserModel userAuthenticated = getUserAuthenticated();
-        Long simpleFinanceId = simpleFinanceInstallmentRepository.getSimpleFinanceId(id);
-        Long userId = simpleFinanceRepository.getUserId(simpleFinanceId);
-        boolean getCheckSimpleFinanceEnabled = simpleFinanceRepository.checkSimpleFinanceEnabled(simpleFinanceId);
-        if (simpleFinanceId == null) {
+        Optional<SimpleFinanceInstallmentModel> getSimpleFinanceInstallment = simpleFinanceInstallmentRepository.findById(id);
+        Long userId = simpleFinanceRepository.getUserId(getSimpleFinanceInstallment.get().getSimple_finance().getId());
+        boolean getCheckSimpleFinanceEnabled = simpleFinanceRepository.checkSimpleFinanceEnabled(getSimpleFinanceInstallment.get().getSimple_finance().getId());
+        if (getSimpleFinanceInstallment.get().getSimple_finance().getId() == null) {
             throw new IllegalArgumentException("Simple finance installment don't exists.");
         }
         if (!getCheckSimpleFinanceEnabled) {
@@ -46,6 +47,7 @@ public class SimpleFinanceInstallmentImpl implements SimpleFinanceInstallmentSer
                             .setId(existingSimpleFinanceInsttament.getId())
                             .setNumberInstallment(existingSimpleFinanceInsttament.getNumber_installment())
                             .setValueInstallment(existingSimpleFinanceInsttament.getValue_installment())
+                            .seMonthPaymentInstallment(existingSimpleFinanceInsttament.getMonth_payment_installment())
                             .setStatusPayment(simpleFinanceInstallmentModel.getStatus_payment())
                             .setSimpleFinance(existingSimpleFinanceInsttament.getSimple_finance())
                             .build();
@@ -57,15 +59,17 @@ public class SimpleFinanceInstallmentImpl implements SimpleFinanceInstallmentSer
     @Override
     public List<SimpleFinanceInstallmentModel> list(Long simpleFinanceId) {
         UserModel userAuthenticated = getUserAuthenticated();
-        Long getSimpleFinanceId = simpleFinanceInstallmentRepository.getSimpleFinanceId(simpleFinanceId);
-        Long getUserId = simpleFinanceRepository.getUserId(getSimpleFinanceId);
-        boolean getCheckSimpleFinanceEnabled = simpleFinanceRepository.checkSimpleFinanceEnabled(simpleFinanceId);
-        if (getSimpleFinanceId == null) {
+        
+        
+        
+        Long getUserId = simpleFinanceRepository.getUserId(simpleFinanceId);
+        //boolean getCheckSimpleFinanceEnabled = simpleFinanceRepository.checkSimpleFinanceEnabled(simpleFinanceId);
+        if (simpleFinanceId == null) {
             throw new IllegalArgumentException("Simple finance installment don't exists.");
         }
-        if (!getCheckSimpleFinanceEnabled) {
-            throw new IllegalArgumentException("It is not allowed to view disabled simple finance installments.");
-        }
+        //if (!getCheckSimpleFinanceEnabled) {
+        //    throw new IllegalArgumentException("It is not allowed to view disabled simple finance installments.");
+        //}
         if (getUserId == null) {
             throw new IllegalArgumentException("Don't exists users vinculated at simple finance installments.");
         }
