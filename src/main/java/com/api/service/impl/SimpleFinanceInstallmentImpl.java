@@ -48,7 +48,7 @@ public class SimpleFinanceInstallmentImpl implements SimpleFinanceInstallmentSer
         }
         return simpleFinanceInstallmentRepository.findById(id)
                 .map(existingSimpleFinanceInsttament -> {
-                    SimpleFinanceInstallmentModel builder = new SimpleFinanceInstallmentModel.Builder()
+                    SimpleFinanceInstallmentModel simpleFinanceInstallmentBuilder = new SimpleFinanceInstallmentModel.Builder()
                             .setId(existingSimpleFinanceInsttament.getId())
                             .setNumberInstallment(existingSimpleFinanceInsttament.getNumber_installment())
                             .setValueInstallment(existingSimpleFinanceInsttament.getValue_installment())
@@ -56,7 +56,7 @@ public class SimpleFinanceInstallmentImpl implements SimpleFinanceInstallmentSer
                             .setStatusPayment(simpleFinanceInstallmentModel.getStatus_payment())
                             .setSimpleFinance(existingSimpleFinanceInsttament.getSimple_finance())
                             .build();
-                    return simpleFinanceInstallmentRepository.save(builder);
+                    return simpleFinanceInstallmentRepository.save(simpleFinanceInstallmentBuilder);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Simple finance installment don't exists."));
     }

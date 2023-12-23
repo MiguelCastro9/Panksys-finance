@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     public UserModel singup(UserModel userModel) {
         Optional<UserModel> checkUserPresent = userRepository.findByEmail(userModel.getEmail());
         if (checkUserPresent.isEmpty()) {
-            UserModel builder = new UserModel.Builder()
+            UserModel userBuilder = new UserModel.Builder()
                     .setName(userModel.getName())
                     .setBirth_date(userModel.getBirth_date())
                     .setEmail(userModel.getEmail())
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
                     .setCreated_date(LocalDateTime.now())
                     .setUpdated_date(LocalDateTime.now())
                     .build();
-            return userRepository.save(builder);
+            return userRepository.save(userBuilder);
         } else {
             throw new IllegalArgumentException("User with email " + userModel.getEmail() + " already exists");
         }
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
         }
         return userRepository.findById(id)
                 .map(existingUser -> {
-                    UserModel builder = new UserModel.Builder()
+                    UserModel userBuilder = new UserModel.Builder()
                             .setId(existingUser.getId())
                             .setName(userModel.getName())
                             .setBirth_date(userModel.getBirth_date())
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
                             .setCreated_date(existingUser.getCreated_date())
                             .setUpdated_date(LocalDateTime.now())
                             .build();
-                    return userRepository.save(builder);
+                    return userRepository.save(userBuilder);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("User don't exists."));
     }
@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
         }
         return userRepository.findById(id)
                 .map(existingUser -> {
-                    UserModel builder = new UserModel.Builder()
+                    UserModel userBuilder = new UserModel.Builder()
                             .setId(existingUser.getId())
                             .setName(existingUser.getName())
                             .setBirth_date(existingUser.getBirth_date())
@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
                             .setCreated_date(existingUser.getCreated_date())
                             .setUpdated_date(LocalDateTime.now())
                             .build();
-                    return userRepository.save(builder);
+                    return userRepository.save(userBuilder);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("User don't exists."));
     }

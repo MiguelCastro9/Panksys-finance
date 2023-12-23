@@ -24,15 +24,15 @@ public class SimpleFinanceInstallmentRequestDto {
     }
 
     public SimpleFinanceInstallmentModel convertSimpleFinanceInstallmentDtoForEntity() {
-        SimpleFinanceInstallmentModel.Builder builder = new SimpleFinanceInstallmentModel.Builder();
-        builder.setStatusPayment(status_payment);
-        return new SimpleFinanceInstallmentModel(builder);
+        SimpleFinanceInstallmentModel.Builder simpleFinanceInstallmentBuilder = new SimpleFinanceInstallmentModel.Builder();
+        simpleFinanceInstallmentBuilder.setStatusPayment(status_payment);
+        return new SimpleFinanceInstallmentModel(simpleFinanceInstallmentBuilder);
     }
 
     public SimpleFinanceInstallmentModel convertSimpleFinanceInstallmentUpdateDtoForEntity() {
-        SimpleFinanceInstallmentModel.Builder builder = new SimpleFinanceInstallmentModel.Builder();
-        builder.setId(id)
+        SimpleFinanceInstallmentModel.Builder simpleFinanceInstallmentBuilder = new SimpleFinanceInstallmentModel.Builder();
+        simpleFinanceInstallmentBuilder.setId(id)
                 .setStatusPayment(status_payment);
-        return new SimpleFinanceInstallmentModel(builder);
+        return new SimpleFinanceInstallmentModel(simpleFinanceInstallmentBuilder);
     }
 }

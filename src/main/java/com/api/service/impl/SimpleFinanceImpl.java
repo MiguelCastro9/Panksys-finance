@@ -110,7 +110,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
         }
         return simpleFinanceRepository.findById(id)
                 .map(existingSimpleFinance -> {
-                    SimpleFinanceModel builder = new SimpleFinanceModel.Builder()
+                    SimpleFinanceModel simpleFinanceBuider = new SimpleFinanceModel.Builder()
                             .setId(existingSimpleFinance.getId())
                             .setName(simpleFinanceModel.getName())
                             .setTotalValue(existingSimpleFinance.getTotal_value())
@@ -124,7 +124,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                             .setCreated_date(existingSimpleFinance.getCreated_date())
                             .setUpdated_date(LocalDateTime.now())
                             .build();
-                    return simpleFinanceRepository.save(builder);
+                    return simpleFinanceRepository.save(simpleFinanceBuider);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Simple finance don't exists."));
     }
@@ -166,7 +166,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
         }
         return simpleFinanceRepository.findById(id)
                 .map(existingSimpleFinance -> {
-                    SimpleFinanceModel builder = new SimpleFinanceModel.Builder()
+                    SimpleFinanceModel simpleFinanceBuilder = new SimpleFinanceModel.Builder()
                             .setId(existingSimpleFinance.getId())
                             .setName(existingSimpleFinance.getName())
                             .setTotalValue(existingSimpleFinance.getTotal_value())
@@ -179,7 +179,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                             .setCreated_date(existingSimpleFinance.getCreated_date())
                             .setUpdated_date(LocalDateTime.now())
                             .build();
-                    return simpleFinanceRepository.save(builder);
+                    return simpleFinanceRepository.save(simpleFinanceBuilder);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Simple finance don't exists."));
     }

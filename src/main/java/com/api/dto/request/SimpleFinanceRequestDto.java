@@ -53,25 +53,25 @@ public class SimpleFinanceRequestDto {
     }
 
     public SimpleFinanceModel convertSimpleFinanceDtoForEntity() {
-        SimpleFinanceModel.Builder builder = new SimpleFinanceModel.Builder();
-        builder.setName(name)
+        SimpleFinanceModel.Builder simpleFinanceModelBuilder = new SimpleFinanceModel.Builder();
+        simpleFinanceModelBuilder.setName(name)
                 .setTotalValue(total_value)
                 .setForm_payment(form_payment)
                 .setMonth_payment(month_payment)
                 .setTotal_installment(total_installment)
                 .setDescription(description);
-        return new SimpleFinanceModel(builder);
+        return new SimpleFinanceModel(simpleFinanceModelBuilder);
     }
 
     public SimpleFinanceModel convertSimpleFinanceUpdateDtoForEntity() {
-        SimpleFinanceModel.Builder builder = new SimpleFinanceModel.Builder();
-        builder.setId(id)
+        SimpleFinanceModel.Builder simpleFinanceModelBuilder = new SimpleFinanceModel.Builder();
+        simpleFinanceModelBuilder.setId(id)
                 .setName(name)
                 .setTotalValue(total_value)
                 .setForm_payment(form_payment)
                 .setMonth_payment(month_payment)
                 .setTotal_installment(total_installment)
                 .setDescription(description);
-        return new SimpleFinanceModel(builder);
+        return new SimpleFinanceModel(simpleFinanceModelBuilder);
     }
 }
