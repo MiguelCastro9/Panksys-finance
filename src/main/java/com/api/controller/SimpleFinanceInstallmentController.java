@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 
 /**
  *
@@ -30,11 +32,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Simple Finance Installments")
 @RequestMapping("api/v1/simple-finance-installment")
 public class SimpleFinanceInstallmentController {
-    
+
     @Autowired
     private SimpleFinanceInstallmentService simpleFinanceInstallmentService;
-    
-    
+
     @PutMapping("/update/{id}")
     public ResponseEntity<SimpleFinanceInstallmentResponseDto> update(@PathVariable Long id, @Valid @RequestBody SimpleFinanceInstallmentRequestDto simpleFinanceInstallmentRequestDto) {
         SimpleFinanceInstallmentModel simpleFinanceInstallmentModel = simpleFinanceInstallmentService.update(id, simpleFinanceInstallmentRequestDto.convertSimpleFinanceInstallmentUpdateDtoForEntity());
@@ -42,15 +43,19 @@ public class SimpleFinanceInstallmentController {
         simpleFinanceInstallmentResponseDto.add(linkTo(methodOn(SimpleFinanceInstallmentController.class).update(id, simpleFinanceInstallmentRequestDto)).withSelfRel());
         return new ResponseEntity<>(simpleFinanceInstallmentResponseDto, HttpStatus.OK);
     }
-    
+
     @GetMapping("/list/{id}")
     public ResponseEntity<List<SimpleFinanceInstallmentResponseDto>> list(@PathVariable("id") Long simpleFinanceId) {
-        List<SimpleFinanceInstallmentResponseDto> simpleFinanceInstallmentResponseDto = simpleFinanceInstallmentService.list(simpleFinanceId).stream()
-                .map(simpleFinanceInstallment -> SimpleFinanceInstallmentResponseDto.convertEntityForSimpleFinanceInstallmentDto(simpleFinanceInstallment))
+        List<SimpleFinanceInstallmentResponseDto> simpleFinanceInstallmentResponseDtoList = simpleFinanceInstallmentService.list(simpleFinanceId).stream()
+                .map(simpleFinanceInstallment -> {
+                    SimpleFinanceInstallmentResponseDto simpleFinanceInstallmentResponseDto = SimpleFinanceInstallmentResponseDto.convertEntityForSimpleFinanceInstallmentDto(simpleFinanceInstallment);
+                    WebMvcLinkBuilder linkBuilder = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(SimpleFinanceInstallmentController.class)
+                            .list(simpleFinanceId));
+                    Link selfLink = linkBuilder.withSelfRel();
+                    simpleFinanceInstallmentResponseDto.add(selfLink);
+                    return simpleFinanceInstallmentResponseDto;
+                })
                 .collect(Collectors.toList());
-        //simpleFinanceInstallmentResponseDto.forEach(simpleFinanceInstallment -> simpleFinanceInstallment
-         //       .add(linkTo(methodOn(SimpleFinanceInstallmentController.class)
-         //               .find(simpleFinanceInstallment.getId())).withSelfRel()));
-        return new ResponseEntity<>(simpleFinanceInstallmentResponseDto, HttpStatus.OK);
+        return new ResponseEntity<>(simpleFinanceInstallmentResponseDtoList, HttpStatus.OK);
     }
 }
