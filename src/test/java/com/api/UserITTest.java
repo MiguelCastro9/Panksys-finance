@@ -6,8 +6,8 @@ import com.api.model.UserModel;
 import com.api.service.UserService;
 import java.time.LocalDate;
 import java.util.Optional;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,14 +33,14 @@ class UserITTest {
     @Autowired
     TestRestTemplate testRestTemplate;
 
-    @BeforeEach
+    @AfterEach
     void cleanDatabase() {
         userService.deleteAll();
     }
     
     @Test
     void signinPostTest() {
-        UserRequestDto userRequestDto = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
+        UserRequestDto userRequestDto = new UserRequestDto("panksys finance", LocalDate.now(), "panksysfinance@email.com", "panksysfinance", "panksysfinance");
         ResponseEntity<UserRequestDto> restTemplate1 = testRestTemplate.postForEntity("/api/v1/auth/singup", userRequestDto, UserRequestDto.class);
         Assertions.assertNotNull(restTemplate1);
         Assertions.assertNotNull(restTemplate1.getBody());
@@ -54,7 +54,7 @@ class UserITTest {
 
     @Test
     void singupPostTest() {
-        UserRequestDto userRequestDto = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
+        UserRequestDto userRequestDto = new UserRequestDto("panksys finance", LocalDate.now(), "panksysfinance@email.com", "panksysfinance", "panksysfinance");
         Assertions.assertEquals(userRequestDto.getPassword(), userRequestDto.getPassword_repeated());
         ResponseEntity<UserRequestDto> restTemplate = testRestTemplate.postForEntity("/api/v1/auth/singup", userRequestDto, UserRequestDto.class);
         Assertions.assertNotNull(restTemplate);
@@ -62,13 +62,13 @@ class UserITTest {
 
     @Test
     void updatePutTest() {
-        UserRequestDto userRequestDto1 = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
+        UserRequestDto userRequestDto1 = new UserRequestDto("panksys finance", LocalDate.now(), "panksysfinance@email.com", "panksysfinance", "panksysfinance");
         Assertions.assertEquals(userRequestDto1.getPassword(), userRequestDto1.getPassword_repeated());
         UserModel userBuilder = userService.singup(userRequestDto1.convertUserDtoForEntity());
         Long userId = userBuilder.getId();
         Optional<UserModel> existingUserBeforeUpdate = userService.find(userId);
         Assertions.assertTrue(existingUserBeforeUpdate.isPresent());
-        UserRequestDto userRequestDto2 = new UserRequestDto("miguel updated", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
+        UserRequestDto userRequestDto2 = new UserRequestDto("panksys finance updated", LocalDate.now(), "panksysfinance@email.com", "panksysfinance", "panksysfinance");
         Assertions.assertEquals(userRequestDto2.getPassword(), userRequestDto2.getPassword_repeated());
         ResponseEntity<Void> restTemplate = testRestTemplate.exchange(
                 "/api/v1/user/update/" + userId,
@@ -82,7 +82,7 @@ class UserITTest {
     
     @Test
     void disabledPutTest() {
-        UserRequestDto userRequestDto = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
+        UserRequestDto userRequestDto = new UserRequestDto("panksys finance", LocalDate.now(), "panksysfinance@email.com", "panksysfinance", "panksysfinance");
         Assertions.assertEquals(userRequestDto.getPassword(), userRequestDto.getPassword_repeated());
         UserModel userBuilder = userService.singup(userRequestDto.convertUserDtoForEntity());
         Long userId = userBuilder.getId();

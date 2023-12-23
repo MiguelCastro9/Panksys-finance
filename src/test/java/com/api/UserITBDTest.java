@@ -8,8 +8,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,14 +28,14 @@ class UserITBDTest {
 
     private List<UserResponseDto> userResponseDto;
 
-    @BeforeEach
+    @AfterEach
     void cleanDatabase() {
         userService.deleteAll();
     }
 
     @Test
     void singupTest() {
-        UserRequestDto userRequestDto = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
+        UserRequestDto userRequestDto = new UserRequestDto("panksys finance", LocalDate.now(), "panksysfinance@email.com", "panksysfinance", "panksysfinance");
         Assertions.assertEquals(userRequestDto.getPassword(), userRequestDto.getPassword_repeated());
         userService.singup(userRequestDto.convertUserDtoForEntity());
         userResponseDto = userService.list().stream().map(user
@@ -47,17 +47,17 @@ class UserITBDTest {
 
     @Test
     void updateTest() {
-        UserRequestDto userRequestDto1 = new UserRequestDto("miguel castro", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
+        UserRequestDto userRequestDto1 = new UserRequestDto("panksys finance", LocalDate.now(), "panksysfinance@email.com", "panksysfinance", "panksysfinance");
         Assertions.assertEquals(userRequestDto1.getPassword(), userRequestDto1.getPassword_repeated());
         UserModel userBuilder = userService.singup(userRequestDto1.convertUserDtoForEntity());
         Long userId = userBuilder.getId();
         Optional<UserModel> existingUserBeforeUpdate = userService.find(userId);
         Assertions.assertTrue(existingUserBeforeUpdate.isPresent());
-        UserRequestDto userRequestDto2 = new UserRequestDto("miguel updated", LocalDate.now(), "miguel@email.com", "miguelmiguel", "miguelmiguel");
+        UserRequestDto userRequestDto2 = new UserRequestDto("panksys finance updated", LocalDate.now(), "panksysfinance@email.com", "panksysfinance", "panksysfinance");
         Assertions.assertEquals(userRequestDto2.getPassword(), userRequestDto2.getPassword_repeated());
         userService.update(userId, userRequestDto2.convertUserUpdateDtoForEntity());
         Optional<UserModel> existingUserAfterUpdate = userService.find(userId);
         Assertions.assertTrue(existingUserAfterUpdate.isPresent());
-        Assertions.assertEquals("miguel updated", existingUserAfterUpdate.get().getName());
+        Assertions.assertEquals("panksys finance updated", existingUserAfterUpdate.get().getName());
     }
 }
