@@ -2,6 +2,7 @@ package com.api.repository;
 
 import com.api.model.SimpleFinanceModel;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,12 +15,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SimpleFinanceRepository extends JpaRepository<SimpleFinanceModel, Long> {
     
-    @Query(value = "SELECT user_id FROM simple_finances WHERE id = :id AND enabled = 1", nativeQuery = true)
-    public Long getUserId(@Param("id") Long id);
+    @Query(value = "SELECT * FROM simple_finances WHERE id = :id AND enabled = 1", nativeQuery = true)
+    public Optional<SimpleFinanceModel> getSimpleFinance(@Param("id") Long id);
     
     @Query(value = "SELECT * FROM simple_finances WHERE user_id = :user_id AND enabled = 1", nativeQuery = true)
     public List<SimpleFinanceModel> list(@Param("user_id") Long userId);
-    
-    @Query(value = "SELECT enabled FROM simple_finances WHERE id = :id", nativeQuery = true)
-    public boolean checkSimpleFinanceEnabled(@Param("id") Long id);
 }

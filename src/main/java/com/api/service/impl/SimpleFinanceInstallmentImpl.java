@@ -1,6 +1,7 @@
 package com.api.service.impl;
 
 import com.api.model.SimpleFinanceInstallmentModel;
+import com.api.model.SimpleFinanceModel;
 import com.api.model.UserModel;
 import com.api.repository.SimpleFinanceInstallmentRepository;
 import com.api.repository.SimpleFinanceRepository;
@@ -30,15 +31,19 @@ public class SimpleFinanceInstallmentImpl implements SimpleFinanceInstallmentSer
     public SimpleFinanceInstallmentModel update(Long id, SimpleFinanceInstallmentModel simpleFinanceInstallmentModel) {
         UserModel userAuthenticated = getUserAuthenticated();
         Optional<SimpleFinanceInstallmentModel> getSimpleFinanceInstallment = simpleFinanceInstallmentRepository.findById(id);
-        Long userId = simpleFinanceRepository.getUserId(getSimpleFinanceInstallment.get().getSimple_finance().getId());
-        boolean getCheckSimpleFinanceEnabled = simpleFinanceRepository.checkSimpleFinanceEnabled(getSimpleFinanceInstallment.get().getSimple_finance().getId());
-        if (getSimpleFinanceInstallment.get().getSimple_finance().getId() == null) {
+        
+        if (getSimpleFinanceInstallment.isEmpty()) {
             throw new IllegalArgumentException("Simple finance installment don't exists.");
         }
-        if (!getCheckSimpleFinanceEnabled) {
+        Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.getSimpleFinance(getSimpleFinanceInstallment.get().getSimple_finance().getId());
+        
+        
+        
+        
+        if (!getSimpleFinance.get().isEnabled()) {
             throw new IllegalArgumentException("It is not allowed to view disabled simple finance installments.");
         }
-        if (!userId.equals(userAuthenticated.getId())) {
+        if (!getSimpleFinance.get().getUser().getId().equals(userAuthenticated.getId())) {
             throw new IllegalArgumentException("You are not allowed to change other users' simple finance installments.");
         }
         return simpleFinanceInstallmentRepository.findById(id)
@@ -62,18 +67,17 @@ public class SimpleFinanceInstallmentImpl implements SimpleFinanceInstallmentSer
         
         
         
-        Long getUserId = simpleFinanceRepository.getUserId(simpleFinanceId);
-        //boolean getCheckSimpleFinanceEnabled = simpleFinanceRepository.checkSimpleFinanceEnabled(simpleFinanceId);
-        if (simpleFinanceId == null) {
+        Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.getSimpleFinance(simpleFinanceId);
+        if (getSimpleFinance.isEmpty()) {
             throw new IllegalArgumentException("Simple finance installment don't exists.");
         }
-        //if (!getCheckSimpleFinanceEnabled) {
-        //    throw new IllegalArgumentException("It is not allowed to view disabled simple finance installments.");
-        //}
-        if (getUserId == null) {
+        if (!getSimpleFinance.get().isEnabled()) {
+            throw new IllegalArgumentException("It is not allowed to view disabled simple finance installments.");
+        }
+        if (getSimpleFinance.get().getUser() == null) {
             throw new IllegalArgumentException("Don't exists users vinculated at simple finance installments.");
         }
-        if (!getUserId.equals(userAuthenticated.getId())) {
+        if (!getSimpleFinance.get().getUser().getId().equals(userAuthenticated.getId())) {
             throw new IllegalArgumentException("You are not allowed to change other users' simple finance installments.");
         }
         return simpleFinanceInstallmentRepository.list(simpleFinanceId);

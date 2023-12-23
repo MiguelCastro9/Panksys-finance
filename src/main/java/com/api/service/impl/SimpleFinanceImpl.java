@@ -98,11 +98,11 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
     @Override
     public SimpleFinanceModel update(Long id, SimpleFinanceModel simpleFinanceModel) {
         UserModel userAuthenticated = getUserAuthenticated();
-        Long userId = simpleFinanceRepository.getUserId(id);
-        if (userId == null) {
+        Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.getSimpleFinance(id);
+        if (getSimpleFinance.get().getUser().getId() == null) {
             throw new IllegalArgumentException("Simple finance don't exists.");
         }
-        if (!userId.equals(userAuthenticated.getId())) {
+        if (!getSimpleFinance.get().getUser().getId().equals(userAuthenticated.getId())) {
             throw new IllegalArgumentException("You are not allowed to change other users' simple finances.");
         }
         return simpleFinanceRepository.findById(id)
@@ -138,11 +138,11 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
     @Override
     public Optional<SimpleFinanceModel> find(Long id) {
         UserModel userAuthenticated = getUserAuthenticated();
-        Long userId = simpleFinanceRepository.getUserId(id);
-        if (userId == null) {
+        Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.getSimpleFinance(id);
+        if (getSimpleFinance.get().getUser().getId() == null) {
             throw new IllegalArgumentException("Simple finance don't exists.");
         }
-        if (!userId.equals(userAuthenticated.getId())) {
+        if (!getSimpleFinance.get().getUser().getId().equals(userAuthenticated.getId())) {
             throw new IllegalArgumentException("You are not allowed to search for simple finances from other users.");
         }
         return simpleFinanceRepository.findById(id);
@@ -151,11 +151,11 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
     @Override
     public SimpleFinanceModel disabled(Long id) {
         UserModel userAuthenticated = getUserAuthenticated();
-        Long userId = simpleFinanceRepository.getUserId(id);
-        if (userId == null) {
+        Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.getSimpleFinance(id);
+        if (getSimpleFinance.get().getUser().getId() == null) {
             throw new IllegalArgumentException("Simple finance dont't exists.");
         }
-        if (!userId.equals(userAuthenticated.getId())) {
+        if (!getSimpleFinance.get().getUser().getId().equals(userAuthenticated.getId())) {
             throw new IllegalArgumentException("You are not allowed to change other users' simple finances.");
         }
         return simpleFinanceRepository.findById(id)
