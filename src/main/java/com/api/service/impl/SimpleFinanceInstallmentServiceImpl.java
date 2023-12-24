@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  * @author Miguel Castro
  */
 @Service
-public class SimpleFinanceInstallmentImpl implements SimpleFinanceInstallmentService {
+public class SimpleFinanceInstallmentServiceImpl implements SimpleFinanceInstallmentService {
 
     @Autowired
     private SimpleFinanceInstallmentRepository simpleFinanceInstallmentRepository;
@@ -36,10 +36,6 @@ public class SimpleFinanceInstallmentImpl implements SimpleFinanceInstallmentSer
             throw new IllegalArgumentException("Simple finance installment don't exists.");
         }
         Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.getSimpleFinance(getSimpleFinanceInstallment.get().getSimple_finance().getId());
-        
-        
-        
-        
         if (!getSimpleFinance.get().isEnabled()) {
             throw new IllegalArgumentException("It is not allowed to view disabled simple finance installments.");
         }
@@ -64,9 +60,6 @@ public class SimpleFinanceInstallmentImpl implements SimpleFinanceInstallmentSer
     @Override
     public List<SimpleFinanceInstallmentModel> list(Long simpleFinanceId) {
         UserModel userAuthenticated = getUserAuthenticated();
-        
-        
-        
         Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.getSimpleFinance(simpleFinanceId);
         if (getSimpleFinance.isEmpty()) {
             throw new IllegalArgumentException("Simple finance installment don't exists.");

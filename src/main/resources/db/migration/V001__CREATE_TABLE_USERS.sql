@@ -9,6 +9,6 @@ CREATE TABLE users (
   password VARCHAR(255) NOT NULL,
   role VARCHAR(45) NOT NULL,
   enabled BOOLEAN,
-  created_date DATETIME(6) NOT NULL,
-  updated_date DATETIME(6) NOT NULL
+  created_date DATE NOT NULL,
+  updated_date DATE NOT NULL
 );

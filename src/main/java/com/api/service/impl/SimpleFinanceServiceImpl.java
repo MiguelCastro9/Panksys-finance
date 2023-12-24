@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +26,8 @@ import org.springframework.stereotype.Service;
  * @author Miguel Castro
  */
 @Service
-public class SimpleFinanceImpl implements SimpleFinanceService {
+@Primary
+public class SimpleFinanceServiceImpl implements SimpleFinanceService {
 
     @Autowired
     private SimpleFinanceRepository simpleFinanceRepository;
@@ -142,6 +144,9 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
     public Optional<SimpleFinanceModel> find(Long id) {
         UserModel userAuthenticated = getUserAuthenticated();
         Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.getSimpleFinance(id);
+        if (getSimpleFinance.isEmpty()) {
+            throw new IllegalArgumentException("Simple finance don't exists.");
+        }
         if (getSimpleFinance.get().getUser().getId() == null) {
             throw new IllegalArgumentException("Simple finance don't exists.");
         }
@@ -156,10 +161,10 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
         UserModel userAuthenticated = getUserAuthenticated();
         Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.getSimpleFinance(id);
         if (getSimpleFinance.isEmpty()) {
-            throw new IllegalArgumentException("Simple finance dont't exists.");
+            throw new IllegalArgumentException("Simple finance don't exists.");
         }
         if (getSimpleFinance.get().getUser().getId() == null) {
-            throw new IllegalArgumentException("Simple finance dont't exists.");
+            throw new IllegalArgumentException("Simple finance don't exists.");
         }
         if (!getSimpleFinance.get().getUser().getId().equals(userAuthenticated.getId())) {
             throw new IllegalArgumentException("You are not allowed to change other users' simple finances.");
@@ -172,6 +177,7 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                             .setTotalValue(existingSimpleFinance.getTotal_value())
                             .setForm_payment(existingSimpleFinance.getForm_payment())
                             .setMonth_payment(existingSimpleFinance.getMonth_payment())
+                            .setTotal_installment(existingSimpleFinance.getTotal_installment())
                             .setDescription(existingSimpleFinance.getDescription())
                             .setAll_status_payment(existingSimpleFinance.getAll_status_payment())
                             .setUser(userAuthenticated)
@@ -183,7 +189,6 @@ public class SimpleFinanceImpl implements SimpleFinanceService {
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Simple finance don't exists."));
     }
-
     @Override
     public void deleteAll() {
         simpleFinanceRepository.deleteAll();

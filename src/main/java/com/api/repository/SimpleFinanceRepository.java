@@ -15,9 +15,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SimpleFinanceRepository extends JpaRepository<SimpleFinanceModel, Long> {
     
-    @Query(value = "SELECT * FROM simple_finances WHERE id = :id AND enabled = 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM simple_finances WHERE id = :id AND enabled = true", nativeQuery = true)
     public Optional<SimpleFinanceModel> getSimpleFinance(@Param("id") Long id);
     
-    @Query(value = "SELECT * FROM simple_finances WHERE user_id = :user_id AND enabled = 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM simple_finances WHERE user_id = :user_id AND enabled = true", nativeQuery = true)
     public List<SimpleFinanceModel> list(@Param("user_id") Long userId);
 }
