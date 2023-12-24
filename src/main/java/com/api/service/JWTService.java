@@ -10,13 +10,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  */
 public interface JWTService {
     
-    String getUsername(String token);
+    public String getUsername(String token);
     
-    UserDetailsService userDetailsService();
+    public UserDetailsService userDetailsService();
     
-    String generateToken(UserDetails userDetails);
+    public String generateToken(UserDetails userDetails);
     
-    String generateRefreshToken(Map<String, Object> extraClaims, UserDetails userDetails);
+    public String generateRefreshToken(Map<String, Object> extraClaims, UserDetails userDetails);
     
-    boolean isTokenValid(String token, UserDetails userDatails);
+    public boolean isTokenValid(String token, UserDetails userDatails);
 }

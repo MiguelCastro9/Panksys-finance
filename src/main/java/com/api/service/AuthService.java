@@ -10,7 +10,7 @@ import com.api.dto.response.JWTResponseDto;
  */
 public interface AuthService {
     
-    JWTResponseDto signin(SigninRequestDto loginRequestDto);
+    public JWTResponseDto signin(SigninRequestDto loginRequestDto);
     
-    JWTResponseDto refreshToken(RefreshTokenRequestDto refreshTokenRequestDto);
+    public JWTResponseDto refreshToken(RefreshTokenRequestDto refreshTokenRequestDto);
 }

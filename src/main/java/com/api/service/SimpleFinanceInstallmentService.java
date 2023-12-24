@@ -8,7 +8,7 @@ import java.util.List;
  */
 public interface SimpleFinanceInstallmentService {
     
-    SimpleFinanceInstallmentModel update(Long id, SimpleFinanceInstallmentModel simpleFinanceInstallmentModel);
+    public SimpleFinanceInstallmentModel update(Long id, SimpleFinanceInstallmentModel simpleFinanceInstallmentModel);
     
-    List<SimpleFinanceInstallmentModel> list(Long simpleFinanceId);
+    public List<SimpleFinanceInstallmentModel> list(Long simpleFinanceId);
 }

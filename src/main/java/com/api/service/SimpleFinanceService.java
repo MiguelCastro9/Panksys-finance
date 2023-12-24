@@ -10,15 +10,15 @@ import java.util.Optional;
  */
 public interface SimpleFinanceService {
     
-    SimpleFinanceModel save(SimpleFinanceModel simpleFinanceModel);
+    public SimpleFinanceModel save(SimpleFinanceModel simpleFinanceModel);
     
-    SimpleFinanceModel update(Long id, SimpleFinanceModel simpleFinanceModel);
+    public SimpleFinanceModel update(Long id, SimpleFinanceModel simpleFinanceModel);
     
-    List<SimpleFinanceModel> list();
+    public List<SimpleFinanceModel> list();
     
-    Optional<SimpleFinanceModel> find(Long id);
+    public Optional<SimpleFinanceModel> find(Long id);
     
-    SimpleFinanceModel disabled(Long id);
+    public SimpleFinanceModel disabled(Long id);
     
-    void deleteAll();
+    public void deleteAll();
 }

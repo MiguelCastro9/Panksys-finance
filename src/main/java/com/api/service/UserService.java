@@ -10,15 +10,15 @@ import java.util.Optional;
  */
 public interface UserService {
     
-    UserModel singup(UserModel userModel);
+    public UserModel singup(UserModel userModel);
     
-    UserModel update(Long id, UserModel userModel);
+    public UserModel update(Long id, UserModel userModel);
     
-    UserModel disabled(Long id);
+    public UserModel disabled(Long id);
     
-    List<UserModel> list();
+    public List<UserModel> list();
     
-    Optional<UserModel> find(Long id);
+    public Optional<UserModel> find(Long id);
     
-    void deleteAll();
+    public void deleteAll();
 }

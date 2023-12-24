@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<UserModel, Long> {
 
-    Optional<UserModel> findByEmail(String email);
+    public Optional<UserModel> findByEmail(String email);
 
-    UserModel findByRole(RoleEnum role);
+    public UserModel findByRole(RoleEnum role);
 }

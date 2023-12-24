@@ -34,7 +34,7 @@ public class AuthController {
     private AuthService authenticationService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @PostMapping("/singup")
     public ResponseEntity<UserResponseDto> singup(@Valid @RequestBody UserRequestDto userRequestDto) {

@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 public class JWTServiceImpl implements JWTService {
     
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Override
     public String generateToken(UserDetails userDetails) {
