@@ -77,4 +77,79 @@ public class SimpleFinanceController {
         simpleFinanceResponseDto.add(linkTo(methodOn(SimpleFinanceController.class).disabled(id)).withSelfRel());
         return new ResponseEntity("Simple finance [" + simpleFinanceResponseDto.getId() + "] " + simpleFinanceResponseDto.getName() + " disabled with success.", HttpStatus.OK);
     }
+    
+    @GetMapping("/total-money")
+    public ResponseEntity<Integer> getTotalFormPaymentByMoney() {
+        return new ResponseEntity<>(simpleFinanceService.getTotalByFormPaymentMoney(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/total-debit")
+    public ResponseEntity<Integer> getTotalFormPaymentByDebit() {
+        return new ResponseEntity<>(simpleFinanceService.getTotalByFormPaymentDebit(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/total-credit")
+    public ResponseEntity<Integer> getTotalFormPaymentByCredit() {
+        return new ResponseEntity<>(simpleFinanceService.getTotalByFormPaymentCredit(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/total-january")
+    public ResponseEntity<Integer> getTotalByMonthJanuary() {
+        return new ResponseEntity<>(simpleFinanceService.getTotalByMonthJanuary(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/total-february")
+    public ResponseEntity<Integer> getTotalByMonthFebruary() {
+        return new ResponseEntity<>(simpleFinanceService.getTotalByMonthFebruary(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/total-march")
+    public ResponseEntity<Integer> getTotalByMonthMarch() {
+        return new ResponseEntity<>(simpleFinanceService.getTotalByMonthMarch(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/total-april")
+    public ResponseEntity<Integer> getTotalByMonthApril() {
+        return new ResponseEntity<>(simpleFinanceService.getTotalByMonthApril(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/total-may")
+    public ResponseEntity<Integer> getTotalByMonthMay() {
+        return new ResponseEntity<>(simpleFinanceService.getTotalByMonthMay(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/total-june")
+    public ResponseEntity<Integer> getTotalByMonthJune() {
+        return new ResponseEntity<>(simpleFinanceService.getTotalByMonthJune(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/total-july")
+    public ResponseEntity<Integer> getTotalByMonthJuly() {
+        return new ResponseEntity<>(simpleFinanceService.getTotalByMonthJuly(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/total-august")
+    public ResponseEntity<Integer> getTotalByMonthAugust() {
+        return new ResponseEntity<>(simpleFinanceService.getTotalByMonthAugust(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/total-september")
+    public ResponseEntity<Integer> getTotalByMonthSeptember() {
+        return new ResponseEntity<>(simpleFinanceService.getTotalByMonthSeptember(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/total-october")
+    public ResponseEntity<Integer> getTotalByMonthOctober() {
+        return new ResponseEntity<>(simpleFinanceService.getTotalByMonthOctober(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/total-november")
+    public ResponseEntity<Integer> getTotalByMonthNovember() {
+        return new ResponseEntity<>(simpleFinanceService.getTotalByMonthNovember(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/total-december")
+    public ResponseEntity<Integer> getTotalByMonthDecember() {
+        return new ResponseEntity<>(simpleFinanceService.getTotalByMonthDecember(), HttpStatus.OK);
+    }
 }

@@ -189,9 +189,23 @@ public class SimpleFinanceServiceImpl implements SimpleFinanceService {
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Simple finance don't exists."));
     }
+
     @Override
-    public void deleteAll() {
-        simpleFinanceRepository.deleteAll();
+    public Integer getTotalByFormPaymentMoney() {
+        UserModel userAuthenticated = getUserAuthenticated();
+        return simpleFinanceRepository.getTotalByFormPaymentMoney(userAuthenticated.getId());
+    }
+
+    @Override
+    public Integer getTotalByFormPaymentDebit() {
+        UserModel userAuthenticated = getUserAuthenticated();
+        return simpleFinanceRepository.getTotalByFormPaymentDebit(userAuthenticated.getId());
+    }
+
+    @Override
+    public Integer getTotalByFormPaymentCredit() {
+        UserModel userAuthenticated = getUserAuthenticated();
+        return simpleFinanceRepository.getTotalByFormPaymentCredit(userAuthenticated.getId());
     }
 
     private UserModel getUserAuthenticated() {
@@ -233,5 +247,77 @@ public class SimpleFinanceServiceImpl implements SimpleFinanceService {
                     .build();
             simpleFinanceInstallmentRepository.save(simpleFinanceInstallmentBuilder);
         }
+    }
+
+    @Override
+    public Integer getTotalByMonthJanuary() {
+        UserModel userAuthenticated = getUserAuthenticated();
+        return simpleFinanceRepository.getTotalByMonthJanuary(userAuthenticated.getId());
+    }
+
+    @Override
+    public Integer getTotalByMonthFebruary() {
+        UserModel userAuthenticated = getUserAuthenticated();
+        return simpleFinanceRepository.getTotalByMonthFebruary(userAuthenticated.getId());
+    }
+
+    @Override
+    public Integer getTotalByMonthMarch() {
+        UserModel userAuthenticated = getUserAuthenticated();
+        return simpleFinanceRepository.getTotalByMonthMarch(userAuthenticated.getId());
+    }
+
+    @Override
+    public Integer getTotalByMonthApril() {
+        UserModel userAuthenticated = getUserAuthenticated();
+        return simpleFinanceRepository.getTotalByMonthApril(userAuthenticated.getId());
+    }
+
+    @Override
+    public Integer getTotalByMonthMay() {
+        UserModel userAuthenticated = getUserAuthenticated();
+        return simpleFinanceRepository.getTotalByMonthMay(userAuthenticated.getId());
+    }
+
+    @Override
+    public Integer getTotalByMonthJune() {
+        UserModel userAuthenticated = getUserAuthenticated();
+        return simpleFinanceRepository.getTotalByMonthJune(userAuthenticated.getId());
+    }
+
+    @Override
+    public Integer getTotalByMonthJuly() {
+        UserModel userAuthenticated = getUserAuthenticated();
+        return simpleFinanceRepository.getTotalByMonthJuly(userAuthenticated.getId());
+    }
+
+    @Override
+    public Integer getTotalByMonthAugust() {
+        UserModel userAuthenticated = getUserAuthenticated();
+        return simpleFinanceRepository.getTotalByMonthAugust(userAuthenticated.getId());
+    }
+
+    @Override
+    public Integer getTotalByMonthSeptember() {
+        UserModel userAuthenticated = getUserAuthenticated();
+        return simpleFinanceRepository.getTotalByMonthSeptember(userAuthenticated.getId());
+    }
+
+    @Override
+    public Integer getTotalByMonthOctober() {
+        UserModel userAuthenticated = getUserAuthenticated();
+        return simpleFinanceRepository.getTotalByMonthOctober(userAuthenticated.getId());
+    }
+
+    @Override
+    public Integer getTotalByMonthNovember() {
+        UserModel userAuthenticated = getUserAuthenticated();
+        return simpleFinanceRepository.getTotalByMonthNovember(userAuthenticated.getId());
+    }
+
+    @Override
+    public Integer getTotalByMonthDecember() {
+        UserModel userAuthenticated = getUserAuthenticated();
+        return simpleFinanceRepository.getTotalByMonthDecember(userAuthenticated.getId());
     }
 }

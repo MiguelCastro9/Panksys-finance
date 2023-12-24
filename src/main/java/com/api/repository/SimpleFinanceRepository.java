@@ -20,4 +20,64 @@ public interface SimpleFinanceRepository extends JpaRepository<SimpleFinanceMode
     
     @Query(value = "SELECT * FROM simple_finances WHERE user_id = :user_id AND enabled = true", nativeQuery = true)
     public List<SimpleFinanceModel> list(@Param("user_id") Long userId);
+    
+    @Query(value = "SELECT COUNT(*) FROM simple_finances WHERE form_payment = 'MONEY'"
+            + " AND user_id = :user_id AND enabled = true", nativeQuery = true)
+    public Integer getTotalByFormPaymentMoney(@Param("user_id") Long userId);
+    
+    @Query(value = "SELECT COUNT(*) FROM simple_finances WHERE form_payment = 'DEBIT'"
+            + " AND user_id = :user_id AND enabled = true", nativeQuery = true)
+    public Integer getTotalByFormPaymentDebit(@Param("user_id") Long userId);
+    
+    @Query(value = "SELECT COUNT(*) FROM simple_finances WHERE form_payment = 'CREDIT'"
+            + " AND user_id = :user_id AND enabled = true", nativeQuery = true)
+    public Integer getTotalByFormPaymentCredit(@Param("user_id") Long userId);
+    
+    @Query(value = "SELECT COUNT(*) FROM simple_finances WHERE MONTH(month_payment) = 1"
+            + " AND user_id = :user_id AND enabled = true", nativeQuery = true)
+    public Integer getTotalByMonthJanuary(@Param("user_id") Long userId);
+    
+    @Query(value = "SELECT COUNT(*) FROM simple_finances WHERE MONTH(month_payment) = 2"
+            + " AND user_id = :user_id AND enabled = true", nativeQuery = true)
+    public Integer getTotalByMonthFebruary(@Param("user_id") Long userId);
+    
+    @Query(value = "SELECT COUNT(*) FROM simple_finances WHERE MONTH(month_payment) = 3"
+            + " AND user_id = :user_id AND enabled = true", nativeQuery = true)
+    public Integer getTotalByMonthMarch(@Param("user_id") Long userId);
+    
+    @Query(value = "SELECT COUNT(*) FROM simple_finances WHERE MONTH(month_payment) = 4"
+            + " AND user_id = :user_id AND enabled = true", nativeQuery = true)
+    public Integer getTotalByMonthApril(@Param("user_id") Long userId);
+    
+    @Query(value = "SELECT COUNT(*) FROM simple_finances WHERE MONTH(month_payment) = 5"
+            + " AND user_id = :user_id AND enabled = true", nativeQuery = true)
+    public Integer getTotalByMonthMay(@Param("user_id") Long userId);
+    
+    @Query(value = "SELECT COUNT(*) FROM simple_finances WHERE MONTH(month_payment) = 6"
+            + " AND user_id = :user_id AND enabled = true", nativeQuery = true)
+    public Integer getTotalByMonthJune(@Param("user_id") Long userId);
+    
+    @Query(value = "SELECT COUNT(*) FROM simple_finances WHERE MONTH(month_payment) = 7"
+            + " AND user_id = :user_id AND enabled = true", nativeQuery = true)
+    public Integer getTotalByMonthJuly(@Param("user_id") Long userId);
+    
+    @Query(value = "SELECT COUNT(*) FROM simple_finances WHERE MONTH(month_payment) = 8"
+            + " AND user_id = :user_id AND enabled = true", nativeQuery = true)
+    public Integer getTotalByMonthAugust(@Param("user_id") Long userId);
+    
+    @Query(value = "SELECT COUNT(*) FROM simple_finances WHERE MONTH(month_payment) = 9"
+            + " AND user_id = :user_id AND enabled = true", nativeQuery = true)
+    public Integer getTotalByMonthSeptember(@Param("user_id") Long userId);
+    
+    @Query(value = "SELECT COUNT(*) FROM simple_finances WHERE MONTH(month_payment) = 10"
+            + " AND user_id = :user_id AND enabled = true", nativeQuery = true)
+    public Integer getTotalByMonthOctober(@Param("user_id") Long userId);
+    
+    @Query(value = "SELECT COUNT(*) FROM simple_finances WHERE MONTH(month_payment) = 11"
+            + " AND user_id = :user_id AND enabled = true", nativeQuery = true)
+    public Integer getTotalByMonthNovember(@Param("user_id") Long userId);
+    
+    @Query(value = "SELECT COUNT(*) FROM simple_finances WHERE MONTH(month_payment) = 12"
+            + " AND user_id = :user_id AND enabled = true", nativeQuery = true)
+    public Integer getTotalByMonthDecember(@Param("user_id") Long userId);
 }

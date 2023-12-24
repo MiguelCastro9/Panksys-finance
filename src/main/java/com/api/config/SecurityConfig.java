@@ -58,7 +58,22 @@ public class SecurityConfig {
         "/api/v1/simple-finance/update/{id}",
         "/api/v1/simple-finance/list",
         "/api/v1/simple-finance/find/{id}",
-        "/api/v1/simple-finance/disabled/{id}"
+        "/api/v1/simple-finance/disabled/{id}",
+        "/api/v1/simple-finance/total-money",
+        "/api/v1/simple-finance/total-debit",
+        "/api/v1/simple-finance/total-credit",
+        "/api/v1/simple-finance/total-january",
+        "/api/v1/simple-finance/total-february",
+        "/api/v1/simple-finance/total-march",
+        "/api/v1/simple-finance/total-april",
+        "/api/v1/simple-finance/total-may",
+        "/api/v1/simple-finance/total-june",
+        "/api/v1/simple-finance/total-july",
+        "/api/v1/simple-finance/total-august",
+        "/api/v1/simple-finance/total-september",
+        "/api/v1/simple-finance/total-october",
+        "/api/v1/simple-finance/total-november",
+        "/api/v1/simple-finance/total-december"
     };
     
     private static final String[] SIMPLE_FINANCE_INSTALLMENT_PATHS = {

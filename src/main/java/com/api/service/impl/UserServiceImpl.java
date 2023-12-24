@@ -82,11 +82,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteAll() {
-        userRepository.deleteAll();
-    }
-
-    @Override
     public UserModel disabled(Long id) {
         UserModel userAuthenticated = getUserAuthenticated();
         if (!id.equals(userAuthenticated.getId())) {

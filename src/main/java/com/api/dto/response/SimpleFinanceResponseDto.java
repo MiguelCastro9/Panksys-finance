@@ -1,7 +1,6 @@
 package com.api.dto.response;
 
 import com.api.enums.FormPaymentEnum;
-import com.api.enums.StatusPaymentEnum;
 import com.api.model.SimpleFinanceModel;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;

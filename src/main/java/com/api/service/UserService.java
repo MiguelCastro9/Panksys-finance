@@ -19,6 +19,4 @@ public interface UserService {
     public List<UserModel> list();
     
     public Optional<UserModel> find(Long id);
-    
-    public void deleteAll();
 }
