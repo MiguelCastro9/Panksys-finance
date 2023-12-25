@@ -79,13 +79,13 @@ public class SecurityConfig {
     private static final String[] SIMPLE_FINANCE_INSTALLMENT_PATHS = {
         "api/v1/simple-finance-installment/update",
         "api/v1/simple-finance-installment/list/{id}",
-        "api/v1/simple-finance-installment/find/{id}"
+        "api/v1/simple-finance-installment/find/{simpleFinanceId}"
     };
     
     private static final String[] FEEDBACK_PATHS = {
         "api/v1/feedback/save",
         "api/v1/feedback/list",
-        "api/v1/feedback/find/{id}"
+        "api/v1/feedback/find/{totalStars}"
     };
 
     @Bean

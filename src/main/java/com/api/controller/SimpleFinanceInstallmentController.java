@@ -44,8 +44,8 @@ public class SimpleFinanceInstallmentController {
         return new ResponseEntity<>(simpleFinanceInstallmentResponseDto, HttpStatus.OK);
     }
 
-    @GetMapping("/list/{id}")
-    public ResponseEntity<List<SimpleFinanceInstallmentResponseDto>> list(@PathVariable("id") Long simpleFinanceId) {
+    @GetMapping("/list/{simpleFinanceId}")
+    public ResponseEntity<List<SimpleFinanceInstallmentResponseDto>> list(@PathVariable("simpleFinanceId") Long simpleFinanceId) {
         List<SimpleFinanceInstallmentResponseDto> simpleFinanceInstallmentResponseDtoList = simpleFinanceInstallmentService.list(simpleFinanceId).stream()
                 .map(simpleFinanceInstallment -> {
                     SimpleFinanceInstallmentResponseDto simpleFinanceInstallmentResponseDto = SimpleFinanceInstallmentResponseDto.convertEntityForSimpleFinanceInstallmentDto(simpleFinanceInstallment);
