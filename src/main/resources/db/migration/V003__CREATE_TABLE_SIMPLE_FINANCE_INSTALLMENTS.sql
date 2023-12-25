@@ -11,4 +11,4 @@ CREATE TABLE simple_finance_installments (
 );
 
 ALTER TABLE simple_finance_installments
-ADD CONSTRAINT fk_simple_finance_id FOREIGN KEY (simple_finance_id) REFERENCES simple_finances(id);
+ADD CONSTRAINT fk_sfi_simple_finance_id FOREIGN KEY (simple_finance_id) REFERENCES simple_finances(id);

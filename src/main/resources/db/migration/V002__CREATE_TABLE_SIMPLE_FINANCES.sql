@@ -17,4 +17,4 @@ CREATE TABLE simple_finances (
 );
 
 ALTER TABLE simple_finances
-ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id);
+ADD CONSTRAINT fk_sf_user_id FOREIGN KEY (user_id) REFERENCES users(id);
