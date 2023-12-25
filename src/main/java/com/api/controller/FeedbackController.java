@@ -49,7 +49,7 @@ public class FeedbackController {
         List<FeedbackResponseDto> feedbackResponseDtoList = feedbackService.list().stream()
                 .map(feedback -> {
                     FeedbackResponseDto feedbackResponseDto = FeedbackResponseDto.convertEntityForFeedbackDto(feedback);
-                    Link selfLink = linkTo(methodOn(FeedbackController.class).list()).slash(feedbackResponseDto.getId()).withSelfRel();
+                    Link selfLink = linkTo(methodOn(FeedbackController.class).list()).withSelfRel();
                     feedbackResponseDto.add(selfLink);
                     return feedbackResponseDto;
                 })
@@ -62,7 +62,7 @@ public class FeedbackController {
         List<FeedbackResponseDto> feedbackResponseDtoList = feedbackService.find(totalStars).stream()
                 .map(feedback -> {
                     FeedbackResponseDto feedbackResponseDto = FeedbackResponseDto.convertEntityForFeedbackDto(feedback);
-                    Link selfLink = linkTo(methodOn(FeedbackController.class).find(totalStars)).slash(feedbackResponseDto.getId()).withSelfRel();
+                    Link selfLink = linkTo(methodOn(FeedbackController.class).find(totalStars)).withSelfRel();
                     feedbackResponseDto.add(selfLink);
                     return feedbackResponseDto;
                 })
