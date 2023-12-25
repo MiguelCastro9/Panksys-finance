@@ -81,6 +81,12 @@ public class SecurityConfig {
         "api/v1/simple-finance-installment/list/{id}",
         "api/v1/simple-finance-installment/find/{id}"
     };
+    
+    private static final String[] FEEDBACK_PATHS = {
+        "api/v1/feedback/save",
+        "api/v1/feedback/list",
+        "api/v1/feedback/find/{id}"
+    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -90,7 +96,8 @@ public class SecurityConfig {
                 .requestMatchers(ADMINS_PATHS).hasAnyAuthority(RoleEnum.ADMIN.name())
                 .requestMatchers(USERS_PATHS).hasAnyAuthority(RoleEnum.USER.name())
                 .requestMatchers(SIMPLE_FINANCE_PATHS).hasAnyAuthority(RoleEnum.USER.name())
-                        .requestMatchers(SIMPLE_FINANCE_INSTALLMENT_PATHS).hasAnyAuthority(RoleEnum.USER.name())
+                .requestMatchers(SIMPLE_FINANCE_INSTALLMENT_PATHS).hasAnyAuthority(RoleEnum.USER.name())
+                .requestMatchers(FEEDBACK_PATHS).hasAnyAuthority(RoleEnum.USER.name())
                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(

@@ -41,10 +41,10 @@ public class SimpleFinanceInstallmentModel implements Serializable {
     @Column(nullable = false)
     private double value_installment;
     
-    @Column(nullable = false)
+    @Column(nullable = false, length = 45)
     private String month_payment_installment;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 45)
     @Enumerated(EnumType.STRING)
     private StatusPaymentEnum status_payment;
 

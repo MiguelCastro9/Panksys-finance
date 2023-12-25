@@ -54,6 +54,7 @@ public class SimpleFinanceModel implements Serializable {
     @Column(nullable = false)
     private LocalDate month_payment;
     
+    @Column(nullable = false)
     private Integer total_installment;
     
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

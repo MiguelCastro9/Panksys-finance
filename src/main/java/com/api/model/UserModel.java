@@ -59,6 +59,9 @@ public class UserModel implements Serializable, UserDetails {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<SimpleFinanceModel> simple_finances;
+    
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<FeedbackModel> feedbacks;
 
     public UserModel(String name, LocalDate birth_date, String email, String password,
             LocalDateTime created_date, LocalDateTime updated_date) {
@@ -66,16 +69,6 @@ public class UserModel implements Serializable, UserDetails {
         this.birth_date = birth_date;
         this.email = email;
         this.password = password;
-        this.created_date = created_date;
-        this.updated_date = updated_date;
-    }
-
-    public UserModel(Long id, String name, LocalDate birth_date, String email,
-            LocalDateTime created_date, LocalDateTime updated_date) {
-        this.id = id;
-        this.name = name;
-        this.birth_date = birth_date;
-        this.email = email;
         this.created_date = created_date;
         this.updated_date = updated_date;
     }
