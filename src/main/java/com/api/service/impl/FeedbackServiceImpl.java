@@ -60,16 +60,16 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public List<FeedbackModel> find(Integer stars) {
-        return feedbackRepository.find(stars).stream()
+    public List<FeedbackModel> filterFeedbackByStars(Integer stars) {
+        return feedbackRepository.filterFeedbackByStars(stars).stream()
                 .sorted(Comparator.comparing(FeedbackModel::getId, Comparator.reverseOrder()))
                 .collect(Collectors.toList());
     }
     
     @Override
-    public List<FeedbackModel> myFeedbacks() {
+    public List<FeedbackModel> findAllMyFeedbacks() {
         UserModel userAuthenticated = getUserAuthenticated();
-        return feedbackRepository.myFeedbacks(userAuthenticated.getId()).stream()
+        return feedbackRepository.findAllMyFeedbacks(userAuthenticated.getId()).stream()
                 .sorted(Comparator.comparing(FeedbackModel::getId, Comparator.reverseOrder()))
                 .collect(Collectors.toList());
     }
@@ -77,7 +77,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public FeedbackModel disabled(Long id) {
         UserModel userAuthenticated = getUserAuthenticated();
-        Optional<FeedbackModel> getFeedback = feedbackRepository.getFeedback(id);
+        Optional<FeedbackModel> getFeedback = feedbackRepository.findFeedback(id);
         if (getFeedback.isEmpty()) {
             throw new IllegalArgumentException("Feedback don't exists.");
         }

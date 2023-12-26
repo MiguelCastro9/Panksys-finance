@@ -18,10 +18,10 @@ import org.springframework.stereotype.Repository;
 public interface SimpleFinanceRepository extends JpaRepository<SimpleFinanceModel, Long> {
 
     @Query(value = "SELECT * FROM simple_finances WHERE id = :id AND enabled = true", nativeQuery = true)
-    public Optional<SimpleFinanceModel> getSimpleFinance(@Param("id") Long id);
+    public Optional<SimpleFinanceModel> findSimpleFinance(@Param("id") Long id);
 
     @Query(value = "SELECT * FROM simple_finances WHERE user_id = :user_id AND enabled = true", nativeQuery = true)
-    public List<SimpleFinanceModel> list(@Param("user_id") Long userId);
+    public List<SimpleFinanceModel> findAllSimpleFinances(@Param("user_id") Long userId);
 
     @Query(value = "SELECT * FROM simple_finances WHERE (name = :name"
             + " OR form_payment = :form_payment"
@@ -29,7 +29,7 @@ public interface SimpleFinanceRepository extends JpaRepository<SimpleFinanceMode
             + " OR total_installment = :total_installment)"
             + " AND user_id = :user_id"
             + " AND enabled = true", nativeQuery = true)
-    public List<SimpleFinanceModel> filter(
+    public List<SimpleFinanceModel> filterSimpleFinances(
             @Param("name") String name,
             @Param("form_payment") FormPaymentEnum formPayment,
             @Param("month_payment") LocalDate monthPayment,

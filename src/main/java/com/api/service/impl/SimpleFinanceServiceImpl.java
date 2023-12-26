@@ -111,7 +111,7 @@ public class SimpleFinanceServiceImpl implements SimpleFinanceService {
     @Override
     public SimpleFinanceModel update(Long id, SimpleFinanceModel simpleFinanceModel) {
         UserModel userAuthenticated = getUserAuthenticated();
-        Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.getSimpleFinance(id);
+        Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.findSimpleFinance(id);
         if (getSimpleFinance.isEmpty()) {
             throw new IllegalArgumentException("Simple finance don't exists.");
         }
@@ -143,28 +143,28 @@ public class SimpleFinanceServiceImpl implements SimpleFinanceService {
     }
 
     @Override
-    public List<SimpleFinanceModel> list() {
+    public List<SimpleFinanceModel> findAllSimpleFinances() {
         UserModel userAuthenticated = getUserAuthenticated();
-        return simpleFinanceRepository.list(userAuthenticated.getId())
+        return simpleFinanceRepository.findAllSimpleFinances(userAuthenticated.getId())
                 .stream()
                 .sorted(Comparator.comparing(SimpleFinanceModel::getId, Comparator.reverseOrder()))
                 .collect(Collectors.toList());
     }
     
     @Override
-    public List<SimpleFinanceModel> filter(String name, FormPaymentEnum formPayment, 
+    public List<SimpleFinanceModel> filterSimpleFinances(String name, FormPaymentEnum formPayment, 
             LocalDate monthPayment, Integer totalInstallment) {
         UserModel userAuthenticated = getUserAuthenticated();
-        return simpleFinanceRepository.filter(name, formPayment, monthPayment, totalInstallment, userAuthenticated.getId())
+        return simpleFinanceRepository.filterSimpleFinances(name, formPayment, monthPayment, totalInstallment, userAuthenticated.getId())
                 .stream()
                 .sorted(Comparator.comparing(SimpleFinanceModel::getId, Comparator.reverseOrder()))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<SimpleFinanceModel> find(Long id) {
+    public Optional<SimpleFinanceModel> findSimpleFinance(Long id) {
         UserModel userAuthenticated = getUserAuthenticated();
-        Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.getSimpleFinance(id);
+        Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.findSimpleFinance(id);
         if (getSimpleFinance.isEmpty()) {
             throw new IllegalArgumentException("Simple finance don't exists.");
         }
@@ -180,7 +180,7 @@ public class SimpleFinanceServiceImpl implements SimpleFinanceService {
     @Override
     public SimpleFinanceModel disabled(Long id) {
         UserModel userAuthenticated = getUserAuthenticated();
-        Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.getSimpleFinance(id);
+        Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.findSimpleFinance(id);
         if (getSimpleFinance.isEmpty()) {
             throw new IllegalArgumentException("Simple finance don't exists.");
         }

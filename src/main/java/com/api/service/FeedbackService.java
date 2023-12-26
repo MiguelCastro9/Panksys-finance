@@ -13,9 +13,9 @@ public interface FeedbackService {
     
     public List<FeedbackModel> findAllFeedbacks();
     
-    public List<FeedbackModel> find(Integer stars);
+    public List<FeedbackModel> filterFeedbackByStars(Integer stars);
     
-    public List<FeedbackModel> myFeedbacks();
+    public List<FeedbackModel> findAllMyFeedbacks();
     
     public FeedbackModel disabled(Long id);
 }

@@ -46,7 +46,7 @@ public class SimpleFinanceInstallmentController {
 
     @GetMapping("/list/{simpleFinanceId}")
     public ResponseEntity<List<SimpleFinanceInstallmentResponseDto>> list(@PathVariable("simpleFinanceId") Long simpleFinanceId) {
-        List<SimpleFinanceInstallmentResponseDto> simpleFinanceInstallmentResponseDtoList = simpleFinanceInstallmentService.list(simpleFinanceId).stream()
+        List<SimpleFinanceInstallmentResponseDto> simpleFinanceInstallmentResponseDtoList = simpleFinanceInstallmentService.findAllSimpleFinanceInstallments(simpleFinanceId).stream()
                 .map(simpleFinanceInstallment -> {
                     SimpleFinanceInstallmentResponseDto simpleFinanceInstallmentResponseDto = SimpleFinanceInstallmentResponseDto.convertEntityForSimpleFinanceInstallmentResponseDto(simpleFinanceInstallment);
                     WebMvcLinkBuilder linkBuilder = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(SimpleFinanceInstallmentController.class)

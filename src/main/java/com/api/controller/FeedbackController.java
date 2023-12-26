@@ -59,11 +59,11 @@ public class FeedbackController {
     }
 
     @GetMapping("/find/{totalStars}")
-    public ResponseEntity<List<FeedbackResponseDto>> find(@PathVariable Integer totalStars) {
-        List<FeedbackResponseDto> feedbackResponseDtoList = feedbackService.find(totalStars).stream()
+    public ResponseEntity<List<FeedbackResponseDto>> filterFeedbackByStars(@PathVariable Integer totalStars) {
+        List<FeedbackResponseDto> feedbackResponseDtoList = feedbackService.filterFeedbackByStars(totalStars).stream()
                 .map(feedback -> {
                     FeedbackResponseDto feedbackResponseDto = FeedbackResponseDto.convertEntityForFeedbackResponseDto(feedback);
-                    Link selfLink = linkTo(methodOn(FeedbackController.class).find(totalStars)).withSelfRel();
+                    Link selfLink = linkTo(methodOn(FeedbackController.class).filterFeedbackByStars(totalStars)).withSelfRel();
                     feedbackResponseDto.add(selfLink);
                     return feedbackResponseDto;
                 })
@@ -72,11 +72,11 @@ public class FeedbackController {
     }
     
     @GetMapping("/my-feedbacks")
-    public ResponseEntity<List<FeedbackResponseDto>> myFeedbacks() {
-        List<FeedbackResponseDto> feedbackResponseDtoList = feedbackService.myFeedbacks().stream()
+    public ResponseEntity<List<FeedbackResponseDto>> findAllMyFeedbacks() {
+        List<FeedbackResponseDto> feedbackResponseDtoList = feedbackService.findAllMyFeedbacks().stream()
                 .map(feedback -> {
                     FeedbackResponseDto feedbackResponseDto = FeedbackResponseDto.convertEntityForFeedbackResponseDto(feedback);
-                    Link selfLink = linkTo(methodOn(FeedbackController.class).myFeedbacks()).withSelfRel();
+                    Link selfLink = linkTo(methodOn(FeedbackController.class).findAllMyFeedbacks()).withSelfRel();
                     feedbackResponseDto.add(selfLink);
                     return feedbackResponseDto;
                 })

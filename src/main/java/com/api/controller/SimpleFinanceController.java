@@ -55,8 +55,8 @@ public class SimpleFinanceController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<SimpleFinanceResponseDto>> list() {
-        List<SimpleFinanceResponseDto> simpleFinanceResponseDto = simpleFinanceService.list().stream()
+    public ResponseEntity<List<SimpleFinanceResponseDto>> findAllSimpleFinances() {
+        List<SimpleFinanceResponseDto> simpleFinanceResponseDto = simpleFinanceService.findAllSimpleFinances().stream()
                 .map(simpleFinance -> SimpleFinanceResponseDto.convertEntityForSimpleFinanceResponseDto(simpleFinance))
                 .collect(Collectors.toList());
         simpleFinanceResponseDto.forEach(simpleFinance -> simpleFinance
@@ -69,7 +69,7 @@ public class SimpleFinanceController {
     public ResponseEntity<List<SimpleFinanceResponseDto>> filter(@RequestParam("name") String name, @RequestParam("form_payment") FormPaymentEnum formPayment,
             @RequestParam("month_payment") LocalDate monthPayment, @RequestParam("total_installment") Integer totalInstallment) {
         List<SimpleFinanceResponseDto> simpleFinanceResponseDto = simpleFinanceService
-                .filter(name, formPayment, monthPayment, totalInstallment).stream()
+                .filterSimpleFinances(name, formPayment, monthPayment, totalInstallment).stream()
                 .map(simpleFinance -> SimpleFinanceResponseDto.convertEntityForSimpleFinanceResponseDto(simpleFinance))
                 .collect(Collectors.toList());
         simpleFinanceResponseDto.forEach(simpleFinance -> simpleFinance
@@ -80,7 +80,7 @@ public class SimpleFinanceController {
 
     @GetMapping("/find/{id}")
     public ResponseEntity<SimpleFinanceResponseDto> find(@PathVariable Long id) {
-        SimpleFinanceModel simpleFinanceModel = simpleFinanceService.find(id).orElseThrow();
+        SimpleFinanceModel simpleFinanceModel = simpleFinanceService.findSimpleFinance(id).orElseThrow();
         SimpleFinanceResponseDto simpleFinanceResponseDto = SimpleFinanceResponseDto.convertEntityForSimpleFinanceResponseDto(simpleFinanceModel);
         simpleFinanceResponseDto.add(linkTo(methodOn(SimpleFinanceController.class).find(id)).withSelfRel());
         return new ResponseEntity<>(simpleFinanceResponseDto, HttpStatus.OK);

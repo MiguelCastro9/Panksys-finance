@@ -16,12 +16,12 @@ public interface SimpleFinanceService {
     
     public SimpleFinanceModel update(Long id, SimpleFinanceModel simpleFinanceModel);
     
-    public List<SimpleFinanceModel> list();
+    public List<SimpleFinanceModel> findAllSimpleFinances();
     
-    public List<SimpleFinanceModel> filter(String name, FormPaymentEnum formPayment, 
+    public List<SimpleFinanceModel> filterSimpleFinances(String name, FormPaymentEnum formPayment, 
             LocalDate monthPayment, Integer totalInstallment);
     
-    public Optional<SimpleFinanceModel> find(Long id);
+    public Optional<SimpleFinanceModel> findSimpleFinance(Long id);
     
     public SimpleFinanceModel disabled(Long id);
     

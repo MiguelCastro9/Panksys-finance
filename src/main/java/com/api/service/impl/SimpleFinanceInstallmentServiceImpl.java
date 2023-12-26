@@ -35,7 +35,7 @@ public class SimpleFinanceInstallmentServiceImpl implements SimpleFinanceInstall
         if (getSimpleFinanceInstallment.isEmpty()) {
             throw new IllegalArgumentException("Simple finance installment don't exists.");
         }
-        Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.getSimpleFinance(getSimpleFinanceInstallment.get().getSimple_finance().getId());
+        Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.findSimpleFinance(getSimpleFinanceInstallment.get().getSimple_finance().getId());
         if (!getSimpleFinance.get().isEnabled()) {
             throw new IllegalArgumentException("It is not allowed to view disabled simple finance installments.");
         }
@@ -58,9 +58,9 @@ public class SimpleFinanceInstallmentServiceImpl implements SimpleFinanceInstall
     }
 
     @Override
-    public List<SimpleFinanceInstallmentModel> list(Long simpleFinanceId) {
+    public List<SimpleFinanceInstallmentModel> findAllSimpleFinanceInstallments(Long simpleFinanceId) {
         UserModel userAuthenticated = getUserAuthenticated();
-        Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.getSimpleFinance(simpleFinanceId);
+        Optional<SimpleFinanceModel> getSimpleFinance = simpleFinanceRepository.findSimpleFinance(simpleFinanceId);
         if (getSimpleFinance.isEmpty()) {
             throw new IllegalArgumentException("Simple finance installment don't exists.");
         }
@@ -73,7 +73,7 @@ public class SimpleFinanceInstallmentServiceImpl implements SimpleFinanceInstall
         if (!getSimpleFinance.get().getUser().getId().equals(userAuthenticated.getId())) {
             throw new IllegalArgumentException("You are not allowed to change other users' simple finance installments.");
         }
-        return simpleFinanceInstallmentRepository.list(simpleFinanceId);
+        return simpleFinanceInstallmentRepository.findAllSimpleFinanceInstallments(simpleFinanceId);
     }
 
     private UserModel getUserAuthenticated() {

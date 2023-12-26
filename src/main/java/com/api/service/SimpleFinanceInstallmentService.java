@@ -10,5 +10,5 @@ public interface SimpleFinanceInstallmentService {
     
     public SimpleFinanceInstallmentModel update(Long id, SimpleFinanceInstallmentModel simpleFinanceInstallmentModel);
     
-    public List<SimpleFinanceInstallmentModel> list(Long simpleFinanceId);
+    public List<SimpleFinanceInstallmentModel> findAllSimpleFinanceInstallments(Long simpleFinanceId);
 }
