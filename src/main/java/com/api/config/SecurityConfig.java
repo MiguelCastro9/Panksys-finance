@@ -85,7 +85,9 @@ public class SecurityConfig {
     private static final String[] FEEDBACK_PATHS = {
         "api/v1/feedback/save",
         "api/v1/feedback/list",
-        "api/v1/feedback/find/{totalStars}"
+        "api/v1/feedback/find/{totalStars}",
+        "api/v1/feedback/my-feedbacks",
+        "api/v1/feedback/disabled/{id}"
     };
     
     private static final String[] NOTIFICATION_PATHS = {

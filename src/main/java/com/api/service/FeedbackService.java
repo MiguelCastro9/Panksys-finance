@@ -11,7 +11,11 @@ public interface FeedbackService {
     
     public FeedbackModel save(FeedbackModel feedbackModel);
     
-    public List<FeedbackModel> list();
+    public List<FeedbackModel> findAllFeedbacks();
     
     public List<FeedbackModel> find(Integer stars);
+    
+    public List<FeedbackModel> myFeedbacks();
+    
+    public FeedbackModel disabled(Long id);
 }

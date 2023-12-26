@@ -46,17 +46,21 @@ public class FeedbackModel implements Serializable {
 
     @Column(nullable = false)
     private LocalDateTime created_date;
+    
+    @Column(nullable = false)
+    private boolean enabled;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserModel user;
 
-    public FeedbackModel(String name, Integer total_stars, String title, String description, LocalDateTime created_date, UserModel user) {
+    public FeedbackModel(String name, Integer total_stars, String title, String description, LocalDateTime created_date, boolean enabled, UserModel user) {
         this.name = name;
         this.total_stars = total_stars;
         this.title = title;
         this.description = description;
         this.created_date = created_date;
+        this.enabled = enabled;
         this.user = user;
     }
 
@@ -67,6 +71,7 @@ public class FeedbackModel implements Serializable {
         this.title = builder.title;
         this.description = builder.description;
         this.created_date = builder.created_date;
+        this.enabled = builder.enabled;
         this.user = builder.user;
     }
 
@@ -83,6 +88,8 @@ public class FeedbackModel implements Serializable {
         private String description;
 
         private LocalDateTime created_date;
+        
+        private boolean enabled;
 
         private UserModel user;
 
@@ -116,6 +123,11 @@ public class FeedbackModel implements Serializable {
             return this;
         }
 
+        public Builder setEnabled(boolean enabled) {
+            this.enabled = enabled;
+            return this;
+        }
+        
         public Builder setUser(UserModel user) {
             this.user = user;
             return this;

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -45,11 +46,11 @@ public class FeedbackController {
     }
     
     @GetMapping("/list")
-    public ResponseEntity<List<FeedbackResponseDto>> list() {
-        List<FeedbackResponseDto> feedbackResponseDtoList = feedbackService.list().stream()
+    public ResponseEntity<List<FeedbackResponseDto>> findAllFeedbacks() {
+        List<FeedbackResponseDto> feedbackResponseDtoList = feedbackService.findAllFeedbacks().stream()
                 .map(feedback -> {
                     FeedbackResponseDto feedbackResponseDto = FeedbackResponseDto.convertEntityForFeedbackDto(feedback);
-                    Link selfLink = linkTo(methodOn(FeedbackController.class).list()).withSelfRel();
+                    Link selfLink = linkTo(methodOn(FeedbackController.class).findAllFeedbacks()).withSelfRel();
                     feedbackResponseDto.add(selfLink);
                     return feedbackResponseDto;
                 })
@@ -68,5 +69,26 @@ public class FeedbackController {
                 })
                 .collect(Collectors.toList());
         return new ResponseEntity<>(feedbackResponseDtoList, HttpStatus.OK);
+    }
+    
+    @GetMapping("/my-feedbacks")
+    public ResponseEntity<List<FeedbackResponseDto>> myFeedbacks() {
+        List<FeedbackResponseDto> feedbackResponseDtoList = feedbackService.myFeedbacks().stream()
+                .map(feedback -> {
+                    FeedbackResponseDto feedbackResponseDto = FeedbackResponseDto.convertEntityForFeedbackDto(feedback);
+                    Link selfLink = linkTo(methodOn(FeedbackController.class).myFeedbacks()).withSelfRel();
+                    feedbackResponseDto.add(selfLink);
+                    return feedbackResponseDto;
+                })
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(feedbackResponseDtoList, HttpStatus.OK);
+    }
+    
+    @DeleteMapping("/disabled/{id}")
+    public ResponseEntity<FeedbackResponseDto> disabled(@PathVariable Long id) {
+        FeedbackModel feedbackModel = feedbackService.disabled(id);
+        FeedbackResponseDto feedbackResponseDto = FeedbackResponseDto.convertEntityForFeedbackDto(feedbackModel);
+        feedbackResponseDto.add(linkTo(methodOn(FeedbackController.class).disabled(id)).withSelfRel());
+        return new ResponseEntity("Feedback [" + feedbackResponseDto.getId() + "] " + feedbackResponseDto.getName() + " disabled with success.", HttpStatus.OK);
     }
 }

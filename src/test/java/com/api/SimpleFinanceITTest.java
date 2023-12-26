@@ -211,7 +211,7 @@ public class SimpleFinanceITTest {
     }
 
     @Test
-    void disabledPutTest() {
+    void disabledDeleteTest() {
         UserRequestDto userRequestDto = new UserRequestDto("panksys finance", LocalDate.now(), "panksysfinance@email.com", "panksysfinance", "panksysfinance");
         ResponseEntity<UserRequestDto> restTemplate1 = restTemplate.postForEntity("/api/v1/auth/singup", userRequestDto, UserRequestDto.class);
         Assertions.assertNotNull(restTemplate1);

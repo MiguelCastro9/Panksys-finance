@@ -98,7 +98,7 @@ class UserITTest {
     }
 
     @Test
-    void disabledPutTest() {
+    void disabledDeleteTest() {
         UserRequestDto userRequestDto1 = new UserRequestDto("panksys finance", LocalDate.now(), "panksysfinance@email.com", "panksysfinance", "panksysfinance");
         Assertions.assertEquals(userRequestDto1.getPassword(), userRequestDto1.getPassword_repeated());
         ResponseEntity<UserRequestDto> restTemplate1 = restTemplate.postForEntity("/api/v1/auth/singup", userRequestDto1, UserRequestDto.class);
