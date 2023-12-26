@@ -49,7 +49,7 @@ public class UserRequestDto {
         this.password_repeated = password_repeated;
     }
 
-    public UserModel convertUserDtoForEntity() {
+    public UserModel convertUserRequestDtoForEntity() {
         UserModel.Builder userBuilder = new UserModel.Builder();
         userBuilder.setName(name)
                 .setBirth_date(birth_date)
@@ -58,7 +58,7 @@ public class UserRequestDto {
         return new UserModel(userBuilder);
     }
 
-    public UserModel convertUserUpdateDtoForEntity() {
+    public UserModel convertUserUpdateRequestDtoForEntity() {
         UserModel.Builder userBuilder = new UserModel.Builder();
         userBuilder.setId(id)
                 .setName(name)

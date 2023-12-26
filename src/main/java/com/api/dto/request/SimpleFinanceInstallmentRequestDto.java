@@ -23,13 +23,13 @@ public class SimpleFinanceInstallmentRequestDto {
         this.status_payment = status_payment;
     }
 
-    public SimpleFinanceInstallmentModel convertSimpleFinanceInstallmentDtoForEntity() {
+    public SimpleFinanceInstallmentModel convertSimpleFinanceInstallmentRequestDtoForEntity() {
         SimpleFinanceInstallmentModel.Builder simpleFinanceInstallmentBuilder = new SimpleFinanceInstallmentModel.Builder();
         simpleFinanceInstallmentBuilder.setStatusPayment(status_payment);
         return new SimpleFinanceInstallmentModel(simpleFinanceInstallmentBuilder);
     }
 
-    public SimpleFinanceInstallmentModel convertSimpleFinanceInstallmentUpdateDtoForEntity() {
+    public SimpleFinanceInstallmentModel convertSimpleFinanceInstallmentUpdateRequestDtoForEntity() {
         SimpleFinanceInstallmentModel.Builder simpleFinanceInstallmentBuilder = new SimpleFinanceInstallmentModel.Builder();
         simpleFinanceInstallmentBuilder.setId(id)
                 .setStatusPayment(status_payment);

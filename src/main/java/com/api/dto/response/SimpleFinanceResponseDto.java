@@ -31,7 +31,7 @@ public class SimpleFinanceResponseDto extends RepresentationModel {
 
     private String description;
 
-    public static SimpleFinanceResponseDto convertEntityForSimpleFinanceDto(SimpleFinanceModel simpleFinanceModel) {
+    public static SimpleFinanceResponseDto convertEntityForSimpleFinanceResponseDto(SimpleFinanceModel simpleFinanceModel) {
         return new SimpleFinanceResponseDto(simpleFinanceModel.getId(), simpleFinanceModel.getName(),
                 simpleFinanceModel.getTotal_value(), simpleFinanceModel.getForm_payment(),
                 simpleFinanceModel.getMonth_payment(), simpleFinanceModel.getTotal_installment(), 

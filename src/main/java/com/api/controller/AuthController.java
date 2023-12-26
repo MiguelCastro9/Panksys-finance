@@ -41,8 +41,8 @@ public class AuthController {
         if (!userRequestDto.getPassword().equals(userRequestDto.getPassword_repeated())) {
             return new ResponseEntity("Passwords is not equals.", HttpStatus.CONFLICT);
         }
-        UserModel userModel = userService.singup(userRequestDto.convertUserDtoForEntity());
-        UserResponseDto userResponseDto = UserResponseDto.convertEntityForUserDto(userModel);
+        UserModel userModel = userService.singup(userRequestDto.convertUserRequestDtoForEntity());
+        UserResponseDto userResponseDto = UserResponseDto.convertEntityForUserResponseDto(userModel);
         userResponseDto.add(linkTo(methodOn(AuthController.class).singup(userRequestDto)).withSelfRel());
         return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
     }

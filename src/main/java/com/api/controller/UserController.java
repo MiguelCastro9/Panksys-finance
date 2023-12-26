@@ -42,8 +42,8 @@ public class UserController {
         if (!userRequestDto.getPassword().equals(userRequestDto.getPassword_repeated())) {
             return new ResponseEntity("Passwords is not equals.", HttpStatus.CONFLICT);
         }
-        UserModel userModel = userService.update(id, userRequestDto.convertUserUpdateDtoForEntity());
-        UserResponseDto userResponseDto = UserResponseDto.convertEntityForUserDto(userModel);
+        UserModel userModel = userService.update(id, userRequestDto.convertUserUpdateRequestDtoForEntity());
+        UserResponseDto userResponseDto = UserResponseDto.convertEntityForUserResponseDto(userModel);
         userResponseDto.add(linkTo(methodOn(UserController.class).update(id, userRequestDto)).withSelfRel());
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
@@ -51,7 +51,7 @@ public class UserController {
     @DeleteMapping("/disabled/{id}")
     public ResponseEntity<UserResponseDto> disabled(@PathVariable Long id) {
         UserModel userModel = userService.disabled(id);
-        UserResponseDto userResponseDto = UserResponseDto.convertEntityForUserDto(userModel);
+        UserResponseDto userResponseDto = UserResponseDto.convertEntityForUserResponseDto(userModel);
         userResponseDto.add(linkTo(methodOn(UserController.class).disabled(id)).withSelfRel());
         return new ResponseEntity("User [" + userResponseDto.getId() + "] " + userResponseDto.getName() + " disabled with success.", HttpStatus.OK);
     }

@@ -57,6 +57,7 @@ public class SecurityConfig {
         "/api/v1/simple-finance/save",
         "/api/v1/simple-finance/update/{id}",
         "/api/v1/simple-finance/list",
+        "/api/v1/simple-finance/filter",
         "/api/v1/simple-finance/find/{id}",
         "/api/v1/simple-finance/disabled/{id}",
         "/api/v1/simple-finance/total-money",

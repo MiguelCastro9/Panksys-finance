@@ -33,7 +33,7 @@ public class NotificationController {
     public ResponseEntity<List<NotificationResponseDto>> list() {
         List<NotificationResponseDto> notificationResponseDtoList = notificationService.findByUserId().stream()
                 .map(notification -> {
-                    NotificationResponseDto notificationResponseDto = NotificationResponseDto.convertEntityForNotificationDto(notification);
+                    NotificationResponseDto notificationResponseDto = NotificationResponseDto.convertEntityForNotificationResponseDto(notification);
                     Link selfLink = linkTo(methodOn(NotificationController.class).list()).withSelfRel();
                     notificationResponseDto.add(selfLink);
                     return notificationResponseDto;

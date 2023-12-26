@@ -28,7 +28,7 @@ public class FeedbackResponseDto extends RepresentationModel {
 
     private LocalDateTime created_date;
 
-    public static FeedbackResponseDto convertEntityForFeedbackDto(FeedbackModel feedbackModel) {
+    public static FeedbackResponseDto convertEntityForFeedbackResponseDto(FeedbackModel feedbackModel) {
         return new FeedbackResponseDto(feedbackModel.getId(), feedbackModel.getName(),
                 feedbackModel.getTotal_stars(), feedbackModel.getTitle(),
                 feedbackModel.getDescription(), feedbackModel.getCreated_date());

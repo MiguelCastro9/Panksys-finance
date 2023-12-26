@@ -38,8 +38,8 @@ public class SimpleFinanceInstallmentController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<SimpleFinanceInstallmentResponseDto> update(@PathVariable Long id, @Valid @RequestBody SimpleFinanceInstallmentRequestDto simpleFinanceInstallmentRequestDto) {
-        SimpleFinanceInstallmentModel simpleFinanceInstallmentModel = simpleFinanceInstallmentService.update(id, simpleFinanceInstallmentRequestDto.convertSimpleFinanceInstallmentUpdateDtoForEntity());
-        SimpleFinanceInstallmentResponseDto simpleFinanceInstallmentResponseDto = SimpleFinanceInstallmentResponseDto.convertEntityForSimpleFinanceInstallmentDto(simpleFinanceInstallmentModel);
+        SimpleFinanceInstallmentModel simpleFinanceInstallmentModel = simpleFinanceInstallmentService.update(id, simpleFinanceInstallmentRequestDto.convertSimpleFinanceInstallmentUpdateRequestDtoForEntity());
+        SimpleFinanceInstallmentResponseDto simpleFinanceInstallmentResponseDto = SimpleFinanceInstallmentResponseDto.convertEntityForSimpleFinanceInstallmentResponseDto(simpleFinanceInstallmentModel);
         simpleFinanceInstallmentResponseDto.add(linkTo(methodOn(SimpleFinanceInstallmentController.class).update(id, simpleFinanceInstallmentRequestDto)).withSelfRel());
         return new ResponseEntity<>(simpleFinanceInstallmentResponseDto, HttpStatus.OK);
     }
@@ -48,7 +48,7 @@ public class SimpleFinanceInstallmentController {
     public ResponseEntity<List<SimpleFinanceInstallmentResponseDto>> list(@PathVariable("simpleFinanceId") Long simpleFinanceId) {
         List<SimpleFinanceInstallmentResponseDto> simpleFinanceInstallmentResponseDtoList = simpleFinanceInstallmentService.list(simpleFinanceId).stream()
                 .map(simpleFinanceInstallment -> {
-                    SimpleFinanceInstallmentResponseDto simpleFinanceInstallmentResponseDto = SimpleFinanceInstallmentResponseDto.convertEntityForSimpleFinanceInstallmentDto(simpleFinanceInstallment);
+                    SimpleFinanceInstallmentResponseDto simpleFinanceInstallmentResponseDto = SimpleFinanceInstallmentResponseDto.convertEntityForSimpleFinanceInstallmentResponseDto(simpleFinanceInstallment);
                     WebMvcLinkBuilder linkBuilder = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(SimpleFinanceInstallmentController.class)
                             .list(simpleFinanceId));
                     Link selfLink = linkBuilder.withSelfRel();

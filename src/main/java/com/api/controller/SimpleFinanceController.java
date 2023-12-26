@@ -2,11 +2,13 @@ package com.api.controller;
 
 import com.api.dto.request.SimpleFinanceRequestDto;
 import com.api.dto.response.SimpleFinanceResponseDto;
+import com.api.enums.FormPaymentEnum;
 import com.api.model.SimpleFinanceModel;
 import com.api.service.SimpleFinanceService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -37,16 +40,16 @@ public class SimpleFinanceController {
 
     @PostMapping("/save")
     public ResponseEntity<SimpleFinanceResponseDto> save(@Valid @RequestBody SimpleFinanceRequestDto simpleFinanceRequestDto) {
-        SimpleFinanceModel simpleFinanceModel = simpleFinanceService.save(simpleFinanceRequestDto.convertSimpleFinanceDtoForEntity());
-        SimpleFinanceResponseDto simpleFinanceResponseDto = SimpleFinanceResponseDto.convertEntityForSimpleFinanceDto(simpleFinanceModel);
+        SimpleFinanceModel simpleFinanceModel = simpleFinanceService.save(simpleFinanceRequestDto.convertSimpleFinanceRequestDtoForEntity());
+        SimpleFinanceResponseDto simpleFinanceResponseDto = SimpleFinanceResponseDto.convertEntityForSimpleFinanceResponseDto(simpleFinanceModel);
         simpleFinanceResponseDto.add(linkTo(methodOn(SimpleFinanceController.class).save(simpleFinanceRequestDto)).withSelfRel());
         return new ResponseEntity<>(simpleFinanceResponseDto, HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<SimpleFinanceResponseDto> update(@PathVariable Long id, @Valid @RequestBody SimpleFinanceRequestDto simpleFinanceRequestDto) {
-        SimpleFinanceModel simpleFinanceModel = simpleFinanceService.update(id, simpleFinanceRequestDto.convertSimpleFinanceUpdateDtoForEntity());
-        SimpleFinanceResponseDto simpleFinanceResponseDto = SimpleFinanceResponseDto.convertEntityForSimpleFinanceDto(simpleFinanceModel);
+        SimpleFinanceModel simpleFinanceModel = simpleFinanceService.update(id, simpleFinanceRequestDto.convertSimpleFinanceUpdateRequestDtoForEntity());
+        SimpleFinanceResponseDto simpleFinanceResponseDto = SimpleFinanceResponseDto.convertEntityForSimpleFinanceResponseDto(simpleFinanceModel);
         simpleFinanceResponseDto.add(linkTo(methodOn(SimpleFinanceController.class).update(id, simpleFinanceRequestDto)).withSelfRel());
         return new ResponseEntity<>(simpleFinanceResponseDto, HttpStatus.OK);
     }
@@ -54,7 +57,20 @@ public class SimpleFinanceController {
     @GetMapping("/list")
     public ResponseEntity<List<SimpleFinanceResponseDto>> list() {
         List<SimpleFinanceResponseDto> simpleFinanceResponseDto = simpleFinanceService.list().stream()
-                .map(simpleFinance -> SimpleFinanceResponseDto.convertEntityForSimpleFinanceDto(simpleFinance))
+                .map(simpleFinance -> SimpleFinanceResponseDto.convertEntityForSimpleFinanceResponseDto(simpleFinance))
+                .collect(Collectors.toList());
+        simpleFinanceResponseDto.forEach(simpleFinance -> simpleFinance
+                .add(linkTo(methodOn(SimpleFinanceController.class)
+                        .find(simpleFinance.getId())).withSelfRel()));
+        return new ResponseEntity<>(simpleFinanceResponseDto, HttpStatus.OK);
+    }
+    
+    @GetMapping("/filter")
+    public ResponseEntity<List<SimpleFinanceResponseDto>> filter(@RequestParam("name") String name, @RequestParam("form_payment") FormPaymentEnum formPayment,
+            @RequestParam("month_payment") LocalDate monthPayment, @RequestParam("total_installment") Integer totalInstallment) {
+        List<SimpleFinanceResponseDto> simpleFinanceResponseDto = simpleFinanceService
+                .filter(name, formPayment, monthPayment, totalInstallment).stream()
+                .map(simpleFinance -> SimpleFinanceResponseDto.convertEntityForSimpleFinanceResponseDto(simpleFinance))
                 .collect(Collectors.toList());
         simpleFinanceResponseDto.forEach(simpleFinance -> simpleFinance
                 .add(linkTo(methodOn(SimpleFinanceController.class)
@@ -65,7 +81,7 @@ public class SimpleFinanceController {
     @GetMapping("/find/{id}")
     public ResponseEntity<SimpleFinanceResponseDto> find(@PathVariable Long id) {
         SimpleFinanceModel simpleFinanceModel = simpleFinanceService.find(id).orElseThrow();
-        SimpleFinanceResponseDto simpleFinanceResponseDto = SimpleFinanceResponseDto.convertEntityForSimpleFinanceDto(simpleFinanceModel);
+        SimpleFinanceResponseDto simpleFinanceResponseDto = SimpleFinanceResponseDto.convertEntityForSimpleFinanceResponseDto(simpleFinanceModel);
         simpleFinanceResponseDto.add(linkTo(methodOn(SimpleFinanceController.class).find(id)).withSelfRel());
         return new ResponseEntity<>(simpleFinanceResponseDto, HttpStatus.OK);
     }
@@ -73,7 +89,7 @@ public class SimpleFinanceController {
     @DeleteMapping("/disabled/{id}")
     public ResponseEntity<SimpleFinanceResponseDto> disabled(@PathVariable Long id) {
         SimpleFinanceModel simpleFinanceModel = simpleFinanceService.disabled(id);
-        SimpleFinanceResponseDto simpleFinanceResponseDto = SimpleFinanceResponseDto.convertEntityForSimpleFinanceDto(simpleFinanceModel);
+        SimpleFinanceResponseDto simpleFinanceResponseDto = SimpleFinanceResponseDto.convertEntityForSimpleFinanceResponseDto(simpleFinanceModel);
         simpleFinanceResponseDto.add(linkTo(methodOn(SimpleFinanceController.class).disabled(id)).withSelfRel());
         return new ResponseEntity("Simple finance [" + simpleFinanceResponseDto.getId() + "] " + simpleFinanceResponseDto.getName() + " disabled with success.", HttpStatus.OK);
     }

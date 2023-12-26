@@ -52,7 +52,7 @@ public class SimpleFinanceRequestDto {
         this.description = description;
     }
 
-    public SimpleFinanceModel convertSimpleFinanceDtoForEntity() {
+    public SimpleFinanceModel convertSimpleFinanceRequestDtoForEntity() {
         SimpleFinanceModel.Builder simpleFinanceModelBuilder = new SimpleFinanceModel.Builder();
         simpleFinanceModelBuilder.setName(name)
                 .setTotalValue(total_value)
@@ -63,7 +63,7 @@ public class SimpleFinanceRequestDto {
         return new SimpleFinanceModel(simpleFinanceModelBuilder);
     }
 
-    public SimpleFinanceModel convertSimpleFinanceUpdateDtoForEntity() {
+    public SimpleFinanceModel convertSimpleFinanceUpdateRequestDtoForEntity() {
         SimpleFinanceModel.Builder simpleFinanceModelBuilder = new SimpleFinanceModel.Builder();
         simpleFinanceModelBuilder.setId(id)
                 .setName(name)

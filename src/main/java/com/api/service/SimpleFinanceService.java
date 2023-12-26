@@ -1,6 +1,8 @@
 package com.api.service;
 
+import com.api.enums.FormPaymentEnum;
 import com.api.model.SimpleFinanceModel;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +17,9 @@ public interface SimpleFinanceService {
     public SimpleFinanceModel update(Long id, SimpleFinanceModel simpleFinanceModel);
     
     public List<SimpleFinanceModel> list();
+    
+    public List<SimpleFinanceModel> filter(String name, FormPaymentEnum formPayment, 
+            LocalDate monthPayment, Integer totalInstallment);
     
     public Optional<SimpleFinanceModel> find(Long id);
     

@@ -34,7 +34,7 @@ public class FeedbackRequestDto {
         this.description = description;
     }
 
-    public FeedbackModel convertFeedbackDtoForEntity() {
+    public FeedbackModel convertFeedbackRequestDtoForEntity() {
         FeedbackModel.Builder feedbackBuilder = new FeedbackModel.Builder();
         feedbackBuilder.setTotal_stars(total_stars)
                 .setTitle(title)

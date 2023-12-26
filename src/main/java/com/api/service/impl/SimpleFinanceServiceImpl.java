@@ -150,6 +150,16 @@ public class SimpleFinanceServiceImpl implements SimpleFinanceService {
                 .sorted(Comparator.comparing(SimpleFinanceModel::getId, Comparator.reverseOrder()))
                 .collect(Collectors.toList());
     }
+    
+    @Override
+    public List<SimpleFinanceModel> filter(String name, FormPaymentEnum formPayment, 
+            LocalDate monthPayment, Integer totalInstallment) {
+        UserModel userAuthenticated = getUserAuthenticated();
+        return simpleFinanceRepository.filter(name, formPayment, monthPayment, totalInstallment, userAuthenticated.getId())
+                .stream()
+                .sorted(Comparator.comparing(SimpleFinanceModel::getId, Comparator.reverseOrder()))
+                .collect(Collectors.toList());
+    }
 
     @Override
     public Optional<SimpleFinanceModel> find(Long id) {

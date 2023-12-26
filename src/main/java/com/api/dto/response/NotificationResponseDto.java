@@ -20,7 +20,7 @@ public class NotificationResponseDto extends RepresentationModel {
 
     private LocalDateTime created_date;
 
-    public static NotificationResponseDto convertEntityForNotificationDto(NotificationModel notificationModel) {
+    public static NotificationResponseDto convertEntityForNotificationResponseDto(NotificationModel notificationModel) {
         return new NotificationResponseDto(notificationModel.getDescription(), notificationModel.getCreated_date());
     }
 }

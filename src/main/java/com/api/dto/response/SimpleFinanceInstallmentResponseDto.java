@@ -26,7 +26,7 @@ public class SimpleFinanceInstallmentResponseDto extends RepresentationModel {
 
     private String month_payment_installment;
 
-    public static SimpleFinanceInstallmentResponseDto convertEntityForSimpleFinanceInstallmentDto(SimpleFinanceInstallmentModel simpleFinanceInstallmentModel) {
+    public static SimpleFinanceInstallmentResponseDto convertEntityForSimpleFinanceInstallmentResponseDto(SimpleFinanceInstallmentModel simpleFinanceInstallmentModel) {
         return new SimpleFinanceInstallmentResponseDto(simpleFinanceInstallmentModel.getId(),
                 simpleFinanceInstallmentModel.getNumber_installment(), simpleFinanceInstallmentModel.getValue_installment(), 
                 simpleFinanceInstallmentModel.getStatus_payment(), simpleFinanceInstallmentModel.getMonth_payment_installment());

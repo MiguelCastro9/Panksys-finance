@@ -24,7 +24,7 @@ public class UserResponseDto extends RepresentationModel {
     
     private String email;
     
-    public static UserResponseDto convertEntityForUserDto(UserModel userModel) {
+    public static UserResponseDto convertEntityForUserResponseDto(UserModel userModel) {
         return new UserResponseDto(userModel.getId(), userModel.getName(), 
                 userModel.getBirth_date(), userModel.getEmail());
     }
