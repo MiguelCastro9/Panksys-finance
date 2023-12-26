@@ -2,9 +2,11 @@ package com.api.service.impl;
 
 import com.api.enums.FormPaymentEnum;
 import com.api.enums.StatusPaymentEnum;
+import com.api.model.NotificationModel;
 import com.api.model.SimpleFinanceInstallmentModel;
 import com.api.model.SimpleFinanceModel;
 import com.api.model.UserModel;
+import com.api.repository.NotificationRepository;
 import com.api.repository.SimpleFinanceInstallmentRepository;
 import com.api.repository.SimpleFinanceRepository;
 import com.api.service.SimpleFinanceService;
@@ -34,6 +36,9 @@ public class SimpleFinanceServiceImpl implements SimpleFinanceService {
 
     @Autowired
     private SimpleFinanceInstallmentRepository simpleFinanceInstallmentRepository;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     @Override
     public SimpleFinanceModel save(SimpleFinanceModel simpleFinanceModel) {
@@ -94,6 +99,12 @@ public class SimpleFinanceServiceImpl implements SimpleFinanceService {
                 && simpleFinanceBuilder.getAll_status_payment().equals(StatusPaymentEnum.LATE)) {
             saveSimpleFinanceInstallmentForCredit(simpleFinanceBuilder, StatusPaymentEnum.LATE);
         }
+        NotificationModel notificationModel = new NotificationModel.Builder()
+                .setUser(userAuthenticated.getId())
+                .setDescription("Your new simple finance was saved with success.")
+                .setCreated_date(LocalDateTime.now())
+                .build();
+        notificationRepository.save(notificationModel);
         return simpleFinanceBuilder;
     }
 

@@ -25,9 +25,9 @@ import org.springframework.http.HttpStatus;
  * @author Miguel Castro
  */
 @RestController
-@RequestMapping("api/v1/auth")
 @SecurityRequirement(name = "BearerAuthentication")
 @Tag(name = "Authentications")
+@RequestMapping("api/v1/auth")
 public class AuthController {
 
     @Autowired

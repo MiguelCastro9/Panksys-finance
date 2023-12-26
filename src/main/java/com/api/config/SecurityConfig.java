@@ -87,6 +87,10 @@ public class SecurityConfig {
         "api/v1/feedback/list",
         "api/v1/feedback/find/{totalStars}"
     };
+    
+    private static final String[] NOTIFICATION_PATHS = {
+        "api/v1/notification/list"
+    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -98,6 +102,7 @@ public class SecurityConfig {
                 .requestMatchers(SIMPLE_FINANCE_PATHS).hasAnyAuthority(RoleEnum.USER.name())
                 .requestMatchers(SIMPLE_FINANCE_INSTALLMENT_PATHS).hasAnyAuthority(RoleEnum.USER.name())
                 .requestMatchers(FEEDBACK_PATHS).hasAnyAuthority(RoleEnum.USER.name())
+                .requestMatchers(NOTIFICATION_PATHS).hasAnyAuthority(RoleEnum.USER.name())
                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
