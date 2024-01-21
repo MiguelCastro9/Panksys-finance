@@ -15,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -63,10 +64,6 @@ public class SimpleFinanceModel implements Serializable {
     @Column(length = 255)
     private String description;
 
-    @Column(nullable = false, length = 45)
-    @Enumerated(EnumType.STRING)
-    private StatusPaymentEnum all_status_payment = StatusPaymentEnum.PENDING;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserModel user;
@@ -79,9 +76,11 @@ public class SimpleFinanceModel implements Serializable {
 
     @Column(nullable = false)
     private LocalDateTime updated_date;
+    
+    private String all_status_payment;
 
     public SimpleFinanceModel(String name, double total_value, FormPaymentEnum form_payment, LocalDate month_payment, 
-            Integer total_installment, String description, StatusPaymentEnum all_status_payment, UserModel user, 
+            Integer total_installment, String description, UserModel user, 
             boolean enabled,LocalDateTime created_date, LocalDateTime updated_date) {
         this.name = name;
         this.total_value = total_value;
@@ -89,7 +88,6 @@ public class SimpleFinanceModel implements Serializable {
         this.month_payment = month_payment;
         this.total_installment = total_installment;
         this.description = description;
-        this.all_status_payment = all_status_payment;
         this.user = user;
         this.enabled = enabled;
         this.created_date = created_date;
@@ -104,7 +102,6 @@ public class SimpleFinanceModel implements Serializable {
         this.month_payment = builder.month_payment;
         this.total_installment = builder.total_installment;
         this.description = builder.description;
-        this.all_status_payment = builder.all_status_payment;
         this.user = builder.user;
         this.enabled = builder.enabled;
         this.created_date = builder.created_date;
@@ -127,8 +124,6 @@ public class SimpleFinanceModel implements Serializable {
         private Integer total_installment;
 
         private String description;
-
-        private StatusPaymentEnum all_status_payment = StatusPaymentEnum.PENDING;
 
         private UserModel user;
 
@@ -170,11 +165,6 @@ public class SimpleFinanceModel implements Serializable {
 
         public Builder setDescription(String description) {
             this.description = description;
-            return this;
-        }
-
-        public Builder setAll_status_payment(StatusPaymentEnum all_status_payment) {
-            this.all_status_payment = all_status_payment;
             return this;
         }
 

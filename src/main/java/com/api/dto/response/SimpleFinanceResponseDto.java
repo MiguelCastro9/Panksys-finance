@@ -30,11 +30,13 @@ public class SimpleFinanceResponseDto extends RepresentationModel {
     private Integer total_installment;
 
     private String description;
-
+    
+    private String all_status_payment;
+    
     public static SimpleFinanceResponseDto convertEntityForSimpleFinanceResponseDto(SimpleFinanceModel simpleFinanceModel) {
         return new SimpleFinanceResponseDto(simpleFinanceModel.getId(), simpleFinanceModel.getName(),
                 simpleFinanceModel.getTotal_value(), simpleFinanceModel.getForm_payment(),
                 simpleFinanceModel.getMonth_payment(), simpleFinanceModel.getTotal_installment(), 
-                simpleFinanceModel.getDescription());
+                simpleFinanceModel.getDescription(), simpleFinanceModel.getAll_status_payment());
     }
 }

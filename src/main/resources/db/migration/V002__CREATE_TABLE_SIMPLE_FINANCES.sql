@@ -9,7 +9,6 @@ CREATE TABLE simple_finances (
   month_payment DATE NOT NULL,
   total_installment BIGINT NOT NULL,
   description VARCHAR(255),
-  all_status_payment VARCHAR(45) NOT NULL,
   user_id BIGINT NOT NULL,
   enabled BOOLEAN NOT NULL,
   created_date DATE NOT NULL,

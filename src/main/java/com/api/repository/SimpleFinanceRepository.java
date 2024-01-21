@@ -20,8 +20,16 @@ public interface SimpleFinanceRepository extends JpaRepository<SimpleFinanceMode
     @Query(value = "SELECT * FROM simple_finances WHERE id = :id AND enabled = true", nativeQuery = true)
     public Optional<SimpleFinanceModel> findSimpleFinance(@Param("id") Long id);
 
-    @Query(value = "SELECT * FROM simple_finances WHERE user_id = :user_id AND enabled = true", nativeQuery = true)
-    public List<SimpleFinanceModel> findAllSimpleFinances(@Param("user_id") Long userId);
+@Query(value = "SELECT " +
+               "sf.id, sf.name, sf.total_value, sf.form_payment, sf.month_payment, sf.total_installment, sf.description, " +
+               "CASE WHEN COUNT(sfi.id) = COUNT(CASE WHEN sfi.status_payment = 'PAID' THEN 1 END) THEN 'INSTALLMENTS PAID' ELSE 'INSTALLMENTS NOT PAID' END as all_status_payment, " +
+               "sf.user_id, sf.enabled, sf.created_date, sf.updated_date " +
+               "FROM simple_finances sf " +
+               "LEFT JOIN simple_finance_installments sfi ON sf.id = sfi.simple_finance_id " +
+               "WHERE sf.user_id = :user_id AND sf.enabled = true " +
+               "GROUP BY sf.id, sf.name, sf.total_value, sf.form_payment, sf.month_payment, sf.total_installment, sf.description, sf.user_id, sf.enabled, sf.created_date, sf.updated_date",
+               nativeQuery = true)
+public List<SimpleFinanceModel> findAllSimpleFinances(@Param("user_id") Long userId);
 
     @Query(value = "SELECT * FROM simple_finances WHERE (name = :name"
             + " OR form_payment = :form_payment"
