@@ -9,86 +9,9 @@
 
 /* SIDEBAR */
 
-.sidebar {
-  position: fixed;
-  height: 100%;
-  width: 230px;
-  background: #008080;
-  transition: all 0.5s ease;
-  left: 0;
-  top: 0;
-}
-
-.sidebar.active {
-  width: 60px;
-}
-
-.sidebar .logo-details {
-  height: 80px;
-  display: flex;
-  align-items: center;
-}
-
-.logo-img {
-  width: 45px;
-  height: 45px;
-  margin-left: 5px;
-}
-
-.logo-name {
-  color: #fff;
-  font-size: 20px;
-  font-weight: 500;
-  margin-left: 5px;
-}
-
-.sidebar .nav-links {
-  margin-top: 10px;
-}
-
-.sidebar .nav-links li {
-  position: relative;
-  list-style: none;
-  height: 50px;
-}
-
-.sidebar .nav-links li a {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  transition: all 0.4s ease;
-}
-
-.sidebar .nav-links li a.active {
-  background: #144f4f;
-}
-
 .sidebar .nav-links li a:hover {
   background: #144f4f;
 }
-
-.sidebar .nav-links li i {
-  min-width: 60px;
-  text-align: center;
-  font-size: 18px;
-  color: #fff;
-}
-
-.sidebar .nav-links li a .links-name {
-  color: #fff;
-  font-size: 15px;
-  font-weight: 400;
-  white-space: nowrap;
-}
-
-.sidebar .nav-links .logout {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-
 /* SECTION */
 
 .section {
