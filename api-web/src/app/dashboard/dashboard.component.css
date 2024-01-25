@@ -9,19 +9,66 @@
 
 /* SECTION */
 
-.section {
+.section-graphic {
   margin-top: 50px;
   margin-left: 300px;
   transition: all 0.5s ease;
 }
 
-.card {
+.card-graphic {
+  width: 500px;
   border-radius: 12px;
   border-color: #fff;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
+.section-table-feedback {
+  margin-top: 50px;
+  margin-left: 250px;
+  margin-right: 20px;
+  transition: all 0.5s ease;
+}
+
+.card-table-feedback {
+  max-width: 100%;
+  border-radius: 12px;
+  border-color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+canvas {
+  margin: auto;
+  width: 350px !important;
+  height: 350px !important;
+}
+
+.row {
+  margin-bottom: 50px;
+}
+
 /* RESPONSIVE */
+
+@media (max-width: 1300px) {
+  .sidebar {
+    width: 60px;
+  }
+
+  .sidebar.active {
+    width: 220px;
+  }
+
+  .logo-name {
+    display: none;
+  }
+
+  .section-graphic {
+    margin-left: 250px;
+  }
+
+  .section-table-feedback {
+    margin-left: 250px;
+  }
+}
 
 @media (max-width: 1240px) {
   .sidebar {
@@ -35,6 +82,24 @@
   .logo-name {
     display: none;
   }
+
+  .section-graphic {
+    margin-left: 130px;
+  }
+
+  .section-table-feedback {
+    margin-left: 80px;
+  }
+
+  .card-graphic {
+    width: 400px;
+  }
+
+  canvas {
+    margin: auto;
+    width: 350px !important;
+    height: 350px !important;
+  }
 }
 
 @media (max-width: 1150px) {
@@ -46,7 +111,7 @@
     width: 220px;
   }
 
-  .section {
+  .section-graphic {
     margin-left: 100px;
   }
 
@@ -64,8 +129,12 @@
     width: 220px;
   }
 
-  .section {
-    margin-left: 130px;
+  .section-graphic {
+    margin-left: 100px;
+  }
+
+  .card-graphic {
+    margin-bottom: 50px;
   }
 
   .logo-name {
@@ -82,8 +151,8 @@
     width: 220px;
   }
 
-  .section {
-    margin-left: 180px;
+  .section-graphic {
+    margin-left: 120px;
   }
 
   .logo-name {
@@ -100,8 +169,8 @@
     width: 220px;
   }
 
-  .section {
-    margin-left: 140px;
+  .section-graphic {
+    margin-left: 80px;
   }
 
   .logo-name {
@@ -118,7 +187,7 @@
     width: 220px;
   }
 
-  .section {
+  .section-graphic {
     margin-left: 90px;
   }
 
@@ -136,7 +205,7 @@
     width: 220px;
   }
 
-  .section {
+  .section-graphic {
     margin-left: 75px;
   }
 
@@ -154,7 +223,7 @@
     width: 220px;
   }
 
-  .section {
+  .section-graphic {
     margin-left: 65px;
   }
 
