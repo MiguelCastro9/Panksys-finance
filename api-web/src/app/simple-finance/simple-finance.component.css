@@ -1,14 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-
-/* SECTION */
-
 .section-table-simple-finance {
   margin-top: 50px;
   margin-left: 250px;
@@ -22,10 +11,6 @@
   border-color: #fff;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-}
-
-.row {
-  margin-bottom: 50px;
 }
 
 .icon-check-paid {
@@ -47,10 +32,33 @@
   border-radius: 4px;
   text-decoration: none;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .button a:hover {
   background: #144f4f;
+}
+
+.button-modal a {
+  color: #fff;
+  background: #008080;
+  padding: 4px 12px;
+  font-size: 15px;
+  font-weight: 400;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.button-modal a:hover {
+  background: #144f4f;
+}
+
+.modal-title {
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 /* RESPONSIVE */
