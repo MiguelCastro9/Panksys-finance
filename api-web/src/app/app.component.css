@@ -108,6 +108,10 @@ a {
   .logo-name {
     display: none;
   }
+
+  .links-name {
+    display: none;
+  }
 }
 
 @media (max-width: 1150px) {

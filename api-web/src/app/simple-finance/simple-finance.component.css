@@ -5,7 +5,7 @@
   transition: all 0.5s ease;
 }
 
-.card-table-simple-finance {
+.table-simple-finance {
   max-width: 100%;
   border-radius: 6px;
   border-color: #fff;
@@ -21,6 +21,10 @@
 .icon-check-not-paid {
   font-size: 25px;
   color: #858E96;
+}
+
+.button {
+  margin-top: 60px;
 }
 
 .button a {
@@ -72,14 +76,6 @@
     width: 220px;
   }
 
-  .logo-name {
-    display: none;
-  }
-
-  .section-graphic {
-    margin-left: 250px;
-  }
-
   .section-table-simple-finance {
     margin-left: 250px;
   }
@@ -94,26 +90,8 @@
     width: 220px;
   }
 
-  .logo-name {
-    display: none;
-  }
-
-  .section-graphic {
-    margin-left: 130px;
-  }
-
   .section-table-simple-finance {
     margin-left: 80px;
-  }
-
-  .card-graphic {
-    width: 400px;
-  }
-
-  canvas {
-    margin: auto;
-    width: 350px !important;
-    height: 350px !important;
   }
 }
 
@@ -125,14 +103,6 @@
   .sidebar.active {
     width: 220px;
   }
-
-  .section-graphic {
-    margin-left: 100px;
-  }
-
-  .logo-name {
-    display: none;
-  }
 }
 
 @media (max-width: 1000px) {
@@ -142,18 +112,6 @@
 
   .sidebar.active {
     width: 220px;
-  }
-
-  .section-graphic {
-    margin-left: 100px;
-  }
-
-  .card-graphic {
-    margin-bottom: 50px;
-  }
-
-  .logo-name {
-    display: none;
   }
 }
 
@@ -166,26 +124,8 @@
     width: 220px;
   }
 
-  .section-graphic {
-    margin-left: 150px;
-  }
-
   .section-table-simple-finance {
     margin-left: 120px;
-  }
-
-  .card-graphic {
-    width: 300px;
-  }
-
-  canvas {
-    margin: auto;
-    width: 300px !important;
-    height: 300px !important;
-  }
-
-  .logo-name {
-    display: none;
   }
 }
 
@@ -197,24 +137,6 @@
   .sidebar.active {
     width: 220px;
   }
-
-  .section-graphic {
-    margin-left: 100px;
-  }
-
-  .card-graphic {
-    width: 320px;
-  }
-
-  canvas {
-    margin: auto;
-    width: 300px !important;
-    height: 300px !important;
-  }
-
-  .logo-name {
-    display: none;
-  }
 }
 
 @media (max-width: 700px) {
@@ -224,14 +146,6 @@
 
   .sidebar.active {
     width: 220px;
-  }
-
-  .section-graphic {
-    margin-left: 120px;
-  }
-
-  .logo-name {
-    display: none;
   }
 }
 
@@ -244,26 +158,8 @@
     width: 220px;
   }
 
-  .section-graphic {
-    margin-left: 120px;
-  }
-
   .section-table-simple-finance {
     margin-left: 100px;
-  }
-
-  .card-graphic {
-    width: 350px;
-  }
-
-  canvas {
-    margin: auto;
-    width: 320px !important;
-    height: 320px !important;
-  }
-
-  .logo-name {
-    display: none;
   }
 }
 
@@ -274,10 +170,6 @@
 
   .sidebar.active {
     width: 220px;
-  }
-
-  .section-graphic {
-    margin-left: 100px;
   }
 
   .section-table-simple-finance {
@@ -295,26 +187,8 @@
     width: 220px;
   }
 
-  .section-graphic {
-    margin-left: 100px;
-  }
-
   .section-table-simple-finance {
     margin-left: 100px;
-  }
-
-  .card-graphic {
-    width: 200px;
-  }
-
-  canvas {
-    margin: auto;
-    width: 200px !important;
-    height: 200px !important;
-  }
-
-  .logo-name {
-    display: none;
   }
 }
 
@@ -327,26 +201,8 @@
     width: 220px;
   }
 
-  .section-graphic {
-    margin-left: 95px;
-  }
-
   .section-table-simple-finance {
     margin-left: 95px;
-  }
-
-  .card-graphic {
-    width: 300px;
-  }
-
-  canvas {
-    margin: auto;
-    width: 200px !important;
-    height: 200px !important;
-  }
-
-  .logo-name {
-    display: none;
   }
 }
 
@@ -359,26 +215,8 @@
     width: 220px;
   }
 
-  .section-graphic {
-    margin-left: 85px;
-  }
-
   .section-table-simple-finance {
     margin-left: 85px;
-  }
-
-  .card-graphic {
-    width: 300px;
-  }
-
-  canvas {
-    margin: auto;
-    width: 200px !important;
-    height: 200px !important;
-  }
-
-  .logo-name {
-    display: none;
   }
 }
 
@@ -390,14 +228,6 @@
   .sidebar.active {
     width: 220px;
   }
-
-  .section-graphic {
-    margin-left: 75px;
-  }
-
-  .logo-name {
-    display: none;
-  }
 }
 
 @media (max-width: 375px) {
@@ -407,24 +237,6 @@
 
   .sidebar.active {
     width: 220px;
-  }
-
-  .section-graphic {
-    margin-left: 90px;
-  }
-
-  .card-graphic {
-    width: 250px;
-  }
-
-  canvas {
-    margin: auto;
-    width: 250px !important;
-    height: 250px !important;
-  }
-
-  .logo-name {
-    display: none;
   }
 }
 
@@ -437,26 +249,8 @@
     width: 220px;
   }
 
-  .section-graphic {
-    margin-left: 70px;
-  }
-
   .section-table-simple-finance {
     margin-left: 90px;
-  }
-
-  .card-graphic {
-    width: 250px;
-  }
-
-  canvas {
-    margin: auto;
-    width: 250px !important;
-    height: 250px !important;
-  }
-
-  .logo-name {
-    display: none;
   }
 }
 
@@ -469,25 +263,7 @@
     width: 220px;
   }
 
-  .section-graphic {
-    margin-left: 70px;
-  }
-
   .section-table-simple-finance {
     margin-left: 80px;
-  }
-
-  .card-graphic {
-    width: 200px;
-  }
-
-  canvas {
-    margin: auto;
-    width: 200px !important;
-    height: 200px !important;
-  }
-
-  .logo-name {
-    display: none;
   }
 }

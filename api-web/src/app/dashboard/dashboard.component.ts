@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
       data: {
         labels: ["Comédia","Romance","Ação","Terror", "Drama"],
         datasets: [{
-          data: [10, 20, 30, 40, 50]
+          data: [400, 30, 300, 400, 500]
         }]
       },
       options: {

@@ -1,126 +1,129 @@
 <section class="section-table-simple-finance">
   <h4>Simple Finances</h4>
-  <br>
   <div class="button">
     <a data-bs-toggle="modal" data-bs-target="#modalFormSimpleFinance">+ New finance</a>
   </div>
   <br>
   <div class="container text-center">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Search">
+    </div>
     <div class="row">
       <div class="col">
-            <table class="card-table-simple-finance table table-responsive table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">Finance</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Mounth</th>
-                  <th scope="col">Total</th>
-                  <th scope="col">Form of payment</th>
-                  <th scope="col">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>MacBook Air</td>
-                  <td>MacBook Air M1 8GB Ram</td>
-                  <td>January</td>
-                  <td>R$ 7.500</td>
-                  <td>Credit</td>
-                  <td><i class='bx bx-check-circle icon-check-paid'></i></td>
-                </tr>
-                <tr>
-                  <td>MacBook Air</td>
-                  <td>MacBook Air M1 8GB Ram</td>
-                  <td>January</td>
-                  <td>R$ 7.500</td>
-                  <td>Credit</td>
-                  <td><i class='bx bx-check-circle icon-check-paid'></i></td>
-                </tr>
-                <tr>
-                  <td>MacBook Air</td>
-                  <td>MacBook Air M1 8GB Ram</td>
-                  <td>January</td>
-                  <td>R$ 7.500</td>
-                  <td>Credit</td>
-                  <td><i class='bx bx-check-circle icon-check-not-paid'></i></td>
-                </tr>
-                <tr>
-                  <td>MacBook Air</td>
-                  <td>MacBook Air M1 8GB Ram</td>
-                  <td>January</td>
-                  <td>R$ 7.500</td>
-                  <td>Credit</td>
-                  <td><i class='bx bx-check-circle icon-check-paid'></i></td>
-                </tr>
-              </tbody>
-            </table>
-            <br>
-          </div>
-        </div>
-      </div>
-</section>
-  <!-- MODAL -->
-  <div class="modal fade" id="modalFormSimpleFinance" data-bs-backdrop="static" tabindex="-1" aria-labelledby="modalFormSimpleFinanceLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content">
-          <h1 class="modal-title fs-5" id="modalFormSimpleFinanceLabel">New simple finance</h1>
-          <div class="modal-body">
-            <form>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="mb-3">
-                    <label for="finance" class="col-form-label">Finance:</label>
-                    <input type="text" class="form-control" id="finance">
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="value" class="col-form-label">Value:</label>
-                    <input type="text" class="form-control" id="value">
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="form_payment" class="col-form-label">Form payment:</label>
-                    <select class="form-control" id="form_payment">
-                      <option selected value="">Select</option>
-                      <option value="DEBIT">Debit</option>
-                      <option value="CREDIT">Credit</option>
-                      <option value="MONEY">Money</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="mounth" class="col-form-label">Mounth:</label>
-                    <input type="date" class="form-control" id="mounth">
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="mb-3">
-                    <label for="installment" class="col-form-label">Installment:</label>
-                    <input type="number" class="form-control" id="installment" min="1" max="24">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="mb-3">
-                    <label for="description" class="col-form-label">Description:</label>
-                    <textarea type="text" class="form-control" id="description"></textarea>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <div class="button-modal">
-            <a data-bs-dismiss="modal">Save</a>
-            <a data-bs-dismiss="modal">Cancel</a>
-          </div>
-          <br>
+        <table class="table table-responsive table-simple-finance table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Finance</th>
+              <th scope="col">Description</th>
+              <th scope="col">Mounth</th>
+              <th scope="col">Total</th>
+              <th scope="col">Form of payment</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>MacBook Air</td>
+              <td>MacBook Air M1 8GB Ram</td>
+              <td>January</td>
+              <td>R$ 7.500</td>
+              <td>Credit</td>
+              <td><i class='bx bx-check-circle icon-check-paid'></i></td>
+            </tr>
+            <tr>
+              <td>MacBook Air</td>
+              <td>MacBook Air M1 8GB Ram</td>
+              <td>January</td>
+              <td>R$ 7.500</td>
+              <td>Credit</td>
+              <td><i class='bx bx-check-circle icon-check-paid'></i></td>
+            </tr>
+            <tr>
+              <td>MacBook Air</td>
+              <td>MacBook Air M1 8GB Ram</td>
+              <td>January</td>
+              <td>R$ 7.500</td>
+              <td>Credit</td>
+              <td><i class='bx bx-check-circle icon-check-not-paid'></i></td>
+            </tr>
+            <tr>
+              <td>MacBook Air</td>
+              <td>MacBook Air M1 8GB Ram</td>
+              <td>January</td>
+              <td>R$ 7.500</td>
+              <td>Credit</td>
+              <td><i class='bx bx-check-circle icon-check-paid'></i></td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
       </div>
     </div>
   </div>
+</section>
+<!-- MODAL -->
+<div class="modal fade" id="modalFormSimpleFinance" data-bs-backdrop="static" tabindex="-1"
+  aria-labelledby="modalFormSimpleFinanceLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <h1 class="modal-title fs-5" id="modalFormSimpleFinanceLabel">New simple finance</h1>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="finance" class="col-form-label">Finance:</label>
+                <input type="text" class="form-control" id="finance">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="mb-3">
+                <label for="value" class="col-form-label">Value:</label>
+                <input type="text" class="form-control" id="value">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="mb-3">
+                <label for="form_payment" class="col-form-label">Form payment:</label>
+                <select class="form-control" id="form_payment">
+                  <option selected value="">Select</option>
+                  <option value="DEBIT">Debit</option>
+                  <option value="CREDIT">Credit</option>
+                  <option value="MONEY">Money</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="mb-3">
+                <label for="mounth" class="col-form-label">Mounth:</label>
+                <input type="date" class="form-control" id="mounth">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="mb-3">
+                <label for="installment" class="col-form-label">Installment:</label>
+                <input type="number" class="form-control" id="installment" min="1" max="24">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label for="description" class="col-form-label">Description:</label>
+                <textarea type="text" class="form-control" id="description"></textarea>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="button-modal">
+        <a data-bs-dismiss="modal">Save</a>
+        <a data-bs-dismiss="modal">Import</a>
+        <a data-bs-dismiss="modal">Cancel</a>
+      </div>
+      <br>
+    </div>
+  </div>
+</div>
