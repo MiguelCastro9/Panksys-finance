@@ -22,15 +22,14 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-.section-table-feedback {
+.section-feedback {
   margin-top: 50px;
-  margin-left: 250px;
-  margin-right: 20px;
+  margin-left: 305px;
   transition: all 0.5s ease;
 }
 
-.card-table-feedback {
-  max-width: 100%;
+.card-feedback {
+  width: 300px;
   border-radius: 12px;
   border-color: #fff;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -47,7 +46,14 @@ canvas {
 }
 
 .user-img {
+  width: 80px;
+  height: 80px;
   border-radius: 100%;
+  margin-bottom: 20px;
+}
+
+.description-feedback {
+  font-size: 14px;
 }
 
 /* RESPONSIVE */
@@ -69,8 +75,12 @@ canvas {
     margin-left: 250px;
   }
 
-  .section-table-feedback {
+  .section-feedback {
     margin-left: 250px;
+  }
+
+  .card-feedback {
+    width: 300px;
   }
 }
 
@@ -91,12 +101,17 @@ canvas {
     margin-left: 130px;
   }
 
-  .section-table-feedback {
-    margin-left: 80px;
+  .section-feedback {
+    margin-left: 120px;
   }
 
   .card-graphic {
     width: 400px;
+  }
+
+  .card-feedback {
+    width: 300px;
+    margin-bottom: 30px;
   }
 
   canvas {
@@ -117,6 +132,14 @@ canvas {
 
   .section-graphic {
     margin-left: 100px;
+  }
+
+  .section-feedback {
+    margin-left: 100px;
+  }
+
+  .card-feedback {
+    width: 250px;
   }
 
   .logo-name {
@@ -159,11 +182,15 @@ canvas {
     margin-left: 150px;
   }
 
-  .section-table-feedback {
-    margin-left: 120px;
+  .card-graphic {
+    width: 300px;
   }
 
-  .card-graphic {
+  .section-feedback {
+    margin-left: 150px;
+  }
+
+  .card-feedback {
     width: 300px;
   }
 
@@ -269,11 +296,15 @@ canvas {
     margin-left: 100px;
   }
 
-  .section-table-feedback {
-    margin-left: 90px;
+  .card-graphic {
+    width: 350px;
   }
 
-  .card-graphic {
+  .section-feedback {
+    margin-left: 100px;
+  }
+
+  .card-feedback {
     width: 350px;
   }
 
@@ -333,11 +364,15 @@ canvas {
     margin-left: 95px;
   }
 
-  .section-table-feedback {
+  .card-graphic {
+    width: 300px;
+  }
+
+  .section-feedback {
     margin-left: 95px;
   }
 
-  .card-graphic {
+  .card-feedback {
     width: 300px;
   }
 
@@ -352,7 +387,7 @@ canvas {
   }
 }
 
-@media (max-width: 415px) {
+@media (max-width: 414px) {
   .sidebar {
     width: 60px;
   }
@@ -370,6 +405,14 @@ canvas {
   }
 
   .card-graphic {
+    width: 300px;
+  }
+
+  .section-feedback {
+    margin-left: 85px;
+  }
+
+  .card-feedback {
     width: 300px;
   }
 
@@ -397,6 +440,10 @@ canvas {
     margin-left: 75px;
   }
 
+  .section-feedback {
+    margin-left: 75px;
+  }
+
   .logo-name {
     display: none;
   }
@@ -416,6 +463,14 @@ canvas {
   }
 
   .card-graphic {
+    width: 250px;
+  }
+
+  .section-feedback {
+    margin-left: 90px;
+  }
+
+  .card-feedback {
     width: 250px;
   }
 
@@ -443,11 +498,15 @@ canvas {
     margin-left: 70px;
   }
 
-  .section-table-feedback {
-    margin-left: 90px;
+  .card-graphic {
+    width: 250px;
   }
 
-  .card-graphic {
+  .section-feedback {
+    margin-left: 80px;
+  }
+
+  .card-feedback {
     width: 250px;
   }
 
@@ -475,11 +534,15 @@ canvas {
     margin-left: 70px;
   }
 
-  .section-table-feedback {
-    margin-left: 80px;
+  .card-graphic {
+    width: 200px;
   }
 
-  .card-graphic {
+  .section-feedback {
+    margin-left: 70px;
+  }
+
+  .card-feedback {
     width: 200px;
   }
 

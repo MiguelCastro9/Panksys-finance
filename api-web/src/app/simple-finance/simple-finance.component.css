@@ -9,19 +9,90 @@
 
 /* SECTION */
 
-.section {
+.section-graphic {
   margin-top: 50px;
   margin-left: 300px;
   transition: all 0.5s ease;
 }
 
-.card {
+.card-graphic {
+  width: 500px;
   border-radius: 12px;
   border-color: #fff;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
+.section-feedback {
+  margin-top: 50px;
+  margin-left: 300px;
+  transition: all 0.5s ease;
+}
+
+.card-feedback {
+  width: 300px;
+  border-radius: 12px;
+  border-color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.section-table-feedback {
+  margin-top: 50px;
+  margin-left: 250px;
+  margin-right: 20px;
+  transition: all 0.5s ease;
+}
+
+.card-table-feedback {
+  max-width: 100%;
+  border-radius: 12px;
+  border-color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+canvas {
+  margin: auto;
+  width: 350px !important;
+  height: 350px !important;
+}
+
+.row {
+  margin-bottom: 50px;
+}
+
+.user-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  margin-bottom: 20px;
+}
+
+.description-feedback {
+  font-size: 14px;
+}
+
 /* RESPONSIVE */
+
+@media (max-width: 1300px) {
+  .sidebar {
+    width: 60px;
+  }
+
+  .sidebar.active {
+    width: 220px;
+  }
+
+  .logo-name {
+    display: none;
+  }
+
+  .section-graphic {
+    margin-left: 250px;
+  }
+
+  .section-table-feedback {
+    margin-left: 250px;
+  }
+}
 
 @media (max-width: 1240px) {
   .sidebar {
@@ -35,6 +106,24 @@
   .logo-name {
     display: none;
   }
+
+  .section-graphic {
+    margin-left: 130px;
+  }
+
+  .section-table-feedback {
+    margin-left: 80px;
+  }
+
+  .card-graphic {
+    width: 400px;
+  }
+
+  canvas {
+    margin: auto;
+    width: 350px !important;
+    height: 350px !important;
+  }
 }
 
 @media (max-width: 1150px) {
@@ -46,7 +135,7 @@
     width: 220px;
   }
 
-  .section {
+  .section-graphic {
     margin-left: 100px;
   }
 
@@ -64,8 +153,72 @@
     width: 220px;
   }
 
-  .section {
-    margin-left: 130px;
+  .section-graphic {
+    margin-left: 100px;
+  }
+
+  .card-graphic {
+    margin-bottom: 50px;
+  }
+
+  .logo-name {
+    display: none;
+  }
+}
+
+@media (max-width: 912px) {
+  .sidebar {
+    width: 60px;
+  }
+
+  .sidebar.active {
+    width: 220px;
+  }
+
+  .section-graphic {
+    margin-left: 150px;
+  }
+
+  .section-table-feedback {
+    margin-left: 120px;
+  }
+
+  .card-graphic {
+    width: 300px;
+  }
+
+  canvas {
+    margin: auto;
+    width: 300px !important;
+    height: 300px !important;
+  }
+
+  .logo-name {
+    display: none;
+  }
+}
+
+@media (max-width: 820px) {
+  .sidebar {
+    width: 60px;
+  }
+
+  .sidebar.active {
+    width: 220px;
+  }
+
+  .section-graphic {
+    margin-left: 100px;
+  }
+
+  .card-graphic {
+    width: 320px;
+  }
+
+  canvas {
+    margin: auto;
+    width: 300px !important;
+    height: 300px !important;
   }
 
   .logo-name {
@@ -82,8 +235,8 @@
     width: 220px;
   }
 
-  .section {
-    margin-left: 180px;
+  .section-graphic {
+    margin-left: 120px;
   }
 
   .logo-name {
@@ -100,8 +253,54 @@
     width: 220px;
   }
 
-  .section {
-    margin-left: 140px;
+  .section-graphic {
+    margin-left: 120px;
+  }
+
+  .section-table-feedback {
+    margin-left: 100px;
+  }
+
+  .card-graphic {
+    width: 350px;
+  }
+
+  canvas {
+    margin: auto;
+    width: 320px !important;
+    height: 320px !important;
+  }
+
+  .logo-name {
+    display: none;
+  }
+}
+
+@media (max-width: 500px) {
+  .sidebar {
+    width: 60px;
+  }
+
+  .sidebar.active {
+    width: 220px;
+  }
+
+  .section-graphic {
+    margin-left: 100px;
+  }
+
+  .section-table-feedback {
+    margin-left: 90px;
+  }
+
+  .card-graphic {
+    width: 350px;
+  }
+
+  canvas {
+    margin: auto;
+    width: 320px !important;
+    height: 320px !important;
   }
 
   .logo-name {
@@ -118,8 +317,86 @@
     width: 220px;
   }
 
-  .section {
-    margin-left: 90px;
+  .section-graphic {
+    margin-left: 100px;
+  }
+
+  .section-table-feedback {
+    margin-left: 100px;
+  }
+
+  .card-graphic {
+    width: 200px;
+  }
+
+  canvas {
+    margin: auto;
+    width: 200px !important;
+    height: 200px !important;
+  }
+
+  .logo-name {
+    display: none;
+  }
+}
+
+@media (max-width: 430px) {
+  .sidebar {
+    width: 60px;
+  }
+
+  .sidebar.active {
+    width: 220px;
+  }
+
+  .section-graphic {
+    margin-left: 95px;
+  }
+
+  .section-table-feedback {
+    margin-left: 95px;
+  }
+
+  .card-graphic {
+    width: 300px;
+  }
+
+  canvas {
+    margin: auto;
+    width: 200px !important;
+    height: 200px !important;
+  }
+
+  .logo-name {
+    display: none;
+  }
+}
+
+@media (max-width: 415px) {
+  .sidebar {
+    width: 60px;
+  }
+
+  .sidebar.active {
+    width: 220px;
+  }
+
+  .section-graphic {
+    margin-left: 85px;
+  }
+
+  .section-table-feedback {
+    margin-left: 85px;
+  }
+
+  .card-graphic {
+    width: 300px;
+  }
+
+  canvas {
+    margin: auto;
+    width: 200px !important;
+    height: 200px !important;
   }
 
   .logo-name {
@@ -136,7 +413,7 @@
     width: 220px;
   }
 
-  .section {
+  .section-graphic {
     margin-left: 75px;
   }
 
@@ -145,7 +422,7 @@
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 375px) {
   .sidebar {
     width: 60px;
   }
@@ -154,8 +431,82 @@
     width: 220px;
   }
 
-  .section {
-    margin-left: 65px;
+  .section-graphic {
+    margin-left: 90px;
+  }
+
+  .card-graphic {
+    width: 250px;
+  }
+
+  canvas {
+    margin: auto;
+    width: 250px !important;
+    height: 250px !important;
+  }
+
+  .logo-name {
+    display: none;
+  }
+}
+
+@media (max-width: 320px) {
+  .sidebar {
+    width: 60px;
+  }
+
+  .sidebar.active {
+    width: 220px;
+  }
+
+  .section-graphic {
+    margin-left: 70px;
+  }
+
+  .section-table-feedback {
+    margin-left: 90px;
+  }
+
+  .card-graphic {
+    width: 250px;
+  }
+
+  canvas {
+    margin: auto;
+    width: 250px !important;
+    height: 250px !important;
+  }
+
+  .logo-name {
+    display: none;
+  }
+}
+
+@media (max-width: 280px) {
+  .sidebar {
+    width: 60px;
+  }
+
+  .sidebar.active {
+    width: 220px;
+  }
+
+  .section-graphic {
+    margin-left: 70px;
+  }
+
+  .section-table-feedback {
+    margin-left: 80px;
+  }
+
+  .card-graphic {
+    width: 200px;
+  }
+
+  canvas {
+    margin: auto;
+    width: 200px !important;
+    height: 200px !important;
   }
 
   .logo-name {
