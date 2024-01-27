@@ -46,6 +46,10 @@ canvas {
   margin-bottom: 50px;
 }
 
+.user-img {
+  border-radius: 100%;
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 1300px) {
