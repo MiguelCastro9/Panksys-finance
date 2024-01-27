@@ -23,8 +23,28 @@
   color: #858E96;
 }
 
+.icon-check-pending {
+  font-size: 25px;
+  color: #bca70c;
+}
+
+.icon-check-not-pending {
+  font-size: 25px;
+  color: #858E96;
+}
+
+.icon-check-late {
+  font-size: 25px;
+  color: #bc2424;
+}
+
+.icon-check-not-late {
+  font-size: 25px;
+  color: #858E96;
+}
+
 .button {
-  margin-top: 60px;
+  margin-top: 30px;
 }
 
 .button a {

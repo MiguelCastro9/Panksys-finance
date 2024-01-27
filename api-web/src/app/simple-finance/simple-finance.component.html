@@ -1,16 +1,17 @@
 <section class="section-table-simple-finance">
   <h4>Simple Finances</h4>
+  <p class="modal-title text-muted">Your simple finances</p>
   <div class="button">
     <a data-bs-toggle="modal" data-bs-target="#modalFormSimpleFinance">+ New finance</a>
   </div>
   <br>
   <div class="container text-center">
     <div class="input-group mb-3">
-      <input type="text" class="form-control" placeholder="Search">
+      <input type="text" class="form-control" placeholder="Search simple finance...">
     </div>
     <div class="row">
       <div class="col">
-        <table class="table table-responsive table-simple-finance table-hover">
+        <table class="table table-responsive text-center table-simple-finance table-hover">
           <thead>
             <tr>
               <th scope="col">Finance</th>
@@ -21,14 +22,18 @@
               <th scope="col">Status</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody data-bs-toggle="modal" data-bs-target="#modalFormSimpleFinanceInstallment">
             <tr>
               <td>MacBook Air</td>
               <td>MacBook Air M1 8GB Ram</td>
               <td>January</td>
               <td>R$ 7.500</td>
               <td>Credit</td>
-              <td><i class='bx bx-check-circle icon-check-paid'></i></td>
+              <td>
+                <i class='bx bx-check-circle icon-check-paid'></i>
+                <i class='bx bxs-hourglass icon-check-not-pending'></i>
+                <i class='bx bx-info-circle icon-check-not-late'></i>
+              </td>
             </tr>
             <tr>
               <td>MacBook Air</td>
@@ -36,7 +41,11 @@
               <td>January</td>
               <td>R$ 7.500</td>
               <td>Credit</td>
-              <td><i class='bx bx-check-circle icon-check-paid'></i></td>
+              <td>
+                <i class='bx bx-check-circle icon-check-paid'></i>
+                <i class='bx bxs-hourglass icon-check-not-pending'></i>
+                <i class='bx bx-info-circle icon-check-not-late'></i>
+              </td>
             </tr>
             <tr>
               <td>MacBook Air</td>
@@ -44,7 +53,11 @@
               <td>January</td>
               <td>R$ 7.500</td>
               <td>Credit</td>
-              <td><i class='bx bx-check-circle icon-check-not-paid'></i></td>
+              <td>
+                <i class='bx bx-check-circle icon-check-not-paid'></i>
+                <i class='bx bxs-hourglass icon-check-pending'></i>
+                <i class='bx bx-info-circle icon-check-not-late'></i>
+              </td>
             </tr>
             <tr>
               <td>MacBook Air</td>
@@ -52,7 +65,11 @@
               <td>January</td>
               <td>R$ 7.500</td>
               <td>Credit</td>
-              <td><i class='bx bx-check-circle icon-check-paid'></i></td>
+              <td>
+                <i class='bx bx-check-circle icon-check-not-paid'></i>
+                <i class='bx bxs-hourglass icon-check-not-pending'></i>
+                <i class='bx bx-info-circle icon-check-late'></i>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -61,12 +78,13 @@
     </div>
   </div>
 </section>
-<!-- MODAL -->
+<!-- MODAL SIMPLE FINANCE -->
 <div class="modal fade" id="modalFormSimpleFinance" data-bs-backdrop="static" tabindex="-1"
   aria-labelledby="modalFormSimpleFinanceLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <h1 class="modal-title fs-5" id="modalFormSimpleFinanceLabel">New simple finance</h1>
+      <p class="modal-title text-muted">Fill in the fields to register a new finance</p>
       <div class="modal-body">
         <form>
           <div class="row">
@@ -121,6 +139,93 @@
       <div class="button-modal">
         <a data-bs-dismiss="modal">Save</a>
         <a data-bs-dismiss="modal">Import</a>
+        <a data-bs-dismiss="modal">Cancel</a>
+      </div>
+      <br>
+    </div>
+  </div>
+</div>
+<!-- MODAL SIMPLE FINANCE INSTALLMENT -->
+<div class="modal fade" id="modalFormSimpleFinanceInstallment" data-bs-backdrop="static" tabindex="-1"
+  aria-labelledby="modalFormSimpleFinanceInstallmentLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <h1 class="modal-title fs-5" id="modalFormSimpleFinanceInstallmentLabel">Installments</h1>
+      <p class="modal-title text-muted">Manage your purchase installments</p>
+      <div class="modal-body">
+        <table class="table table-responsive text-center table-simple-finance table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Mounth</th>
+              <th scope="col">Installment</th>
+              <th scope="col">Installment value</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>January</td>
+              <td>1x</td>
+              <td>R$ 1.875</td>
+              <td>
+                <i class='bx bx-check-circle icon-check-not-paid'></i>
+                <i class='bx bxs-hourglass icon-check-pending'></i>
+                <i class='bx bx-info-circle icon-check-not-late'></i>
+              </td>
+            </tr>
+            <tr>
+              <td>February</td>
+              <td>2x</td>
+              <td>R$ 1.875</td>
+              <td>
+                <i class='bx bx-check-circle icon-check-not-paid'></i>
+                <i class='bx bxs-hourglass icon-check-pending'></i>
+                <i class='bx bx-info-circle icon-check-not-late'></i>
+              </td>
+            </tr>
+            <tr>
+              <td>March</td>
+              <td>3x</td>
+              <td>R$ 1.875</td>
+              <td>
+                <i class='bx bx-check-circle icon-check-not-paid'></i>
+                <i class='bx bxs-hourglass icon-check-pending'></i>
+                <i class='bx bx-info-circle icon-check-not-late'></i>
+              </td>
+            </tr>
+            <tr>
+              <td>April</td>
+              <td>4x</td>
+              <td>R$ 1.875</td>
+              <td>
+                <i class='bx bx-check-circle icon-check-not-paid'></i>
+                <i class='bx bxs-hourglass icon-check-pending'></i>
+                <i class='bx bx-info-circle icon-check-not-late'></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="button-modal">
+        <a data-bs-dismiss="modal">Close</a>
+        <a data-bs-toggle="modal" data-bs-target="#modalDeleteSimpleFinance">Delete</a>
+      </div>
+      <br>
+    </div>
+  </div>
+</div>
+<!-- MODAL DELETE SIMPLE FINANCE -->
+<div class="modal fade" id="modalDeleteSimpleFinance" data-bs-backdrop="static" tabindex="-1"
+  aria-labelledby="modalDeleteSimpleFinanceLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <h1 class="modal-title fs-5" id="modalDeleteSimpleFinanceLabel">Delete finance</h1>
+      <p class="modal-title text-muted">Do you really want to <strong>delete</strong> your simple finance?</p>
+      <div class="modal-body">
+
+      </div>
+      <div class="button-modal">
+        <a data-bs-dismiss="modal">Confirm</a>
         <a data-bs-dismiss="modal">Cancel</a>
       </div>
       <br>
