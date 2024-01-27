@@ -281,22 +281,9 @@
   }
 
   .section-table-simple-finance {
-    margin-left: 90px;
+    margin-left: 70px;
   }
 
-  .card-graphic {
-    width: 350px;
-  }
-
-  canvas {
-    margin: auto;
-    width: 320px !important;
-    height: 320px !important;
-  }
-
-  .logo-name {
-    display: none;
-  }
 }
 
 @media (max-width: 450px) {
