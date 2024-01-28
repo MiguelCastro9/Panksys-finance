@@ -1,0 +1,87 @@
+<section class="section-feedback">
+  <h4>Feedbacks</h4>
+  <p class="modal-title text-muted">Build together with us by sharing your feedback in the community</p>
+  <div class="button">
+    <a data-bs-toggle="modal" data-bs-target="#modalFormSimpleFinance">+ New feedback</a>
+  </div>
+  <br>
+  <div class="container text-center">
+    <div class="row">
+      <div class="col">
+        <div class="card card-feedback">
+          <div class="card-body">
+            <br>
+            <img src="https://source.unsplash.com/100x100/?face" class="user-img">
+            <br><br>
+            <i class='bx bx-star icon-stars-feedback'></i>
+            <i class='bx bx-star icon-stars-feedback'></i>
+            <i class='bx bx-star icon-stars-feedback'></i>
+            <i class='bx bx-star icon-stars-feedback'></i>
+            <i class='bx bx-star icon-stars-feedback'></i>
+          </div>
+          <h6>Title feedback</h6>
+          <p class="description-feedback">Some quick example text to build on the card title and make up the bulk of
+            the card's content.</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card card-feedback">
+          <div class="card-body">
+            <br>
+            <img src="https://source.unsplash.com/100x100/?face" class="user-img">
+            <br><br>
+            <i class='bx bx-star icon-stars-feedback'></i>
+            <i class='bx bx-star icon-stars-feedback'></i>
+            <i class='bx bx-star icon-stars-feedback'></i>
+            <i class='bx bx-star icon-stars-feedback'></i>
+            <i class='bx bx-star icon-stars-feedback'></i>
+          </div>
+          <h6>Title feedback</h6>
+          <p class="description-feedback">Some quick example text to build on the card title and make up the bulk of
+            the card's content.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- MODAL FEEDBACK -->
+<div class="modal fade" id="modalFormSimpleFinance" data-bs-backdrop="static" tabindex="-1"
+  aria-labelledby="modalFormSimpleFinanceLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <h1 class="modal-title fs-5" id="modalFormSimpleFinanceLabel">New feedback</h1>
+      <p class="modal-title text-muted">Fill in the fields to register a new feedback</p>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="finance" class="col-form-label">Title:</label>
+                <input type="text" class="form-control" id="finance">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="stars" class="col-form-label">Stars:</label>
+                <input type="number" class="form-control" id="stars" min="1" max="5">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label for="description" class="col-form-label">Description:</label>
+                <textarea type="text" class="form-control" id="description"></textarea>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="button-modal">
+        <a data-bs-dismiss="modal">Share</a>
+        <a data-bs-dismiss="modal">Cancel</a>
+      </div>
+      <br>
+    </div>
+  </div>
+</div>
