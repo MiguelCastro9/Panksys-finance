@@ -1,13 +1,15 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [],
+  imports: [MenuComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
+
 export class DashboardComponent implements OnInit {
 
   constructor() {

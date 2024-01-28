@@ -1,10 +1,10 @@
+import { MenuComponent } from './../menu/menu.component';
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-feedback',
   standalone: true,
-  imports: [RouterLink],
+  imports: [MenuComponent],
   templateUrl: './feedback.component.html',
   styleUrl: './feedback.component.css'
 })

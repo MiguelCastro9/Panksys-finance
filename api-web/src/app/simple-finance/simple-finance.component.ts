@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'app-simple-finance',
   standalone: true,
-  imports: [RouterLink],
+  imports: [MenuComponent],
   templateUrl: './simple-finance.component.html',
   styleUrl: './simple-finance.component.css'
 })
