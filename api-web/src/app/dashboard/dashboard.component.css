@@ -1,11 +1,10 @@
 .section-graphic {
   margin-top: 50px;
-  margin-left: 300px;
+  margin-left: 235px;
   transition: all 0.5s ease;
 }
 
 .card-graphic {
-  width: 500px;
   border-radius: 12px;
   border-color: #fff;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -13,12 +12,11 @@
 
 .section-feedback {
   margin-top: 50px;
-  margin-left: 305px;
+  margin-left: 235px;
   transition: all 0.5s ease;
 }
 
 .card-feedback {
-  width: 300px;
   border-radius: 12px;
   border-color: #fff;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
