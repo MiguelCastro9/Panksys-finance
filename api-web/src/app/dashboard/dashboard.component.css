@@ -43,6 +43,11 @@ canvas {
   font-size: 14px;
 }
 
+.icon-stars-feedback {
+  font-size: 25px;
+  color: #e3cc24;
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 1300px) {
