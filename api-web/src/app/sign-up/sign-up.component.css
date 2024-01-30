@@ -1,4 +1,4 @@
-.section-signin {
+.section-signup {
   display: flex;
   height: 100vh;
 }
@@ -81,7 +81,7 @@ a {
 /* RESPONSIVE */
 
 @media (max-width: 1024px) {
-  .section-signin {
+  .section-signup {
     display: flex;
     height: auto;
     flex-direction: column;
